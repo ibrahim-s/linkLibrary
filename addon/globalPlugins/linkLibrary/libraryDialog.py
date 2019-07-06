@@ -19,8 +19,10 @@ import addonHandler
 addonHandler.initTranslation()
 
 CURRENT_DIR= os.path.dirname(os.path.abspath(__file__))
-# path of library files in the addon
-LIBRARIES_DIR= os.path.abspath(os.path.join(CURRENT_DIR,'..', '..', 'linkLibrary-addonFiles')).decode("mbcs")
+# path of library files for the addon
+#LIBRARIES_DIR= os.path.abspath(os.path.join(CURRENT_DIR,'..', '..', 'linkLibrary-addonFiles')).decode("mbcs")
+# os.path.expanduser('~') is the home user directory
+LIBRARIES_DIR= os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles').decode("mbcs")
 
 def addLibrary(message, caption, oldName=None):
 	''' Entering the name of new library, or renaming existing one by passing a value to oldName in this function.'''
@@ -40,7 +42,7 @@ def addLibrary(message, caption, oldName=None):
 def makeHtmlFile(libraryName, libraryData, newpath):
 	''' Make Html file out of pickle library file.'''
 	with codecs.open(newpath, 'wb', encoding= 'utf-8') as html:
-		html.write("""<!DOCTYPE html><html lang="en"><head>
+		html.write(u"""<!DOCTYPE html><html lang="en"><head>
 			<meta charset="UTF-8">
 <title>Bookmarks </title>
 		</head><body>
@@ -49,9 +51,9 @@ def makeHtmlFile(libraryName, libraryData, newpath):
 		<DL>""".format(libraryName)
 		)
 		for url, label, about in libraryData:
-			html.write('<DT><a href= "{}">{}</a></DT>'.format('http://'+url if url.startswith('www.') else url, label))
-			html.write('<DD>{}</DD>'.format(about))
-		html.write('</DL></body></html>')
+			html.write(u'<DT><a href= "{}">{}</a></DT>'.format('http://'+url if url.startswith('www.') else url, label))
+			html.write(u'<DD>{}</DD>'.format(about))
+		html.write(u'</DL></body></html>')
 		return True
 
 def validateLibraryFile(filePath):
@@ -267,7 +269,7 @@ class LibraryDialog(wx.Dialog):
 		self.postInit()
 
 	def postInit(self):
-		foundFiles= os.listdir(os.path.join(CURRENT_DIR,'..', '..', 'linkLibrary-addonFiles'))
+		foundFiles= os.listdir(os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles'))
 		libraryFiles= sorted([os.path.splitext(f)[0].decode("mbcs") for f in foundFiles])
 		LibraryDialog.libraryFiles= libraryFiles
 		self.listBox.Set(libraryFiles)

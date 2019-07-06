@@ -9,7 +9,8 @@ from logHandler import log
 import os
 
 CURRENT_DIR= os.path.dirname(__file__).decode("mbcs")
-SAVING_DIR= os.path.join(CURRENT_DIR, "..", "..", "linkLibrary-addonFiles")
+#SAVING_DIR= os.path.join(CURRENT_DIR, "..", "..", "linkLibrary-addonFiles")
+SAVING_DIR= os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles')
 
 class Link(object):
 	#links in a specific library or file
@@ -48,10 +49,8 @@ class Link(object):
 	@classmethod
 	def save_to_file(cls):
 		with open(os.path.join(SAVING_DIR, cls.filename), 'wb') as f:
-			#print cls.myBooks
 			pickle.dump(cls.myLinks, f)
 		cls.myLinks= {}
-			#print cls.myBooks
 
 	@classmethod
 	def retreave_from_file(cls):

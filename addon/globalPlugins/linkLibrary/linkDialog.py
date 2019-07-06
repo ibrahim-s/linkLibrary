@@ -188,6 +188,7 @@ class MyPopupMenu(wx.Menu):
 			return
 		Link.remove_allLinks()
 		self.parent.populateListBox()
+		self.Destroy()
 		#self.parent.focusAndSelect()
 
 class LinkDialog(wx.Dialog):
@@ -257,7 +258,7 @@ class LinkDialog(wx.Dialog):
 		self.Show()
 
 	def populateListBox(self, selected= None):
-		#self.Hide()
+		log.info('under populateListBox')
 		Link.retreave_from_file()
 		if not Link.myLinks:
 			#LinkDialog.link_keys= []
@@ -270,11 +271,20 @@ class LinkDialog(wx.Dialog):
 		self.link_labels= lst
 		self.numberOfLinks= len(lst)
 		self.SetTitle(u"{}({})".format(self.filename, self.numberOfLinks))
+		if not lst:
+			self.aboutText.Disable()
+			[obj.Hide() for obj in (self.showOrHideUrlButton, self.urlText, self.openLinkWithButton)]
+			self.Show()
+			return
 		if not selected:
-			self.listBox.SetSelection(0)
+			i= 0
+			self.listBox.SetSelection(i)
 		else:
 			i= self.link_labels.index(selected)
 			self.listBox.SetSelection(i)
+		link= Link.getLinkByLabel(self.link_labels[i])
+		self.showOrHideAboutControl(link.about)
+		[obj.Show() for obj in (self.showOrHideUrlButton, self.openLinkWithButton)]
 		self.Show()
 
 	def OnRightDown(self, e):
@@ -286,19 +296,22 @@ class LinkDialog(wx.Dialog):
 	def onKillFocus(self, evt):
 		log.info('under kill focus event')
 		i= self.listBox.GetSelection()
-		if i== -1:
-			self.aboutText.Disable()
-			self.showOrHideUrlButton.Hide()
-			self.urlText.Hide()
-			self.openLinkWithButton.Hide()
-			return
-		else:
+		if i!= -1:
+#		if i== -1:
+			#self.aboutText.Disable()
+			#self.showOrHideUrlButton.Hide()
+			#self.showOrHideUrlButton.Disable()
+			#self.urlText.Hide()
+			#self.openLinkWithButton.Hide()
+			#return
+		#else:
 			link= Link.getLinkByLabel(self.link_labels[i])
 			if link:
 				self.showOrHideAboutControl(link.about)
 				if self.showOrHideUrlButton.GetLabel()== "Hide Source Url":
 					self.showOrHideUrlButton.SetLabel("Show Source Url")
 				self.showOrHideUrlButton.Show()
+				#self.showOrHideUrlButton.Enable()
 				self.urlText.Hide()
 				self.openLinkWithButton.Show()
 		evt.Skip()
