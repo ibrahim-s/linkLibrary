@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #libraryDialog.py
+# Copyright 2019 ibrahim hamadeh, released under GPLv2.0
 #graphical user interface for libraries dialog
 
 import wx, gui, core, os, ui
@@ -20,7 +21,6 @@ addonHandler.initTranslation()
 
 CURRENT_DIR= os.path.dirname(os.path.abspath(__file__))
 # path of library files for the addon
-#LIBRARIES_DIR= os.path.abspath(os.path.join(CURRENT_DIR,'..', '..', 'linkLibrary-addonFiles')).decode("mbcs")
 # os.path.expanduser('~') is the home user directory
 LIBRARIES_DIR= os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles').decode("mbcs")
 
@@ -337,6 +337,10 @@ class LibraryDialog(wx.Dialog):
 		self.refreshLibraries(i= sel)
 
 	def refreshLibraries(self, str=None, i= None):
+		'''
+		@str: name of selected library
+		@i: index of selected library
+		'''
 		self.Hide()
 		self.listBox.Set(LibraryDialog.libraryFiles)
 		if str:

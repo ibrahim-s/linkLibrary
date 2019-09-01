@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #linkDialog.py
+# Copyright 2019 ibrahim hamadeh, released under GPLv2.0
 #graphical user interface for link dialog
 
 import wx, gui
@@ -130,7 +131,7 @@ class MyPopupMenu(wx.Menu):
 		self.Append(removeAll)
 		self.Bind(wx.EVT_MENU, self.onRemoveAll, removeAll)
 
-	def onAdd(self, e= None, link= None):
+	def onAdd(self, evt= None, link= None):
 		#getting the url of the link
 		url= getLinkUrl('Enter Link source(www...)', 'Url:', link)
 		log.info('url: %s'%url)
@@ -149,7 +150,7 @@ class MyPopupMenu(wx.Menu):
 		#self.parent.focusAndSelect(selected= label)
 		return True
 
-	def onEdit(self, e):
+	def onEdit(self, evt):
 		listBox= self.parent.FindWindowById(self.eventObjectId)
 		i= listBox.GetSelection()
 		if i!= -1:
@@ -161,7 +162,7 @@ class MyPopupMenu(wx.Menu):
 			if not edited:
 				Link.add_link(l.url, l.label, l.about)
 
-	def onRemove(self, e):
+	def onRemove(self, evt):
 		listBox= self.parent.FindWindowById(self.eventObjectId)
 		i= listBox.GetSelection()
 		if i!= -1:
@@ -175,10 +176,16 @@ class MyPopupMenu(wx.Menu):
 			wx.YES|wx.NO|wx.ICON_QUESTION)== wx.NO:
 				return
 			Link.remove_link(l.url)
-			self.parent.populateListBox()
-			#self.parent.focusAndSelect()
+			# index of the link to be selected and focused on
+			index= i if len(self.parent.link_labels)>= i+2 else i-1
+			if index >=0:
+				#self.parent.populateListBox(selected= self.parent.link_labels[index])
+				self.parent.populateListBox()
+				listBox.SetSelection(index)
+			else: self.parent.populateListBox()
+			#self.parent.populateListBox()
 
-	def onRemoveAll(self, e):
+	def onRemoveAll(self, evt):
 		if gui.messageBox(
 		# Translators: Message displayed when trying to remove all links.
 		_('Are you sure you want to remove all links from this library?, this can not be undone.'),
@@ -200,7 +207,6 @@ class LinkDialog(wx.Dialog):
 		size=(500, 300))
 		self.filename= filename
 		#sending the filename to the Link class
-		#Link.filename= u"%s"%filename + u".pickle"
 		Link.filename= filename + ".pickle"
 
 		panel = wx.Panel(self, -1) 
@@ -267,8 +273,8 @@ class LinkDialog(wx.Dialog):
 		else:
 			lst = sorted([Link.myLinks[url]['label'] for url in Link.myLinks])
 		self.Hide()
-		self.listBox.Set(lst)
 		self.link_labels= lst
+		self.listBox.Set(lst)
 		self.numberOfLinks= len(lst)
 		self.SetTitle(u"{}({})".format(self.filename, self.numberOfLinks))
 		if not lst:

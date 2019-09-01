@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Development version 1.1](https://github.com/ibrahim-s/myLibrary/releases/download/v1.1-dev/myArabicLibrary-1.1-dev.nvda-addon)  
+Download [Development version 0.2][1]  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
 From the main dialog of libraries, you can choose the library or category you like and press enter on it.  
@@ -14,6 +14,7 @@ NVDA menu>preferences>inputGestures>Link Library.
 
 *	After assigning a gesture to the addon, using that gesture or shortcut you can open the main dialog of the addon  
 *	A dialog will open, listing all libraries or categories of links that are found.  
+*	At first only one library named General will be found, it is empty, ready to host general links.  
 *	Tabing on that dialog, you can rename, remove, or add any libraries or category of links you want at any time.  
 *	On the list of libraries, stand on one of your choice, and press enter.   
 *	A dialog for that library will open, showing all linksin it (name or label of links) in a list .  
@@ -30,6 +31,10 @@ NVDA menu>preferences>inputGestures>Link Library.
 *	In the menu of the new window, go to Import and Backup submenu, then to Import Bookmarks from HTML… and press enter.  
 *	Navigate through the dialog opened to the html file and select it. After that an entry or folder having the same name of the imported library will be found in the firefox bookmarks menu including all links of the imported library in it.  
 
+### Changes for 0.2 ###
+
+*	Make the only place to save and retreave data, a folder named "linkLibrary-addonFiles" in the home user directory. So that it will be used by all instances of the addon in installed or portable versions of NVDA.
+
 ### Changes for 0.1 ###
 
 *	Initial version.
@@ -37,3 +42,5 @@ NVDA menu>preferences>inputGestures>Link Library.
 ### contact me ###
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
+
+[1]: https://github.com/ibrahim-s/myLibrary/releases/download/v0.2-dev/linkLibrary-0.2-dev.nvda-addon

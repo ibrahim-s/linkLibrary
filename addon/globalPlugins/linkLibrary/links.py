@@ -1,15 +1,18 @@
+#links.py
+# Copyright 2019 ibrahim hamadeh, released under GPLv2.0
+#This module is aimed to construct link object, retreave links from file, save links to file and use other helpful functions.
+
 #for compatibility with python3
 try:
 	import cPickle as pickle
 except ImportError:
 	import pickle
 
-#.decode("mbcs")
-from logHandler import log
+import wx, gui
 import os
+from logHandler import log
 
-CURRENT_DIR= os.path.dirname(__file__).decode("mbcs")
-#SAVING_DIR= os.path.join(CURRENT_DIR, "..", "..", "linkLibrary-addonFiles")
+#CURRENT_DIR= os.path.dirname(__file__).decode("mbcs")
 SAVING_DIR= os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles')
 
 class Link(object):
@@ -29,7 +32,6 @@ class Link(object):
 		link= cls(url, label, about)
 		cls.myLinks[link.url]= {"label": link.label, "about": link.about}
 		log.info( cls.myLinks)
-		#cls.save_to_file()
 
 	@classmethod
 	def remove_link(cls, url):
@@ -48,20 +50,34 @@ class Link(object):
 
 	@classmethod
 	def save_to_file(cls):
-		with open(os.path.join(SAVING_DIR, cls.filename), 'wb') as f:
-			pickle.dump(cls.myLinks, f)
-		cls.myLinks= {}
+		'''Saving links in a specific library to file'''
+		try:
+			with open(os.path.join(SAVING_DIR, cls.filename), 'wb') as f:
+				pickle.dump(cls.myLinks, f)
+			cls.myLinks= {}
+		except Exception as e:
+			log.info("Error saving links to file",exc_info=1)
+			return
 
 	@classmethod
 	def retreave_from_file(cls):
-		if cls.myLinks: return
-		else:
-			try:
-				with open(os.path.join(SAVING_DIR, cls.filename), 'rb') as f:
-					d= pickle.load(f)
-					cls.myLinks= d
-			except:
-				cls.myLinks= {}
+		'''Retreaving links from a specific library file.'''
+		if cls.myLinks: 
+			return
+		try:
+			with open(os.path.join(SAVING_DIR, cls.filename), 'rb') as f:
+				d= pickle.load(f)
+				cls.myLinks= d
+		except EOFError:
+			cls.myLinks= {}
+			return
+		except Exception as e:
+			#Translators: Message displayed when getting an error trying to retreave link data
+			gui.messageBox(_("Unable to load links data"), 
+			#Translators: Title of message box
+			_("Error"), wx.OK|wx.ICON_ERROR)
+			log.info("Error", exc_info=1)
+			return
 
 	@classmethod
 	def getLinkByUrl(cls, url):
@@ -72,29 +88,9 @@ class Link(object):
 
 	@classmethod
 	def getLinkByLabel(cls, label):
+		'''Getting the link object given its label'''
 		#try:
 		url= [key for key in cls.myLinks if cls.myLinks[key]['label']== label]
 		if url:
 			link=cls.getLinkByUrl(url[0])
 			return link
-
-if __name__== '__main__':
-	#Book.add_book('book1', 'author1', 'about1', 'size1', 'url1', 'url2')
-	#Book.save_to_file()
-	Book.retreave_from_file('test.pickle')
-	print Book.myBooks
-"""
-	@classmethod
-	def getBookByUrl(cls, url):
-		key= [key for key in cls.myBooks if cls.myBooks[key]['url']== url]
-		if key:
-			book= cls.getBookByKey(key[0])
-			return book
-
-	@classmethod
-	def getBookByUrl2(cls, url):
-		key= [key for key in cls.myBooks if cls.myBooks[key]['url2']== url]
-		if key:
-			book= cls.getBookByKey(key[0])
-			return book
-"""

@@ -6,19 +6,19 @@
 import globalPluginHandler 
 import core, ui
 import wx, gui
-#from gui import guiHelper
 import config
 import globalVars
 import os
 import shutil
+from .libraryDialog import LibraryDialog
 import addonHandler
 addonHandler.initTranslation()
-from .libraryDialog import LibraryDialog
 
-# path of library files in the addon
-LIBRARIES_DIR= os.path.abspath(os.path.join(os.path.dirname(__file__),'..', '..', 'linkLibrary-addonFiles')).decode("mbcs")
+# path of library files for the addon, home user lirectory/linkLibrary-addonFiles.
+homeDirectory= os.path.expanduser('~')
+LIBRARIES_DIR= os.path.abspath(os.path.join(homeDirectory, 'linkLibrary-addonFiles')).decode("mbcs")
 
-#initial value when no instance of dialog opened
+#initial value when no instance of dialog is opened
 LIBRARYDIALOG= None
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
