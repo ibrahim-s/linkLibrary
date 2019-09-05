@@ -48,11 +48,11 @@ def makeHtmlFile(libraryName, libraryData, newpath):
 		</head><body>
 		<h1>Link Library Bookmarks</h1>
 		<DT><H3>{}</H3>
-		<DL>""".format(libraryName)
+		<DL><p>""".format(libraryName)
 		)
 		for url, label, about in libraryData:
 			html.write(u'<DT><a href= "{}">{}</a></DT>'.format('http://'+url if url.startswith('www.') else url, label))
-			html.write(u'<DD>{}</DD>'.format(about))
+			html.write(u'{}'.format(about))
 		html.write(u'</DL></body></html>')
 		return True
 

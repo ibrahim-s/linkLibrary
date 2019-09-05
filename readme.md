@@ -43,4 +43,4 @@ NVDA menu>preferences>inputGestures>Link Library.
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v0.2-dev/linkLibrary-0.2-dev.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v0.3-dev/linkLibrary-0.3-dev.nvda-addon

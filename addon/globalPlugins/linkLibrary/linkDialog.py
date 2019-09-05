@@ -65,10 +65,11 @@ def getLinkAbout(message, caption, link= None):
 
 class OpenWithMenu(wx.Menu):
 	''' The menu that pops up when pressing openlink with button.'''
-	def __init__(self, link):
+	def __init__(self, parentDialog, link):
 		super(OpenWithMenu, self).__init__()
 
 		self.link= link
+		self.parentDialog= parentDialog
 
 		#if in windows10, add a menu item for edge browser
 		if winVersion.winVersionText.startswith('10'):
@@ -86,12 +87,14 @@ class OpenWithMenu(wx.Menu):
 		url= self.link.url
 		if url:
 			subprocess.Popen(executable_path+' '+url)
+			self.parentDialog.checkCloseAfterActivatingALink()
 
 	def onEdge(self, evt):
 		url= self.link.url
 		if url:
 			url= 'http://'+url if url.startswith('www') else url
 			os.startfile("microsoft-edge:{i}".format(i=url)) 
+			self.parentDialog.checkCloseAfterActivatingALink()
 
 #the popup menu class
 class MyPopupMenu(wx.Menu):
@@ -365,21 +368,11 @@ class LinkDialog(wx.Dialog):
 	def onOpenLinkWith(self, evt):
 		log.info('under onOpenLinkWith handler')
 		i= self.listBox.GetSelection()
-		#if i!= -1:
-			#try:
 		link= Link.getLinkByLabel(self.link_labels[i])
-			#except KeyError:
-				#pass
 		if link:
 			btn = evt.GetEventObject()
 			pos = btn.ClientToScreen( (0,0) )
-			self.PopupMenu(OpenWithMenu(link), pos)
-
-	def onAnotherUrl(self, evt):
-		url= self.anotherUrlText.GetValue()
-		if url:
-			queueHandler.queueFunction(queueHandler.eventQueue, webbrowser.open, url)
-			self.checkCloseAfterActivatingALink()
+			self.PopupMenu(OpenWithMenu(self, link), pos)
 
 	def checkCloseAfterActivatingALink(self):
 		if  config.conf["linkLibrary"]["closeDialogAfterActivatingALink"]:

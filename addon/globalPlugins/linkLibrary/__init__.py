@@ -110,6 +110,8 @@ class LinkDialogSettings(gui.SettingsDialog):
 	def postInit(self):
 		self.closeDialogCheckBox.SetFocus()
 
+#Most of stuff here, copy libraries folder dialog and import libraries folder dialog is borrowed from Read Feeds by Noelia.
+
 class PathSelectionWithoutNewDir(gui.guiHelper.PathSelectionHelper):
 
 	def __init__(self, parent, buttonText, browseForDirectoryTitle):
@@ -258,7 +260,7 @@ class ImportDialog(wx.Dialog):
 			raise e
 		else:
 			# Translators: message presented when importing libraries folder succeeded.
-			core.callLater(100, ui.message, _("Libraries folder imported successfuly."))
+			core.callLater(100, ui.message, _("Information: Libraries folder imported successfuly."))
 
 	def onCancel(self, evt):
 		self.Destroy()
