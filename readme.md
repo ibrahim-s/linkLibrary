@@ -1,7 +1,9 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Development version 0.2][1]  
+Download [Development version 0.4][1]  
+NVDA compatibility: 2018.3 to 2019.3  
+Python compatibility: Python2 and Python3  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
 From the main dialog of libraries, you can choose the library or category you like and press enter on it.  
@@ -31,6 +33,10 @@ NVDA menu>preferences>inputGestures>Link Library.
 *	In the menu of the new window, go to Import and Backup submenu, then to Import Bookmarks from HTML… and press enter.  
 *	Navigate through the dialog opened to the html file and select it. After that an entry or folder having the same name of the imported library will be found in the firefox bookmarks menu including all links of the imported library in it.  
 
+### Changes for 0.4 ###
+
+*	Make the addon python3 compatible  
+
 ### Changes for 0.2 ###
 
 *	Make the only place to save and retreave data, a folder named "linkLibrary-addonFiles" in the home user directory. So that it will be used by all instances of the addon in installed or portable versions of NVDA.
@@ -43,4 +49,4 @@ NVDA menu>preferences>inputGestures>Link Library.
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v0.3-dev/linkLibrary-0.3-dev.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v0.4-dev/linkLibrary-0.4-dev.nvda-addon

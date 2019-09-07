@@ -3,7 +3,7 @@
 # Copyright 2019 ibrahim hamadeh, released under GPLv2.0
 #graphical user interface for libraries dialog
 
-import wx, gui, core, os, ui
+import wx, gui, core, os, sys, ui
 import shutil
 import codecs
 #for compatibility with python3
@@ -22,7 +22,10 @@ addonHandler.initTranslation()
 CURRENT_DIR= os.path.dirname(os.path.abspath(__file__))
 # path of library files for the addon
 # os.path.expanduser('~') is the home user directory
-LIBRARIES_DIR= os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles').decode("mbcs")
+if sys.version_info.major== 3:
+	LIBRARIES_DIR= os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles')
+else:
+	LIBRARIES_DIR= os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles').decode("mbcs")
 
 def addLibrary(message, caption, oldName=None):
 	''' Entering the name of new library, or renaming existing one by passing a value to oldName in this function.'''
@@ -270,7 +273,10 @@ class LibraryDialog(wx.Dialog):
 
 	def postInit(self):
 		foundFiles= os.listdir(os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles'))
-		libraryFiles= sorted([os.path.splitext(f)[0].decode("mbcs") for f in foundFiles])
+		if sys.version_info.major== 3:
+			libraryFiles= sorted([os.path.splitext(f)[0] for f in foundFiles])
+		else:
+			libraryFiles= sorted([os.path.splitext(f)[0].decode("mbcs") for f in foundFiles])
 		LibraryDialog.libraryFiles= libraryFiles
 		self.listBox.Set(libraryFiles)
 		self.listBox.SetSelection(0)

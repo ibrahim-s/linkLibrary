@@ -53,7 +53,7 @@ class Link(object):
 		'''Saving links in a specific library to file'''
 		try:
 			with open(os.path.join(SAVING_DIR, cls.filename), 'wb') as f:
-				pickle.dump(cls.myLinks, f)
+				pickle.dump(cls.myLinks, f, protocol=2)
 			cls.myLinks= {}
 		except Exception as e:
 			log.info("Error saving links to file",exc_info=1)
@@ -72,12 +72,11 @@ class Link(object):
 			cls.myLinks= {}
 			return
 		except Exception as e:
-			#Translators: Message displayed when getting an error trying to retreave link data
+			# Translators: Message displayed when getting an error trying to retreave link data
 			gui.messageBox(_("Unable to load links data"), 
-			#Translators: Title of message box
+			# Translators: Title of message box
 			_("Error"), wx.OK|wx.ICON_ERROR)
-			log.info("Error", exc_info=1)
-			return
+			raise e
 
 	@classmethod
 	def getLinkByUrl(cls, url):

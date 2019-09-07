@@ -6,9 +6,9 @@
 import globalPluginHandler 
 import core, ui
 import wx, gui
+import os, sys
 import config
 import globalVars
-import os
 import shutil
 from .libraryDialog import LibraryDialog
 import addonHandler
@@ -16,7 +16,10 @@ addonHandler.initTranslation()
 
 # path of library files for the addon, home user lirectory/linkLibrary-addonFiles.
 homeDirectory= os.path.expanduser('~')
-LIBRARIES_DIR= os.path.abspath(os.path.join(homeDirectory, 'linkLibrary-addonFiles')).decode("mbcs")
+if sys.version_info.major== 3:
+	LIBRARIES_DIR= os.path.abspath(os.path.join(homeDirectory, 'linkLibrary-addonFiles'))
+else:
+	LIBRARIES_DIR= os.path.abspath(os.path.join(homeDirectory, 'linkLibrary-addonFiles')).decode("mbcs")
 
 #initial value when no instance of dialog is opened
 LIBRARYDIALOG= None
@@ -80,10 +83,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	# Translators: message displayed in input help mode for openning  choose library dialog.
 	script_openLibraryDialog.__doc__ = _('Open  Link Library dialog.')
-
-	__gestures = {
-		'KB:NVDA+w':'openLibraryDialog'
-	}
 
 #default configuration of settings dialog
 configspec={
