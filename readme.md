@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Development version 0.4][1]  
+Download [Development version 0.5][1]  
 NVDA compatibility: 2018.3 to 2019.3  
 Python compatibility: Python2 and Python3  
 
@@ -28,10 +28,20 @@ NVDA menu>preferences>inputGestures>Link Library.
 *	For instance to export a library, stand on the library you want to export and press the contact menu, arrow down once to Export library as, choose the type of file you want to be exported, pickle or html and press enter.  
 *	A dialog will open to choose the folder you want to export to, choose folder and press enter or navigate to select folder button and press on it.  
 *	That's it, an information message will be displayed telling you that the library has been exported, congratulations.  
-*	A last and beautiful thing, if you export a library as html, you can if you want include the links in that file in firefox bookmarks.  
+*	Another  beautiful thing, if you export a library as html, you can if you want include the links in that file in firefox bookmarks.  
 *	Just open firefox, from the bookmarks menu choose show all bookmarks control+shift+b.  
 *	In the menu of the new window, go to Import and Backup submenu, then to Import Bookmarks from HTML… and press enter.  
 *	Navigate through the dialog opened to the html file and select it. After that an entry or folder having the same name of the imported library will be found in the firefox bookmarks menu including all links of the imported library in it.  
+*	Lastly mentioned, but may be most important is that you got the ability to choose the data files of your addon.  
+*	First upon installing the addon, a message box will appear asking you if yo agree to create the folder that hosts the data files for the addon in your home user directory.  
+*	you can if you wish, press cancel and choose the directory required to host data files later from the settings dialog of the addon in preferences menu.  
+*	Worth noting that creating the folder to host the data files in the home user directory, helps that all instances of the addon on the computer can share the same files or data base  
+*	and choosing another path like dropbox for example, will give the user the ability to share the same folder or data base with instances of the addon on another computer that uses the same dropbox account.  
+
+### Changes for 0.5 ###
+
+*	Add dialog in the addon settings dialog to let the user add or choose the directory that he wishes to host the data file of the addon.  
+*	So now he can keep on the default path which is the home user directory, or choose from the settings dialog the path he wants.  
 
 ### Changes for 0.4 ###
 
@@ -49,4 +59,4 @@ NVDA menu>preferences>inputGestures>Link Library.
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v0.4-dev/linkLibrary-0.4-dev.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v0.5-dev/linkLibrary-0.5-dev.nvda-addon

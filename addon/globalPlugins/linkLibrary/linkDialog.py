@@ -73,7 +73,8 @@ class OpenWithMenu(wx.Menu):
 
 		#if in windows10, add a menu item for edge browser
 		if winVersion.winVersionText.startswith('10'):
-			edge= wx.MenuItem(self, -1, label= 'Microsoft Edge')
+			edge= wx.MenuItem(self, -1, text= 'Microsoft Edge')
+			self.Append(edge)
 			self.Bind(wx.EVT_MENU, self.onEdge, edge)
 
 		#Add menu items for several browsers found in the registry
@@ -205,12 +206,14 @@ class LinkDialog(wx.Dialog):
 	#to insure that there is only one instance of LinkDialog class is running
 	currentInstance= None
 
-	def __init__(self, parent, filename):
+	def __init__(self, parent, filename, libraries_path):
 		super(LinkDialog, self).__init__(parent, -1, title= filename, 
 		size=(500, 300))
 		self.filename= filename
 		#sending the filename to the Link class
 		Link.filename= filename + ".pickle"
+		#Sending libraries path to the Link class
+		Link.SAVING_DIR= libraries_path
 
 		panel = wx.Panel(self, -1) 
 		# Translators: Label for the list of links.

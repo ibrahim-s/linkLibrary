@@ -13,7 +13,7 @@ import os
 from logHandler import log
 
 #CURRENT_DIR= os.path.dirname(__file__).decode("mbcs")
-SAVING_DIR= os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles')
+#SAVING_DIR= os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles')
 
 class Link(object):
 	#links in a specific library or file
@@ -52,7 +52,7 @@ class Link(object):
 	def save_to_file(cls):
 		'''Saving links in a specific library to file'''
 		try:
-			with open(os.path.join(SAVING_DIR, cls.filename), 'wb') as f:
+			with open(os.path.join(cls.SAVING_DIR, cls.filename), 'wb') as f:
 				pickle.dump(cls.myLinks, f, protocol=2)
 			cls.myLinks= {}
 		except Exception as e:
@@ -65,7 +65,7 @@ class Link(object):
 		if cls.myLinks: 
 			return
 		try:
-			with open(os.path.join(SAVING_DIR, cls.filename), 'rb') as f:
+			with open(os.path.join(cls.SAVING_DIR, cls.filename), 'rb') as f:
 				d= pickle.load(f)
 				cls.myLinks= d
 		except EOFError:
@@ -76,7 +76,7 @@ class Link(object):
 			gui.messageBox(_("Unable to load links data"), 
 			# Translators: Title of message box
 			_("Error"), wx.OK|wx.ICON_ERROR)
-			raise e
+			log.info('Error', exc_info=1)
 
 	@classmethod
 	def getLinkByUrl(cls, url):
