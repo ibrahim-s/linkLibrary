@@ -4,7 +4,7 @@
 #graphical user interface for libraries dialog
 
 import wx, gui, core, os, sys, ui
-import shutil, codecs, config, globalVars
+import api, shutil, codecs, config, globalVars
 from configobj import ConfigObj
 #for compatibility with python3
 try:
@@ -20,12 +20,6 @@ import addonHandler
 addonHandler.initTranslation()
 
 CURRENT_DIR= os.path.dirname(os.path.abspath(__file__))
-#path of ini file to store available paths
-#iniFile= os.path.join(globalVars.appArgs.configPath, "linkLibrary.ini")
-#iniFile= iniFile if sys.version_info.major==3 else iniFile.decode('mbcs')
-#handle of ini file for available paths
-#
-#pathsHandle=ConfigObj(iniFile, encoding="UTF-8")
 
 # path of library files for the addon
 # os.path.expanduser('~') is the home user directory
@@ -321,7 +315,7 @@ class LibraryDialog(wx.Dialog):
 		log.info(name)
 		if not name:
 			return
-		filename= name+'.pickle'
+		filename= api.filterFileName(name)+'.pickle'
 		filepath= os.path.join(self.LIBRARIES_DIR, filename)
 		log.info('filepath to add: %s'%filepath)
 		try:
@@ -346,6 +340,7 @@ class LibraryDialog(wx.Dialog):
 			LibraryDialog.libraryFiles.insert(i, oldName)
 			return
 		else:
+			newname= api.filterFileName(newname)
 			os.rename(os.path.join(self.LIBRARIES_DIR, oldName+'.pickle'), os.path.join(self.LIBRARIES_DIR, newname+'.pickle'))
 			#log.info(LibraryDialog.libraryFiles)
 			LibraryDialog.libraryFiles.append(newname)

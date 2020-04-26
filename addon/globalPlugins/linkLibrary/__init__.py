@@ -151,7 +151,7 @@ class LinkDialogSettings(gui.SettingsDialog):
 		self.removePathBtn= settingsSizerHelper.addItem( wx.Button(self, -1, label= _("Remove Selected Path")))
 		self.removePathBtn.Bind(wx.EVT_BUTTON, self.onRemovePath)
 		# Translators: label of the check box 
-		self.closeDialogCheckBox=settingsSizerHelper.addItem(wx.CheckBox(self,label=_("&Close Link Dialog after activating a link")))
+		self.closeDialogCheckBox=settingsSizerHelper.addItem(wx.CheckBox(self,label=_("&Close dialog after activating a link")))
 		self.closeDialogCheckBox.SetValue(config.conf["linkLibrary"]["closeDialogAfterActivatingALink"])
 		#self.closeDialogCheckBox.SetValue(self.configHandle.as_bool("closeDialogAfterActivatingALink"))
 
