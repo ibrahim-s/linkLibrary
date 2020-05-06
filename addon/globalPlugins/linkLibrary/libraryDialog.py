@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
-#libraryDialog.py
+# libraryDialog.py
 # Copyright 2019 ibrahim hamadeh, released under GPLv2.0
-#graphical user interface for libraries dialog
+# graphical user interface for libraries dialog
 
 import wx, gui, core, os, sys, ui
 import api, shutil, codecs, config, globalVars
+import json
 from configobj import ConfigObj
+'''
 #for compatibility with python3
 try:
 	import cPickle as pickle
 except ImportError:
 	import pickle
-
+'''
 from logHandler import log
 from .links import Link
 from .linkDialog import LinkDialog
@@ -20,11 +22,6 @@ import addonHandler
 addonHandler.initTranslation()
 
 CURRENT_DIR= os.path.dirname(os.path.abspath(__file__))
-
-# path of library files for the addon
-# os.path.expanduser('~') is the home user directory
-#LIBRARIES_DIR= os.path.abspath(os.path.join(pathsHandle["availablePaths"][config.conf["linkLibrary"]["chosenDataPath"]], 'linkLibrary-addonFiles'))
-#LIBRARIES_DIR= LIBRARIES_DIR if sys.version_info.major== 3 else LIBRARIES_DIR.decode('mbcs')
 
 def addLibrary(message, caption, oldName=None):
 	''' Entering the name of new library, or renaming existing one by passing a value to oldName in this function.'''
@@ -128,8 +125,7 @@ class LibraryPopupMenu(wx.Menu):
 		if path_chosen:
 			library_name= self.parent.FindWindowById(self.objectId).GetStringSelection()
 			try:
-				#shutil.copy(os.path.join(LIBRARIES_DIR, library_name+'.pickle'), os.path.join(path_chosen, library_name+'.pickle'))
-				shutil.copy(os.path.join(self.LIBRARIES_DIR, library_name+'.pickle'), path_chosen)
+				shutil.copy(os.path.join(self.LIBRARIES_DIR, library_name+'.json'), path_chosen)
 			except Exception as e:
 				wx.CallAfter(gui.messageBox,
 				# Translators: message of error dialog displayed when cannot export library file.
@@ -149,10 +145,10 @@ class LibraryPopupMenu(wx.Menu):
 
 	def onExportHtml(self, evt):
 		library_name= self.parent.FindWindowById(self.objectId).GetStringSelection()
-		path= os.path.join(self.LIBRARIES_DIR, library_name+'.pickle')
+		path= os.path.join(self.LIBRARIES_DIR, library_name+'.json')
 		try:
-			with open(path, 'rb') as f:
-				d= pickle.load(f)
+			with open(path, 'r') as f:
+				d= json.load(f)
 		## if the library file is empty return False
 		#if not d: return False
 		except EOFError:
@@ -193,9 +189,9 @@ class LibraryPopupMenu(wx.Menu):
 		dlg.Destroy()
 
 	def onImport(self, evt):
-		''' Importing a new pickle library file to the link library file directory'''
+		''' Importing a new json library file to the link library file directory'''
 		dlg= wx.FileDialog(self.parent, "Choose File", "", "", 
-		"Pickle Files (*.pickle)|*.pickle", 
+		"Json Files (*.json)|*.json", 
 		wx.FD_FILE_MUST_EXIST)
 
 		if dlg.ShowModal()== wx.ID_OK:
@@ -232,7 +228,6 @@ class LibraryPopupMenu(wx.Menu):
 class LibraryDialog(wx.Dialog):
 	def __init__(self, parent, path):
 		super(LibraryDialog, self).__init__(parent, title= _('Link Library'))
-		#self.LIBRARIES_DIR= path
 		self.LIBRARIES_DIR= os.path.join(path, 'linkLibrary-addonFiles')
 		self.createDirectoryIfNotExist()
 
@@ -275,20 +270,19 @@ class LibraryDialog(wx.Dialog):
 		self.postInit()
 
 	def createDirectoryIfNotExist(self):
-		#path= os.path.join(self.LIBRARIES_DIR, "linkLibrary-addonFiles")
 		path= self.LIBRARIES_DIR
+		#path is the full path, with the base folder of the directory.
 		if os.path.isdir(path):
 			return
 		try:
 			os.mkdir(path)
-			#create one file in the directory named general.pickle
-			open(os.path.join(path, "general.pickle"), 'w').close()
+			#create one file in the directory named general.json
+			with open(os.path.join(path, "general.json"), 'w') as f:
+				f.write("{}")
 		except:
 			log.info("Failed to create directory", exc_info=1)
 
 	def postInit(self):
-		#foundFiles= os.listdir(os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles'))
-		#foundFiles= os.listdir(os.path.join(self.LIBRARIES_DIR, 'linkLibrary-addonFiles'))
 		foundFiles= os.listdir(self.LIBRARIES_DIR)
 		if sys.version_info.major== 3:
 			libraryFiles= sorted([os.path.splitext(f)[0] for f in foundFiles])
@@ -315,11 +309,12 @@ class LibraryDialog(wx.Dialog):
 		log.info(name)
 		if not name:
 			return
-		filename= api.filterFileName(name)+'.pickle'
+		filename= api.filterFileName(name)+'.json'
 		filepath= os.path.join(self.LIBRARIES_DIR, filename)
 		log.info('filepath to add: %s'%filepath)
 		try:
-			open(filepath, 'w').close()
+			with open(filepath, 'w') as f:
+				f.write("{}")
 		except Exception as e:
 			raise e
 		LibraryDialog.libraryFiles.append(name)
@@ -341,7 +336,7 @@ class LibraryDialog(wx.Dialog):
 			return
 		else:
 			newname= api.filterFileName(newname)
-			os.rename(os.path.join(self.LIBRARIES_DIR, oldName+'.pickle'), os.path.join(self.LIBRARIES_DIR, newname+'.pickle'))
+			os.rename(os.path.join(self.LIBRARIES_DIR, oldName+'.json'), os.path.join(self.LIBRARIES_DIR, newname+'.json'))
 			#log.info(LibraryDialog.libraryFiles)
 			LibraryDialog.libraryFiles.append(newname)
 			LibraryDialog.libraryFiles.sort()
@@ -357,9 +352,7 @@ class LibraryDialog(wx.Dialog):
 		#_('Warning'), wx.NO|wx.YES)== wx.NO:
 		_('Warning'), wx.ICON_QUESTION | wx.YES_NO)== wx.NO:
 			return
-		#path= os.path.abspath(os.path.join(CURRENT_DIR, '..', '..', toRemove+'.pickle')).decode("mbcs")
-		#os.remove(path)
-		os.remove(os.path.join(self.LIBRARIES_DIR, toRemove+'.pickle'))
+		os.remove(os.path.join(self.LIBRARIES_DIR, toRemove+'.json'))
 		LibraryDialog.libraryFiles.remove(toRemove)
 		sel= i if len(LibraryDialog.libraryFiles)>= i+2 else i-1
 		self.refreshLibraries(i= sel)

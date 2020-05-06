@@ -1,4 +1,4 @@
-#installTasks.py
+# installTasks.py
 # Copyright 2019-2020 Ibrahim Hamadeh , released under GPL2.0
 # required to establish the addon data directory on install, and if previous versions found preserve ini file for available paths.
 
@@ -6,10 +6,10 @@ import os
 import wx
 import gui
 import shutil
-from logHandler import log
 
 def onInstall():
 	# Retreaving path.ini file from previous installation if exists.
+	# path.ini file, contains the available paths that the user has added previously
 	src= os.path.join(os.path.dirname(__file__), '..', 'linkLibrary', 'availablePaths')
 	dest= os.path.join(os.path.dirname(__file__), 'availablePaths')
 	if os.path.exists(src):
@@ -21,6 +21,7 @@ def onInstall():
 
 	# Option to create folder to store addon's library files, if the user is installing the addon for the first time.
 	userPath= os.path.expanduser('~')
+	#The default path for data files, in the home user directory
 	addon_data_path= os.path.join(userPath, "linkLibrary-addonFiles")
 	if not os.path.exists(addon_data_path):
 		# Translators: message asking the user if he wants to decline creating the data folder in the home user directory.
@@ -33,7 +34,8 @@ def onInstall():
 			return
 		try:
 			os.mkdir(addon_data_path)
-			#create one file in the directory named general.pickle
-			open(os.path.join(addon_data_path, "general.pickle"), 'w').close()
+			#create one file in the directory named general.json
+			with open(os.path.join(addon_data_path, "general.json"), 'w') as f:
+				f.write("{}")
 		except Exception as e:
 			raise e

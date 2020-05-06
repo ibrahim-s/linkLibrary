@@ -1,19 +1,18 @@
+# -*- coding: UTF-8 -*-
 #links.py
 # Copyright 2019 ibrahim hamadeh, released under GPLv2.0
 #This module is aimed to construct link object, retreave links from file, save links to file and use other helpful functions.
 
 #for compatibility with python3
-try:
-	import cPickle as pickle
-except ImportError:
-	import pickle
+#try:
+	#import cPickle as pickle
+#except ImportError:
+	#import pickle
 
 import wx, gui
 import os
+import json
 from logHandler import log
-
-#CURRENT_DIR= os.path.dirname(__file__).decode("mbcs")
-#SAVING_DIR= os.path.join(os.path.expanduser('~'), 'linkLibrary-addonFiles')
 
 class Link(object):
 	#links in a specific library or file
@@ -52,11 +51,12 @@ class Link(object):
 	def save_to_file(cls):
 		'''Saving links in a specific library to file'''
 		try:
-			with open(os.path.join(cls.SAVING_DIR, cls.filename), 'wb') as f:
-				pickle.dump(cls.myLinks, f, protocol=2)
+			with open(os.path.join(cls.SAVING_DIR, cls.filename), 'w', encoding= 'utf-8') as f:
+				json.dump(cls.myLinks, f, ensure_ascii= False, indent= 4)
 			cls.myLinks= {}
 		except Exception as e:
-			log.info("Error saving links to file",exc_info=1)
+#			log.info("Error saving links to file",exc_info=1)
+			raise e
 			return
 
 	@classmethod
@@ -65,18 +65,18 @@ class Link(object):
 		if cls.myLinks: 
 			return
 		try:
-			with open(os.path.join(cls.SAVING_DIR, cls.filename), 'rb') as f:
-				d= pickle.load(f)
+			with open(os.path.join(cls.SAVING_DIR, cls.filename), encoding= 'utf-8') as f:
+				d= json.load(f)
 				cls.myLinks= d
-		except EOFError:
-			cls.myLinks= {}
-			return
+		#except EOFError:
+			#cls.myLinks= {}
+			#return
 		except Exception as e:
 			# Translators: Message displayed when getting an error trying to retreave link data
 			gui.messageBox(_("Unable to load links data"), 
 			# Translators: Title of message box
 			_("Error"), wx.OK|wx.ICON_ERROR)
-			log.info('Error', exc_info=1)
+			raise e
 
 	@classmethod
 	def getLinkByUrl(cls, url):

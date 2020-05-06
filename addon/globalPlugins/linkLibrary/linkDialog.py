@@ -211,7 +211,7 @@ class LinkDialog(wx.Dialog):
 		size=(500, 300))
 		self.filename= filename
 		#sending the filename to the Link class
-		Link.filename= filename + ".pickle"
+		Link.filename= filename + ".json"
 		#Sending libraries path to the Link class
 		Link.SAVING_DIR= libraries_path
 
@@ -272,12 +272,23 @@ class LinkDialog(wx.Dialog):
 	def populateListBox(self, selected= None):
 		log.info('under populateListBox')
 		Link.retreave_from_file()
+		log.info(Link.myLinks)
 		if not Link.myLinks:
 			#LinkDialog.link_keys= []
 			lst= []
 			#self.listBox.Set(lst)
 		else:
-			lst = sorted([Link.myLinks[url]['label'] for url in Link.myLinks])
+			try:
+				lst = sorted([Link.myLinks[url]['label'] for url in Link.myLinks])
+			except Exception as e:
+				# Translators: Message displayed when getting an error trying to retreave links data
+				gui.messageBox(_("Unable to load links data"), 
+				# Translators: Title of message box
+				_("Error"), wx.OK|wx.ICON_ERROR)
+				#log.info('Error', exc_info=1)
+				Link.myLinks= {}
+				raise e
+
 		self.Hide()
 		self.link_labels= lst
 		self.listBox.Set(lst)

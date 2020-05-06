@@ -349,9 +349,9 @@ class ImportDialog(wx.Dialog):
 		self.Destroy()
 
 	def importFolder(self, source_directory):
-		if not os.path.basename(source_directory)== "linkLibrary-addonFiles" or not any(os.path.splitext(_file)[-1]== '.pickle' for _file in os.listdir(source_directory)):
-			# Translators: message displayed when folder to be imported not named linkLibrary-addonFiles, or all files in it has not .pickle extension
-			gui.messageBox(_("Check that the folder name is linkLibrary-addonFiles, and all files in it has a .pickle extension."),
+		if not os.path.basename(source_directory)== "linkLibrary-addonFiles" or not any(os.path.splitext(_file)[-1]== '.json' for _file in os.listdir(source_directory)):
+			# Translators: message displayed when folder to be imported not named linkLibrary-addonFiles, or all files in it has not .json extension
+			gui.messageBox(_("Check that the folder name is linkLibrary-addonFiles, and all files in it has a .json extension."),
 			_("Error"), wx.OK|wx.ICON_ERROR)
 			return
 		# Translators: message to warn the user that the old library folder will be removed.
