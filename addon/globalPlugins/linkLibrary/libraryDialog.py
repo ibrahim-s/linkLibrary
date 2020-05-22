@@ -298,7 +298,10 @@ class LibraryDialog(wx.Dialog):
 		log.info('under right down handler') 
 		obj= e.GetEventObject()
 		id= obj.GetId()
-		self.PopupMenu(LibraryPopupMenu(self, self.LIBRARIES_DIR, id), e.GetPosition())
+		menu= LibraryPopupMenu(self, self.LIBRARIES_DIR, id)
+		self.PopupMenu(menu, e.GetPosition())
+		menu.Destroy()
+		log.info('destroying pop up menu')
 
 	def onAdd(self, evt):
 		# Translators: Message displayed when adding a new library.

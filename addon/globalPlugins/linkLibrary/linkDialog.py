@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-#linkDialog.py
+# linkDialog.py
 # Copyright 2019 ibrahim hamadeh, released under GPLv2.0
-#graphical user interface for link dialog
+# Graphical user interface for link dialog
 
 import wx, gui
 import webbrowser, os
@@ -64,18 +64,14 @@ def getLinkAbout(message, caption, link= None):
 	return result
 
 class OpenWithMenu(wx.Menu):
-	''' The menu that pops up when pressing openlink with button.'''
+	''' The menu that pops up when pressing openlink with button
+	items of this menu are the labels of the browsers found on computer.
+	'''
 	def __init__(self, parentDialog, link):
 		super(OpenWithMenu, self).__init__()
 
 		self.link= link
 		self.parentDialog= parentDialog
-
-		#if in windows10, add a menu item for edge browser
-		if winVersion.winVersionText.startswith('10'):
-			edge= wx.MenuItem(self, -1, text= 'Microsoft Edge')
-			self.Append(edge)
-			self.Bind(wx.EVT_MENU, self.onEdge, edge)
 
 		#Add menu items for several browsers found in the registry
 		#browsersFound is a list of tuples, each tuple consists of the browser name and it's executable path.
@@ -84,11 +80,19 @@ class OpenWithMenu(wx.Menu):
 			self.Append(item)
 			self.Bind(wx.EVT_MENU, lambda evt , args=executable_path : self.onOpen(evt, args), item)
 
+		#if in windows10, add a menu item for edge browser
+		if winVersion.winVersionText.startswith('10'):
+			edge= wx.MenuItem(self, -1, text= 'Edge Legacy')
+			self.Append(edge)
+			self.Bind(wx.EVT_MENU, self.onEdge, edge)
+
 	def onOpen(self, evt, executable_path):
 		url= self.link.url
 		if url:
 			subprocess.Popen(executable_path+' '+url)
 			self.parentDialog.checkCloseAfterActivatingALink()
+			#wx.CallAfter(self.parentDialog.checkCloseAfterActivatingALink)
+			#self.Destroy()
 
 	def onEdge(self, evt):
 		url= self.link.url
@@ -96,6 +100,8 @@ class OpenWithMenu(wx.Menu):
 			url= 'http://'+url if url.startswith('www') else url
 			os.startfile("microsoft-edge:{i}".format(i=url)) 
 			self.parentDialog.checkCloseAfterActivatingALink()
+			#wx.CallAfter(self.parentDialog.checkCloseAfterActivatingALink)
+			#self.Destroy()
 
 #the popup menu class
 class MyPopupMenu(wx.Menu):
@@ -105,7 +111,6 @@ class MyPopupMenu(wx.Menu):
         
 		self.parent = parent
 		self.eventObjectId= eventObjectId
-
 
 		#Add A Link menu
 		add= wx.MenuItem(self, -1, 
@@ -186,8 +191,8 @@ class MyPopupMenu(wx.Menu):
 				#self.parent.populateListBox(selected= self.parent.link_labels[index])
 				self.parent.populateListBox()
 				listBox.SetSelection(index)
-			else: self.parent.populateListBox()
-			#self.parent.populateListBox()
+			else:
+				self.parent.populateListBox()
 
 	def onRemoveAll(self, evt):
 		if gui.messageBox(
@@ -199,7 +204,7 @@ class MyPopupMenu(wx.Menu):
 			return
 		Link.remove_allLinks()
 		self.parent.populateListBox()
-		self.Destroy()
+		#self.Destroy()
 		#self.parent.focusAndSelect()
 
 class LinkDialog(wx.Dialog):
@@ -311,10 +316,13 @@ class LinkDialog(wx.Dialog):
 		self.Show()
 
 	def OnRightDown(self, e):
-#		print 'hi'
 		obj= e.GetEventObject()
 		id= obj.GetId()
-		self.PopupMenu(MyPopupMenu(self, id), e.GetPosition())
+		#self.PopupMenu(MyPopupMenu(self, id), e.GetPosition())
+		menu= MyPopupMenu(self, id)
+		self.PopupMenu(menu, e.GetPosition())
+		menu.Destroy()
+		log.info('destroying context menu')
 
 	def onKillFocus(self, evt):
 		log.info('under kill focus event')
@@ -386,7 +394,11 @@ class LinkDialog(wx.Dialog):
 		if link:
 			btn = evt.GetEventObject()
 			pos = btn.ClientToScreen( (0,0) )
-			self.PopupMenu(OpenWithMenu(self, link), pos)
+			#self.PopupMenu(OpenWithMenu(self, link), pos)
+			menu= OpenWithMenu(self, link)
+			self.PopupMenu(menu, pos)
+			menu.Destroy()
+			log.info('destroying openWith popup menu')
 
 	def checkCloseAfterActivatingALink(self):
 		if  config.conf["linkLibrary"]["closeDialogAfterActivatingALink"]:
