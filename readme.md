@@ -1,8 +1,8 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Development version 0.5][1]  
-NVDA compatibility: 2018.3 to 2019.3  
+Download [Development version 0.8][1]  
+NVDA compatibility: 2018.3 to 2020.1  
 Python compatibility: Python2 and Python3  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -59,4 +59,4 @@ NVDA menu>preferences>inputGestures>Link Library.
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v0.5-dev/linkLibrary-0.5-dev.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v0.8-dev/linkLibrary-0.8-dev.nvda-addon
