@@ -28,7 +28,6 @@ configspec={
 config.conf.spec["linkLibrary"]= configspec
 
 #path of ini file to store available paths
-#iniFile= os.path.join(globalVars.appArgs.configPath, "linkLibrary.ini")
 iniFile= os.path.join(globalVars.appArgs.configPath, "addons", "linkLibrary", "availablePaths", "paths.ini")
 iniFile= iniFile if sys.version_info.major==3 else iniFile.decode('mbcs')
 
@@ -66,6 +65,7 @@ def getChosenDataPath():
 		chosenPath= chosenPath if sys.version_info.major== 3 else chosenPath.decode('mbcs')
 		return chosenPath
 #log.info(getChosenDataPath())
+
 #initial value when no instance of dialog is opened
 LIBRARYDIALOG= None
 

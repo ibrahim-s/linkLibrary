@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # linkDialog.py
 # Copyright 2019 ibrahim hamadeh, released under GPLv2.0
+# See the file COPYING for more details.
 # Graphical user interface for link dialog
 
 import wx, gui

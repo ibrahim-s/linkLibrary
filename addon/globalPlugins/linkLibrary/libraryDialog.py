@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
 # libraryDialog.py
 # Copyright 2019 ibrahim hamadeh, released under GPLv2.0
+# See the file COPYING for more details.
 # graphical user interface for libraries dialog
 
 import wx, gui, core, os, sys, ui
 import api, shutil, codecs, config, globalVars
 import json
 from configobj import ConfigObj
-'''
-#for compatibility with python3
-try:
-	import cPickle as pickle
-except ImportError:
-	import pickle
-'''
 from logHandler import log
 from .links import Link
 from .linkDialog import LinkDialog
@@ -39,7 +33,8 @@ def addLibrary(message, caption, oldName=None):
 	return name
 
 def makeHtmlFile(libraryName, libraryData, newpath):
-	''' Make Html file out of pickle library file.'''
+	''' Make Html file out of json library file.
+	'''
 	with codecs.open(newpath, 'wb', encoding= 'utf-8') as html:
 		html.write(u"""<!DOCTYPE html><html lang="en"><head>
 			<meta charset="UTF-8">
@@ -58,9 +53,8 @@ def makeHtmlFile(libraryName, libraryData, newpath):
 def validateLibraryFile(filePath):
 	''' checking if the library file to be imported is valid. if it is not it returns False'''
 	try:
-		with open(filePath, 'rb') as f:
-#		try:
-			d= pickle.load(f)
+		with open(filePath, encoding= 'utf-8') as f:
+			d= json.load(f)
 	except Exception as e:
 		#gui.messageBox()
 		#raise e
@@ -90,26 +84,26 @@ class LibraryPopupMenu(wx.Menu):
 
 #add a subMenu for exporting a library
 		subMenu= wx.Menu()
-		self.exportPickle = subMenu.Append(wx.ID_ANY, 
-		# Translators: label of menu to export library as pickle file
-		_('Pickle File'))
+		self.exportJson = subMenu.Append(wx.ID_ANY, 
+		# Translators: label of menu to export library as json file
+		_('Json File'))
 		self.exportHtml = subMenu.Append(wx.ID_ANY, 
 		# Translators: label of menu to export library as html.
 		_('Html File'))
 		self.AppendSubMenu(subMenu, 
 		# Translators: label obj subMenu items for exporting a library.
 		_('Export Library As'))
-		self.Bind(wx.EVT_MENU, self.onExportPickle, self.exportPickle)
+		self.Bind(wx.EVT_MENU, self.onExportJson, self.exportJson)
 		self.Bind(wx.EVT_MENU, self.onExportHtml, self.exportHtml)
 
 		#Add Import Library menu.
 		importLibrary= wx.MenuItem(self, wx.ID_ANY, 
 		# Translators: label obj menu items to import a library.
-		_('Import Library(as pickle)'))
+		_('Import Library(as Json)'))
 		self.Append(importLibrary)
 		self.Bind(wx.EVT_MENU, self.onImport, importLibrary)
 
-	def onExportPickle(self, evt):
+	def onExportJson(self, evt):
 		#if self.parent.GetObjectById(objectId).GetSelection()== -1:
 			#return
 		dlg = wx.DirDialog(self.parent, "Choose a directory:",
@@ -200,7 +194,7 @@ class LibraryPopupMenu(wx.Menu):
 		dlg.Destroy()
 		if file_path:
 			if not validateLibraryFile(file_path):
-			#validation of the pickle file did not succeed
+			#validation of the json file did not succeed
 			# Translators: Message to be displayed when import fails due to validation problem
 				gui.messageBox(_('Importfailed; chosen file is empty or not valid.'),
 				# Translators: Title of message box
@@ -227,7 +221,11 @@ class LibraryPopupMenu(wx.Menu):
 
 class LibraryDialog(wx.Dialog):
 	def __init__(self, parent, path):
-		super(LibraryDialog, self).__init__(parent, title= _('Link Library'))
+		pathLabel= config.conf["linkLibrary"]["chosenDataPath"]
+		# Translators: Title of dialog with the path label as suffix.
+		title= _("Link Library - {}").format(pathLabel)
+		super(LibraryDialog, self).__init__(parent, title= title)
+		#super(LibraryDialog, self).__init__(parent, title= _('Link Library'))
 		self.LIBRARIES_DIR= os.path.join(path, 'linkLibrary-addonFiles')
 		self.createDirectoryIfNotExist()
 

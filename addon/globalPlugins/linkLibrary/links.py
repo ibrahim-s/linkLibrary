@@ -1,13 +1,8 @@
 # -*- coding: UTF-8 -*-
 #links.py
 # Copyright 2019 ibrahim hamadeh, released under GPLv2.0
+# See the file COPYING for more details
 #This module is aimed to construct link object, retreave links from file, save links to file and use other helpful functions.
-
-#for compatibility with python3
-#try:
-	#import cPickle as pickle
-#except ImportError:
-	#import pickle
 
 import wx, gui
 import os
