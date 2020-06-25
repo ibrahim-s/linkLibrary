@@ -1,7 +1,7 @@
 #getbrowsers.py
 # Copyright 2019 ibrahim hamadeh, released under GPLv2.0.
 # See the file COPYING for more details.
-#This module is aimed to get several browsers if found in the registry and their path
+#This module is aimed to get several browsers if found in the registry and their path.
 
 import os
 import sys

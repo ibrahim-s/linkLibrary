@@ -92,8 +92,6 @@ class OpenWithMenu(wx.Menu):
 		if url:
 			subprocess.Popen(executable_path+' '+url)
 			self.parentDialog.checkCloseAfterActivatingALink()
-			#wx.CallAfter(self.parentDialog.checkCloseAfterActivatingALink)
-			#self.Destroy()
 
 	def onEdge(self, evt):
 		url= self.link.url
@@ -101,8 +99,6 @@ class OpenWithMenu(wx.Menu):
 			url= 'http://'+url if url.startswith('www') else url
 			os.startfile("microsoft-edge:{i}".format(i=url)) 
 			self.parentDialog.checkCloseAfterActivatingALink()
-			#wx.CallAfter(self.parentDialog.checkCloseAfterActivatingALink)
-			#self.Destroy()
 
 #the popup menu class
 class MyPopupMenu(wx.Menu):
@@ -142,22 +138,27 @@ class MyPopupMenu(wx.Menu):
 		self.Bind(wx.EVT_MENU, self.onRemoveAll, removeAll)
 
 	def onAdd(self, evt= None, link= None):
-		#getting the url of the link
-		url= getLinkUrl('Enter Link source(www...)', 'Url:', link)
-		log.info('url: %s'%url)
+		# Translators: getting the url of the link
+		url= getLinkUrl(_("Enter Link source(www...)"),
+		# Translators: title of dialog.
+		_("Url:"), link)
+		#log.info('url: %s'%url)
 		if not url: return
 
-		# getting the label of the link.
-		label=getLinkLabel('Enter Link Label Please', 'Link Label', link)
-		log.info('label: %s'%label)
+		# Translators: getting the label of the link.
+		label=getLinkLabel(_("Enter Link Label Please"),
+		# Translators: title of dialog.
+		_("Link Label"), link)
+		#log.info('label: %s'%label)
 		if not label: return
 
-		#getting the about of the link
-		about= getLinkAbout("Write Something About The Link", "About", link)
+		# Translators: getting the about of the link
+		about= getLinkAbout(_("Write Something About The Link"),
+		# Translators: title of dialog.
+		_("About"), link)
 
 		Link.add_link(url, label, about)
 		self.parent.populateListBox(selected= label)
-		#self.parent.focusAndSelect(selected= label)
 		return True
 
 	def onEdit(self, evt):
@@ -189,13 +190,16 @@ class MyPopupMenu(wx.Menu):
 			# index of the link to be selected and focused on
 			index= i if len(self.parent.link_labels)>= i+2 else i-1
 			if index >=0:
-				#self.parent.populateListBox(selected= self.parent.link_labels[index])
 				self.parent.populateListBox()
 				listBox.SetSelection(index)
 			else:
 				self.parent.populateListBox()
 
 	def onRemoveAll(self, evt):
+		listBox= self.parent.FindWindowById(self.eventObjectId)
+		i= listBox.GetSelection()
+		if i== -1:
+			return
 		if gui.messageBox(
 		# Translators: Message displayed when trying to remove all links.
 		_('Are you sure you want to remove all links from this library?, this can not be undone.'),
@@ -205,8 +209,6 @@ class MyPopupMenu(wx.Menu):
 			return
 		Link.remove_allLinks()
 		self.parent.populateListBox()
-		#self.Destroy()
-		#self.parent.focusAndSelect()
 
 class LinkDialog(wx.Dialog):
 	#to insure that there is only one instance of LinkDialog class is running
@@ -229,8 +231,6 @@ class LinkDialog(wx.Dialog):
 		# Translators: Label of about the link text control.
 		aboutLabel = wx.StaticText(panel, -1, _("About The Link"))
 		self.aboutText = wx.TextCtrl(panel, -1,
-			   "Here is a looooooooooooooong line of text set in the control.\n\n"
-			   "See that it wrapped, and that this line is after a blank",
 			   size=(200, 100), style=wx.TE_MULTILINE|wx.TE_READONLY)
 
 		self.showOrHideUrlButton= wx.Button(panel, -1,
@@ -241,7 +241,6 @@ class LinkDialog(wx.Dialog):
 		urlLabel = wx.StaticText(panel, -1, _("Url:"))
 		self.urlText = wx.TextCtrl(panel, -1, "", 
 		size=(175, -1), style= wx.TE_MULTILINE|wx.TE_READONLY|wx.TE_NO_VSCROLL|wx.TE_PROCESS_ENTER)
-		#self.urlText.SetSelection(0, -1)
 
 		# Translators: Label of open link with button.
 		self.openLinkWithButton= wx.Button(panel, -1, label= _("Open Link With"))
@@ -255,12 +254,9 @@ class LinkDialog(wx.Dialog):
 		panel.SetSizer(sizer)
 
 		#make bindings
-		#self.listBox.Bind(wx.EVT_KEY_UP, self.onOpenWithDefault)
-		#self.Bind(wx.EVT_LISTBOX_DCLICK, self.onOpenWithDefault, self.listBox)
 		self.listBox.Bind(wx.EVT_LISTBOX, self.onKillFocus)
 		self.listBox.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
 		self.listBox.Bind(wx.EVT_KILL_FOCUS, self.onKillFocus)
-		#self.listBox.Bind(wx.EVT_SET_FOCUS, self.onKillFocus)
 		self.Bind(wx.EVT_BUTTON, self.onShowOrHideUrl, self.showOrHideUrlButton)
 		self.urlText.Bind(wx.EVT_TEXT_ENTER, self.onOpenWithDefault)
 		self.Bind(wx.EVT_BUTTON, self.onOpenLinkWith, self.openLinkWithButton)
@@ -276,13 +272,11 @@ class LinkDialog(wx.Dialog):
 		self.Show()
 
 	def populateListBox(self, selected= None):
-		log.info('under populateListBox')
+		#log.info('under populateListBox')
 		Link.retreave_from_file()
-		log.info(Link.myLinks)
+		#log.info(Link.myLinks)
 		if not Link.myLinks:
-			#LinkDialog.link_keys= []
 			lst= []
-			#self.listBox.Set(lst)
 		else:
 			try:
 				lst = sorted([Link.myLinks[url]['label'] for url in Link.myLinks])
@@ -291,7 +285,6 @@ class LinkDialog(wx.Dialog):
 				gui.messageBox(_("Unable to load links data"), 
 				# Translators: Title of message box
 				_("Error"), wx.OK|wx.ICON_ERROR)
-				#log.info('Error', exc_info=1)
 				Link.myLinks= {}
 				raise e
 
@@ -319,31 +312,21 @@ class LinkDialog(wx.Dialog):
 	def OnRightDown(self, e):
 		obj= e.GetEventObject()
 		id= obj.GetId()
-		#self.PopupMenu(MyPopupMenu(self, id), e.GetPosition())
 		menu= MyPopupMenu(self, id)
 		self.PopupMenu(menu, e.GetPosition())
 		menu.Destroy()
-		log.info('destroying context menu')
+		#log.info('destroying context menu')
 
 	def onKillFocus(self, evt):
-		log.info('under kill focus event')
+		#log.info('under kill focus event')
 		i= self.listBox.GetSelection()
 		if i!= -1:
-#		if i== -1:
-			#self.aboutText.Disable()
-			#self.showOrHideUrlButton.Hide()
-			#self.showOrHideUrlButton.Disable()
-			#self.urlText.Hide()
-			#self.openLinkWithButton.Hide()
-			#return
-		#else:
 			link= Link.getLinkByLabel(self.link_labels[i])
 			if link:
 				self.showOrHideAboutControl(link.about)
 				if self.showOrHideUrlButton.GetLabel()== "Hide Source Url":
 					self.showOrHideUrlButton.SetLabel("Show Source Url")
 				self.showOrHideUrlButton.Show()
-				#self.showOrHideUrlButton.Enable()
 				self.urlText.Hide()
 				self.openLinkWithButton.Show()
 		evt.Skip()
@@ -360,22 +343,19 @@ class LinkDialog(wx.Dialog):
 		else:
 			self.urlText.Hide()
 			self.showOrHideUrlButton.SetLabel("Show Source Url")
-			
 
 	def showOrHideAboutControl(self, value):
 		if value: # The about text control has some information about the link.
 			self.aboutText.SetValue(value)
 			self.aboutText.SetSelection(0, -1)
 			self.aboutText.Enable()
-			log.info('about is shown')
+			#log.info('about is shown')
 		else : 
 			self.aboutText.Disable()
-			log.info('about is hiddin')
+			#log.info('about is hiddin')
 
 	def onOpenWithDefault(self, evt):
-		log.info('under onOpenWithDefault handler')
-		#key_code = evt.GetKeyCode()
-		#if key_code== wx.WXK_RETURN:
+		#log.info('under onOpenWithDefault handler')
 		i= self.listBox.GetSelection()
 		if i!= -1:
 			try:
@@ -383,23 +363,20 @@ class LinkDialog(wx.Dialog):
 			except KeyError:
 				pass
 			else:
-				#if link.url:
-				#webbrowser.open(link.url)
 				queueHandler.queueFunction(queueHandler.eventQueue, webbrowser.open, link.url)
 				self.checkCloseAfterActivatingALink()
 
 	def onOpenLinkWith(self, evt):
-		log.info('under onOpenLinkWith handler')
+		#log.info('under onOpenLinkWith handler')
 		i= self.listBox.GetSelection()
 		link= Link.getLinkByLabel(self.link_labels[i])
 		if link:
 			btn = evt.GetEventObject()
 			pos = btn.ClientToScreen( (0,0) )
-			#self.PopupMenu(OpenWithMenu(self, link), pos)
 			menu= OpenWithMenu(self, link)
 			self.PopupMenu(menu, pos)
 			menu.Destroy()
-			log.info('destroying openWith popup menu')
+			#log.info('destroying openWith popup menu')
 
 	def checkCloseAfterActivatingALink(self):
 		if  config.conf["linkLibrary"]["closeDialogAfterActivatingALink"]:
@@ -408,7 +385,7 @@ class LinkDialog(wx.Dialog):
 			wx.CallLater(4000, self.Destroy)
 
 	def onClose(self, evt):
-		log.info('under onClose') 
+		#log.info('under onClose') 
 		if Link.myLinks:
 			Link.save_to_file()
 		self.Destroy()

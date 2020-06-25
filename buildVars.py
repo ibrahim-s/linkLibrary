@@ -24,7 +24,7 @@ This addon does not come with a default or assigned gesture or shortcut to it
 You can as always add a gesture or change the existed one going to :
 NVDA menu>preferences>inputGestures>Link Library."""),
 	# version
-	"addon_version" : "0.9-dev",
+	"addon_version" : "1.0-dev",
 	# Author(s)
 	"addon_author" : u"ibrahim hamadeh<ibra.hamadeh@hotmail.com>",
 	# URL for the add-on documentation support
@@ -34,7 +34,7 @@ NVDA menu>preferences>inputGestures>Link Library."""),
 	# Minimum NVDA version supported (e.g. "2018.3.0")
 	"addon_minimumNVDAVersion" : "2018.3.0",
 	# Last NVDA version supported/tested (e.g. "2018.4.0", ideally more recent than minimum version)
-	"addon_lastTestedNVDAVersion" : "2020.2.0",
+	"addon_lastTestedNVDAVersion" : "2020.4.0",
 	# Add-on update channel (default is stable or None)
 	"addon_updateChannel" : None,
 }

@@ -40,6 +40,7 @@ def createIniFileForAvailablePaths(iniFile):
 	configHandle["availablePaths"]= {}
 	configHandle["availablePaths"]["Home user directory"]= homeDirectory
 	configHandle.write()
+
 #create ini file for the first time
 if not os.path.exists(iniFile):
 	createIniFileForAvailablePaths(iniFile)
@@ -50,11 +51,10 @@ pathsHandle=ConfigObj(iniFile, encoding="UTF-8")
 def getChosenDataPath():
 	'''Gets directory for path chosen by the user.'''
 	pathName= config.conf["linkLibrary"]["chosenDataPath"]
-	#directory or value for this pathName, as saved in paths.inie
+	#directory or value for this pathName, as saved in paths.ini file
 	try:
 		chosenPath= os.path.abspath(pathsHandle["availablePaths"][pathName])
 	except KeyError:
-#		chosenPath= os.path.abspath(pathsHandle["availablePaths"]["Home user directory"])
 		chosenPath= homeDirectory
 		# Key not exist in availablePaths, so better remove it from base configuration, and return the value of chosenDataPath to Home user directory
 		config.conf["linkLibrary"]["chosenDataPath"]= 'Home user directory'
@@ -74,27 +74,33 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
-		#if not os.path.exists(iniFile):
-			#createIniFileForAvailablePaths(iniFile)
-
 		self.makeAddonMenu()
 
 	def makeAddonMenu(self):
 		self.preferencesMenu= gui.mainFrame.sysTrayIcon.preferencesMenu
 		self.addonMenu= wx.Menu()
+		self.subMenu= self.preferencesMenu.AppendSubMenu(self.addonMenu, 
 		# Translators: label of submenu.
-		self.subMenu= self.preferencesMenu.AppendSubMenu(self.addonMenu, _("&Link Library"))
+		_("&Link Library"))
 		# Link library settings menu item.
-		self.linkLibrarySetting= self.addonMenu.Append(wx.ID_ANY, _("Link Library Setting"))
+		self.linkLibrarySetting= self.addonMenu.Append(wx.ID_ANY, 
+		# Translators: Label of Link Library Setting menu item
+		_("Link Library Setting"))
 		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.onLinkLibrarySetting, self.linkLibrarySetting)
 		#open library dialog menu item
-		self.openLibraryDialog= self.addonMenu.Append(wx.ID_ANY, _("Open Library Dialog"))
+		self.openLibraryDialog= self.addonMenu.Append(wx.ID_ANY, 
+		# Translators: Label of Open Library Dialog menu item
+		_("Open Library Dialog"))
 		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.onOpenLibraryDialog, self.openLibraryDialog)
 		# Copy Library Folder menu item.
-		self.copyLibraryFolder= self.addonMenu.Append(wx.ID_ANY, _("Copy Library Folder"))
+		self.copyLibraryFolder= self.addonMenu.Append(wx.ID_ANY,
+		# Translators: Label of Copy Library Folder menu item
+		_("Copy Library Folder"))
 		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.onCopyLibrariesFolder, self.copyLibraryFolder)
 		#Import Library Folder menu item.
-		self.importLibraryFolder= self.addonMenu.Append(wx.ID_ANY, _("Import Library Folder"))
+		self.importLibraryFolder= self.addonMenu.Append(wx.ID_ANY,
+		# Translators: Label of Import Library Folder menu item
+		_("Import Library Folder"))
 		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.onImportLibrariesFolder, self.importLibraryFolder)
 
 	def terminate(self):
@@ -128,36 +134,39 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		else:
 			LIBRARYDIALOG.Raise()
 
-	# Translators: message displayed in input help mode for openning  choose library dialog.
+	# Translators: message displayed in input help mode for openning  link library dialog.
 	script_openLibraryDialog.__doc__ = _('Open  Link Library dialog.')
-#make SettingsDialog class
 
+#Link Library Dialog Settings class
 class LinkDialogSettings(gui.SettingsDialog):
 	# Translators: title of the dialog
 	title= _("Link Library Settings")
+	#The dictionary in which we will store in it temporarly the label an value of the new added path
 	pathInfoDict= {}
-	#configHandle= ConfigObj(iniFile, encoding= 'utf-8')
 
 	def makeSettings(self, sizer):
 		settingsSizerHelper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
+		self.availablePaths= settingsSizerHelper.addLabeledControl(
 		# Translators: label of cumbo box of available paths to contain data files.
-		self.availablePaths= settingsSizerHelper.addLabeledControl(_("Choose Path to store Data Files"), wx.Choice, choices=[key for key in pathsHandle["availablePaths"]])
-		#log.info([key for key in self.configHandle["availablePaths"]])
+		_("Choose Path to store Data Files"), wx.Choice, choices=[key for key in pathsHandle["availablePaths"]])
+		#log.info([key for key in pathsHandle["availablePaths"]])
 		self.availablePaths.Bind(wx.EVT_CHOICE, self.onAvailablePaths)
 		# Translators: label of button to add a new path.
-		self.addPathBtn= settingsSizerHelper.addItem( wx.Button(self, -1, label= _("Add New Path")))
+		label= _("Add New Path")
+		self.addPathBtn= settingsSizerHelper.addItem( wx.Button(self, -1, label))
 		self.addPathBtn.Bind(wx.EVT_BUTTON, self.onAddPath)
 		# Translators: label of Remove path button.
-		self.removePathBtn= settingsSizerHelper.addItem( wx.Button(self, -1, label= _("Remove Selected Path")))
+		label= _("Remove Selected Path")
+		self.removePathBtn= settingsSizerHelper.addItem( wx.Button(self, -1, label))
 		self.removePathBtn.Bind(wx.EVT_BUTTON, self.onRemovePath)
+		self.closeDialogCheckBox=settingsSizerHelper.addItem(wx.CheckBox(self,
 		# Translators: label of the check box 
-		self.closeDialogCheckBox=settingsSizerHelper.addItem(wx.CheckBox(self,label=_("&Close dialog after activating a link")))
+		label=_("&Close dialog after activating a link")))
 		self.closeDialogCheckBox.SetValue(config.conf["linkLibrary"]["closeDialogAfterActivatingALink"])
-		#self.closeDialogCheckBox.SetValue(self.configHandle.as_bool("closeDialogAfterActivatingALink"))
 
 	def postInit(self):
 		self.availablePaths.SetStringSelection(config.conf["linkLibrary"]["chosenDataPath"])
-#		self.availablePaths.SetStringSelection(self.configHandle["chosenDataPath"])
+		#log.info(config.conf["linkLibrary"]["chosenDataPath"])
 		#log.info(self.availablePaths.GetStringSelection())
 		if self.availablePaths.GetStringSelection()== "Home user directory":
 			#log.info('under if')
@@ -169,7 +178,6 @@ class LinkDialogSettings(gui.SettingsDialog):
 		self.removePathBtn.Enabled= state
 
 	def onAddPath(self, evt):
-		#gui.mainFrame._popupSettingsDialog(AddPathDialog, self.pathInfo)
 		gui.mainFrame.prePopup()
 		d= AddPathDialog(self)
 		d.Show()
@@ -182,29 +190,32 @@ class LinkDialogSettings(gui.SettingsDialog):
 			if gui.messageBox(
 			# Translators: The confirmation prompt displayed when the user requests to remove the selected path.
 			_("This path({}) will be permanently removed. This action cannot be undone.").format(name),
-			# Translators: The title of the confirmation dialog for deletion of a configuration profile.
+			# Translators: The title of the confirmation dialog for removal of selected path.
 			_("Warning"),
 			wx.OK | wx.CANCEL | wx.ICON_QUESTION
 			) != wx.OK:
 				return
+			self.Hide()
+			self.availablePaths.Delete(i)
 			if name== config.conf["linkLibrary"]["chosenDataPath"]:
 				#return to default path
-				config.conf["linkLibrary"]["chosenDataPath"]= homeDirectory
+				config.conf["linkLibrary"]["chosenDataPath"]= "Home user directory"
 			if name in pathsHandle["availablePaths"]:
 				del pathsHandle["availablePaths"][name]
 			if name in self.pathInfoDict:
 				del self.pathInfoDict[name]
-			self.availablePaths.Delete(i)
 			self.postInit()
+			self.Show()
 
 	def onOk(self, evt):
 		pathName= self.availablePaths.GetStringSelection()
-		log.info(self.pathInfoDict)
+		#log.info(self.pathInfoDict)
 		for key, value in self.pathInfoDict.items():
-			#config.conf["linkLibrary"]["availablePaths"][key]= value
+			#if value or directory ends with 'linkLibrary-addonFiles', remove it's base
+			if os.path.basename(value)== 'linkLibrary-addonFiles':
+				value= os.path.dirname(value)
 			#store the addedpaths in the ini file
 			pathsHandle["availablePaths"][key]= value
-#		self.configHandle.write()
 		pathsHandle.write()
 		config.conf["linkLibrary"]["chosenDataPath"]= pathName
 		config.conf["linkLibrary"]["closeDialogAfterActivatingALink"]= self.closeDialogCheckBox.IsChecked() 
@@ -229,7 +240,7 @@ class CopyDialog(wx.Dialog):
 
 	def __init__(self, parent):
 		# Translators: title of Copy Dialog
-		super(CopyDialog, self).__init__(parent, title= "Copy Libraries Folder")
+		super(CopyDialog, self).__init__(parent, title= _("Copy Libraries Folder"))
 
 		mainSizer= wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper( self, wx.VERTICAL)
@@ -246,16 +257,14 @@ class CopyDialog(wx.Dialog):
 		dirDialogTitle = _("Select Directory")
 		directoryEntryControl = groupHelper.addItem(PathSelectionWithoutNewDir(self, browseText, dirDialogTitle))
 		self.directoryEdit = directoryEntryControl.pathControl
-		#self.directoryEdit.Value = os.path.join(globalVars.appArgs.configPath, "linkLibrary-addonFiles")
 
 		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))
+		# Translators: Label of continue button
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()
 		continueButton.Bind(wx.EVT_BUTTON, self.onCopyLibrariesFolder)
-		
 		bHelper.addButton(self, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
-		
 
 		mainSizer.Add(sHelper.sizer, border=10, flag=wx.ALL)
 		mainSizer.Fit(self)
@@ -267,11 +276,13 @@ class CopyDialog(wx.Dialog):
 			gui.messageBox(
 			# Translators: The message displayed when the user has not specified a destination directory
 			_("Please specify a directory."),
+			# Translators: Title of dialog
 			_("Error"), wx.OK|wx.ICON_ERROR)
 			return
-		if not os.path.exists(selected_path) or not os.path.isdir(selected_path):
+		if not os.path.isdir(selected_path):
 			# Translators: The message displayed when the user specifies an invalid destination directory
 			gui.messageBox(_("%s is invalid, please select a valid directory path.")%selected_path,
+			# Translators: Title of dialog
 			_("Error"), wx.OK|wx.ICON_ERROR)
 			return
 		self.Hide()
@@ -339,7 +350,7 @@ class ImportDialog(wx.Dialog):
 			# Translators: label of dialog
 			_("Error"), wx.OK|wx.ICON_ERROR)
 			return
-		if not os.path.exists(selected_path) or not os.path.isdir(selected_path):
+		if not os.path.isdir(selected_path):
 			# Translators: message displayed when path selected is not valid
 			gui.messageBox(_("Sorry, but %s is invalid path.")%selected_path,
 			_("Error"), wx.OK|wx.ICON_ERROR)
@@ -349,6 +360,8 @@ class ImportDialog(wx.Dialog):
 		self.Destroy()
 
 	def importFolder(self, source_directory):
+		# If at least one file in the imported folder has a json extension, the folder will be accepted
+		# In other words, if not any file is a json file, the folder will be considered unvalid
 		if not os.path.basename(source_directory)== "linkLibrary-addonFiles" or not any(os.path.splitext(_file)[-1]== '.json' for _file in os.listdir(source_directory)):
 			# Translators: message displayed when folder to be imported not named linkLibrary-addonFiles, or all files in it has not .json extension
 			gui.messageBox(_("Check that the folder name is linkLibrary-addonFiles, and all files in it has a .json extension."),
@@ -378,7 +391,6 @@ class ImportDialog(wx.Dialog):
 
 class AddPathDialog(wx.Dialog):
 	"""Dialog to add new path for data files."""
-	#pathInfo parameter is to pass the infos about the new path name and value to the LinkDialogSettings dialog.
 	def __init__(self,parent):
 		# Translators: Title of dialog.
 		title=_("Add new path")
@@ -413,14 +425,14 @@ class AddPathDialog(wx.Dialog):
 
 	def onOkButton(self, evt):
 		pathValue= self.directoryEdit.Value
-		log.info(pathValue)
+		#log.info(pathValue)
 		if not pathValue:
 			gui.messageBox(
 			# Translators: The message displayed when the user has not specified a directory
 			_("Please specify a directory."),
 			_("Warning"), wx.OK|wx.ICON_WARNING)
 			return
-		if not os.path.exists(pathValue) or not os.path.isdir(pathValue):
+		if not os.path.isdir(pathValue):
 			# Translators: message displayed when path selected is not valid
 			gui.messageBox(_("Sorry, but %s is invalid path.")%pathValue,
 			_("Error"), wx.OK|wx.ICON_ERROR)
