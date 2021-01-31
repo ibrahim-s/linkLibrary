@@ -7,6 +7,7 @@
 import wx, gui, core, os, sys, ui
 import api, shutil, codecs, config, globalVars
 import json
+import re
 from logHandler import log
 from .links import Link
 from .linkDialog import LinkDialog
@@ -192,6 +193,8 @@ class LibraryPopupMenu(wx.Menu):
 				_('Import Error'), wx.OK|wx.ICON_ERROR)
 				return
 			file_name= os.path.split(file_path)[1]
+			if file_name in os.listdir(self.LIBRARIES_DIR):
+				file_name= self.importingLibraryWithNamePresent(file_name, file_path)
 			library_name= os.path.splitext(file_name)[0]
 			try:
 				shutil.move(file_path, os.path.join(self.LIBRARIES_DIR, file_name))
@@ -202,13 +205,50 @@ class LibraryPopupMenu(wx.Menu):
 				_('Error', wx.OK|wx.ICON_ERROR))
 				raise e
 			else:
-				#selected_library= self.parent.FindWindowById(self.objectId).GetStringSelection()
-				LibraryDialog.libraryFiles.append(library_name)
+				if library_name not in LibraryDialog.libraryFiles:
+					# this checking is important in case obj merging 2 libraries, if we do not do it we will have 2 files with same name in libraries list.
+					LibraryDialog.libraryFiles.append(library_name)
 				LibraryDialog.libraryFiles.sort()
 				self.parent.refreshLibraries(str= library_name)
 				core.callLater(200, ui.message,
 				# Translators: Message presented when library has been imported.
 				_("Information: Library imported."))
+
+	def importingLibraryWithNamePresent(self, filename, filepath):
+		'''Importing a library, that has a name already present in existing libraries'''
+		library_name= os.path.splitext(filename)[0]
+		# Translators: Ask the user if he wants to merge the two libraries or not.
+		if gui.messageBox(_("A library with similar name already exists, do you want to merge the two libraries?"),
+			# Translators: Title of message box
+			_("Information"),
+			style= wx.YES_NO|wx.ICON_QUESTION)== wx.NO:
+			libraryNames= [os.path.splitext(f)[0] for f in os.listdir(self.LIBRARIES_DIR) if f.startswith(library_name)]
+			if len(libraryNames)== 1:
+				return library_name + ' (2).json'
+			nums= []
+			# library names that end with a number between paranthesis
+			libraryNames= [name for name in libraryNames if re.match(r'.+\([0-9]+\)', name)]
+			try:
+				for name in libraryNames:
+					# n is the number to be between paranthesis
+					n=name[name.rfind('(')+1: -1]
+					nums.append(int(n))
+				raisedNum= max(nums)+ 1
+			except:
+				raisedNum=2
+			return library_name+ " (%s).json"% raisedNum
+		else:
+			# Now if the user wants to merge the two libraries.
+			#log.info('mergeing two libraries ...')
+			with open(filepath, encoding= 'utf-8') as f:
+				importedDict= json.load(f)
+			with open(os.path.join(self.LIBRARIES_DIR, filename), encoding= 'utf-8') as f:
+				existedDict= json.load(f)
+			importedDict.update(existedDict)
+			mergedDict= importedDict
+			with open(filepath, 'w', encoding= 'utf-8') as f:
+				json.dump(mergedDict, f, ensure_ascii= False, indent= 4)
+			return filename
 
 class LibraryDialog(wx.Dialog):
 	def __init__(self, parent, path):

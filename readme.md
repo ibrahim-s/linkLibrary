@@ -2,7 +2,7 @@
 
 Author: Ibrahim Hamadeh  
 Download [Development version][1]  
-NVDA compatibility: 2018.3 to 2020.2  
+NVDA compatibility: 2018.3 to 2021.1  
 Python compatibility: Python2 and Python3  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -42,6 +42,13 @@ NVDA menu>preferences>inputGestures>Link Library.
 *	Worth noting that creating the folder to host the data files in the home user directory, helps that all instances of the addon on the computer can share the same files or data base  
 *	and choosing another path like dropbox for example, will give the user the ability to share the same folder or data base with instances of the addon on another computer that uses the same dropbox account.  
 
+### Changes for 1.1 ###
+
+*	Now links in libraries, that is to say their labels are sorted ignoring case sensetivity.  
+*	During importing a json library, now if similar name exists  
+the user will be asked if he wishes to merge the two libraries or not, if he says No, the library will be imported having a number between paranthesis as suffix denoting number of similar libraries  
+and if he wants to merge the libraries, the imported or existed file will have the two dictionaries merged inside it.  
+
 ### Changes for 1.0 ###
 
 *	Change Data or library files from .pickle to .json files
@@ -68,4 +75,4 @@ NVDA menu>preferences>inputGestures>Link Library.
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.0-dev/linkLibrary-1.0-dev.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.1dev/linkLibrary-1.1-dev.nvda-addon

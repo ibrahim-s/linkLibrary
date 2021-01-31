@@ -279,7 +279,7 @@ class LinkDialog(wx.Dialog):
 			lst= []
 		else:
 			try:
-				lst = sorted([Link.myLinks[url]['label'] for url in Link.myLinks])
+				lst = sorted([Link.myLinks[url]['label'] for url in Link.myLinks], key= lambda s: s.lower())
 			except Exception as e:
 				# Translators: Message displayed when getting an error trying to retreave links data
 				gui.messageBox(_("Unable to load links data"), 
