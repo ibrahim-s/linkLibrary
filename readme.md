@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Development version][1]  
+Download [Version 1.1][1]  
 NVDA compatibility: 2018.3 to 2021.1  
 Python compatibility: Python2 and Python3  
 
@@ -75,4 +75,4 @@ and if he wants to merge the libraries, the imported or existed file will have t
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.1dev/linkLibrary-1.1-dev.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.1/linkLibrary-1.1.nvda-addon

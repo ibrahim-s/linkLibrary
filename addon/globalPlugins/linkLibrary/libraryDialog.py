@@ -327,10 +327,10 @@ class LibraryDialog(wx.Dialog):
 		foundFiles= [os.path.splitext(f) for f in os.listdir(self.LIBRARIES_DIR)]
 		# foundFiles is a list of tuples, first element of the tuple is the name of file and the second is it's extension
 		if sys.version_info.major== 3:
-			libraryFiles= sorted([name for name, ext in foundFiles if ext== '.json'])
+			libraryFiles= sorted([name for name, ext in foundFiles if ext== '.json'], key= lambda s: s.lower())
 			# We picked only .json files, even if there are other files in the folder.
 		else:
-			libraryFiles= sorted([name.decode("mbcs") for name, ext in foundFiles if ext== '.json'])
+			libraryFiles= sorted([name.decode("mbcs") for name, ext in foundFiles if ext== '.json'], key= lambda s: s.lower())
 		LibraryDialog.libraryFiles= libraryFiles
 		self.listBox.Set(libraryFiles)
 		self.listBox.SetSelection(0)
