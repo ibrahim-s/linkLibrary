@@ -8,7 +8,6 @@ import wx, gui
 import webbrowser, os
 import subprocess 
 import queueHandler
-import winVersion
 import config
 from .links import Link
 #importing the getBrowsers function that retreaves the found browsers in the registry
@@ -81,23 +80,10 @@ class OpenWithMenu(wx.Menu):
 			self.Append(item)
 			self.Bind(wx.EVT_MENU, lambda evt , args=executable_path : self.onOpen(evt, args), item)
 
-		#if in windows10, add a menu item for edge browser
-		if winVersion.winVersionText.startswith('10'):
-			edge= wx.MenuItem(self, -1, text= 'Edge Legacy')
-			self.Append(edge)
-			self.Bind(wx.EVT_MENU, self.onEdge, edge)
-
 	def onOpen(self, evt, executable_path):
 		url= self.link.url
 		if url:
 			subprocess.Popen(executable_path+' '+url)
-			self.parentDialog.checkCloseAfterActivatingALink()
-
-	def onEdge(self, evt):
-		url= self.link.url
-		if url:
-			url= 'http://'+url if url.startswith('www') else url
-			os.startfile("microsoft-edge:{i}".format(i=url)) 
 			self.parentDialog.checkCloseAfterActivatingALink()
 
 #the popup menu class
@@ -255,7 +241,9 @@ class LinkDialog(wx.Dialog):
 
 		#make bindings
 		self.listBox.Bind(wx.EVT_LISTBOX, self.onKillFocus)
-		self.listBox.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
+		#self.listBox.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
+		self.listBox.Bind(wx.EVT_CONTEXT_MENU, self.OnRightDown)
+		#wx.EVT_CONTEXT_MENU is used in NVDA 2021.1,for wx.EVT_RIGHT_DOWN seized to work.
 		self.listBox.Bind(wx.EVT_KILL_FOCUS, self.onKillFocus)
 		self.Bind(wx.EVT_BUTTON, self.onShowOrHideUrl, self.showOrHideUrlButton)
 		self.urlText.Bind(wx.EVT_TEXT_ENTER, self.onOpenWithDefault)

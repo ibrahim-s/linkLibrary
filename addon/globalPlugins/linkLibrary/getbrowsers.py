@@ -21,7 +21,7 @@ exeLabels= {
 	'seamonkey.exe': 'Seamonkey', 
 	'wyzo.exe': 'Wyzo', 
 	'waterfox.exe': 'Waterfox',
-	'msedge.exe': 'Edge Chromium',
+	'msedge.exe': 'Microsoft Edge',
 	'brave.exe': 'Brave'
 }
 

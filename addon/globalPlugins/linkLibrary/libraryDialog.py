@@ -266,7 +266,9 @@ class LibraryDialog(wx.Dialog):
 		# Translators: label of libraries list box.
 		staticText= wx.StaticText(panel, -1, _('Choose a library'))
 		self.listBox = wx.ListBox(panel,-1, style= wx.LB_SINGLE)
-		self.listBox.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
+		#self.listBox.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
+		self.listBox.Bind(wx.EVT_CONTEXT_MENU, self.OnRightDown)
+		# wx.EVT_CONTEXT_MENU is used in NVDA 2021.1, for wx.EVT_RIGHT_DOWN seized to work.
 		self.listBox.Bind(wx.EVT_KILL_FOCUS, self.onKillFocus)
 		listBoxSizer.Add(staticText, 0, wx.ALL, 5)
 		listBoxSizer.Add(self.listBox, 1, wx.ALL|wx.EXPAND, 5)
