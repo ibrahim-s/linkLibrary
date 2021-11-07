@@ -326,16 +326,16 @@ class LibraryDialog(wx.Dialog):
 			return
 
 	def postInit(self):
+		#log.info('under postInit of libraries file dialog...')
 		foundFiles= [os.path.splitext(f) for f in os.listdir(self.LIBRARIES_DIR)]
 		# foundFiles is a list of tuples, first element of the tuple is the name of file and the second is it's extension
-		if sys.version_info.major== 3:
-			libraryFiles= sorted([name for name, ext in foundFiles if ext== '.json'], key= lambda s: s.lower())
-			# We picked only .json files, even if there are other files in the folder.
-		else:
-			libraryFiles= sorted([name.decode("mbcs") for name, ext in foundFiles if ext== '.json'], key= lambda s: s.lower())
+		libraryFiles= sorted([name for name, ext in foundFiles if ext== '.json'], key= lambda s: s.lower())
+		# We picked only .json files, even if there are other files in the folder.
 		LibraryDialog.libraryFiles= libraryFiles
 		self.listBox.Set(libraryFiles)
-		self.listBox.SetSelection(0)
+		#log.info(f'list count:{self.listBox.GetCount()}')
+		if self.listBox.GetCount()> 0:
+			self.listBox.SetSelection(0)
 		self.Raise()
 		self.Show()
 
@@ -394,6 +394,8 @@ class LibraryDialog(wx.Dialog):
 	def onRemove(self, evt):
 		toRemove= self.listBox.GetStringSelection()
 		i= self.listBox.GetSelection()
+		# number of items or libraries in the list.
+		numItems= self.listBox.GetCount()
 		if gui.messageBox(
 		# Translators: Message displayed upon removing a library.
 		_('Are you sure you want to remove {} library, this can not be undone?'.format(toRemove)),
@@ -402,7 +404,8 @@ class LibraryDialog(wx.Dialog):
 			return
 		os.remove(os.path.join(self.LIBRARIES_DIR, toRemove+'.json'))
 		LibraryDialog.libraryFiles.remove(toRemove)
-		sel= i if len(LibraryDialog.libraryFiles)>= i+2 else i-1
+		sel= i if i!= numItems-1 else i-1
+		#log.info(f'sel after onRemove: {sel}')
 		self.refreshLibraries(i= sel)
 		# i is the index of item to be selected after refresh
 
@@ -415,13 +418,14 @@ class LibraryDialog(wx.Dialog):
 		self.listBox.Set(LibraryDialog.libraryFiles)
 		if str:
 			self.listBox.SetStringSelection(str)
-		if i:
+		if i  is not None and i> -1:
 			self.listBox.SetSelection(i)
+		self.listBox.SetFocus()
 		self.Show()
 
 	def onKillFocus(self, evt):
-		library_name= self.listBox.GetStringSelection()
-		state= library_name!= 'general'
+		library_num= self.listBox.GetCount()
+		state= bool(library_num)
 		self.rename.Enabled= state
 		self.remove.Enabled= state
 		evt.Skip()

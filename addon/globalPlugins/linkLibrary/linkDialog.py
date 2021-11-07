@@ -21,9 +21,9 @@ addonHandler.initTranslation()
 def getLinkUrl(message, caption, link= None):
 	''' Entring the source url of the link upon adding or editing a link.'''
 	if not link:
-		url= wx.GetTextFromUser(message, caption).strip()
+		url= wx.GetTextFromUser(message, caption).strip().rstrip('/')
 	else:
-		url= wx.GetTextFromUser(message, caption, link.url).strip()
+		url= wx.GetTextFromUser(message, caption, link.url).strip().rstrip('/')
 	if not url:
 		return 
 	else:
@@ -230,13 +230,14 @@ class LinkDialog(wx.Dialog):
 
 		# Translators: Label of open link with button.
 		self.openLinkWithButton= wx.Button(panel, -1, label= _("Open Link With"))
-		self.okButton= wx.Button(panel, id= wx.ID_OK, label= "")
+		# Translators: Label of OK button.
+		self.okButton= wx.Button(panel, id= wx.ID_OK, label= _("OK"))
 		self.okButton.SetDefault()
-		#Label of Close button.
-		self.closeButton= wx.Button(panel, id= wx.ID_CANCEL, label= _("Close"))
+		#Label of cancel button.
+		self.cancelButton= wx.Button(panel, id= wx.ID_CANCEL, label= _("Cancel"))
 
 		sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=6)
-		sizer.AddMany([listLabel, self.listBox, aboutLabel, self.aboutText, self.showOrHideUrlButton,urlLabel, self.urlText, self.openLinkWithButton, self.closeButton])
+		sizer.AddMany([listLabel, self.listBox, aboutLabel, self.aboutText, self.showOrHideUrlButton,urlLabel, self.urlText, self.openLinkWithButton, self.okButton, self.cancelButton])
 		panel.SetSizer(sizer)
 
 		#make bindings
@@ -249,13 +250,13 @@ class LinkDialog(wx.Dialog):
 		self.urlText.Bind(wx.EVT_TEXT_ENTER, self.onOpenWithDefault)
 		self.Bind(wx.EVT_BUTTON, self.onOpenLinkWith, self.openLinkWithButton)
 		self.Bind(wx.EVT_BUTTON, self.onOpenWithDefault, self.okButton)
-		self.Bind(wx.EVT_BUTTON, self.onClose, self.closeButton)
+		#self.Bind(wx.EVT_BUTTON, self.onClose, self.closeButton)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, self.cancelButton)
 		self.postInit()
 
 	def postInit(self):
 		self.populateListBox()
 		self.urlText.Hide()
-		self.okButton.Hide()
 		self.Raise()
 		self.Show()
 
@@ -372,7 +373,7 @@ class LinkDialog(wx.Dialog):
 				Link.save_to_file()
 			wx.CallLater(4000, self.Destroy)
 
-	def onClose(self, evt):
+	def onCancel(self, evt):
 		#log.info('under onClose') 
 		if Link.myLinks:
 			Link.save_to_file()

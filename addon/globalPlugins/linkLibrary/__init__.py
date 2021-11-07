@@ -14,6 +14,7 @@ import shutil
 from configobj import ConfigObj
 from logHandler import log
 from .libraryDialog import LibraryDialog
+
 import addonHandler
 addonHandler.initTranslation()
 
@@ -29,13 +30,13 @@ config.conf.spec["linkLibrary"]= configspec
 
 #path of ini file to store available paths
 iniFile= os.path.join(globalVars.appArgs.configPath, "addons", "linkLibrary", "availablePaths", "paths.ini")
-iniFile= iniFile if sys.version_info.major==3 else iniFile.decode('mbcs')
 
 #creating ini file for available directories or paths
 def createIniFileForAvailablePaths(iniFile):
 	#Create parent directory of iniFile if not present
 	availablePaths= os.path.join(globalVars.appArgs.configPath, "addons", "linkLibrary", "availablePaths")
-	if not os.path.exists(availablePaths): os.mkdir(availablePaths)
+	if not os.path.exists(availablePaths):
+		os.mkdir(availablePaths)
 	configHandle= ConfigObj(iniFile, encoding="UTF-8")
 	configHandle["availablePaths"]= {}
 	configHandle["availablePaths"]["Home user directory"]= homeDirectory
@@ -62,7 +63,6 @@ def getChosenDataPath():
 		config.conf.save()
 		log.info("Error in getting chosenDataPath from availablePaths", exc_info=1)
 	finally:
-		chosenPath= chosenPath if sys.version_info.major== 3 else chosenPath.decode('mbcs')
 		return chosenPath
 #log.info(getChosenDataPath())
 
