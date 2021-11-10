@@ -7,6 +7,9 @@ import wx
 import gui
 import shutil
 
+import addonHandler
+addonHandler.initTranslation()
+
 def onInstall():
 	# Retreaving path.ini file from previous installation if exists.
 	# path.ini file, contains the available paths that the user has added previously
