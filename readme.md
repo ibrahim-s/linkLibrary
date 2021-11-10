@@ -1,12 +1,12 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 1.2][1]  
-NVDA compatibility: 2018.3 and beyond  
-Python compatibility: Python2 and Python3  
+Download [Version 1.2.5][1]  
+NVDA compatibility: 2019.3 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
-From the main dialog of libraries, you can choose the library or category you like and press enter on it.  
+From the main dialog of libraries, you can add, rename or remove any existing one  
+Got already libraries, then choose the library or category you like and press enter on it.  
 On the opened dialog, you will have all links in that category in a list and have access to source url an the about info of each llink if present.  
 This addon does not come with a default or assigned gesture or shortcut to it  
 You can as always add a gesture or change the existed one going to :  
@@ -16,7 +16,7 @@ NVDA menu>preferences>inputGestures>Link Library.
 
 *	After assigning a gesture to the addon, using that gesture or shortcut you can open the main dialog of the addon  
 *	A dialog will open, listing all libraries or categories of links that are found.  
-*	At first only one library named General will be found, it is empty, ready to host general links.  
+*	At first no libraries found, it is empty, ready to host the libraries you wish to establish  .  
 *	Tabing on that dialog, you can rename, remove, or add any libraries or category of links you want at any time.  
 *	On the list of libraries, stand on one of your choice, and press enter.   
 *	A dialog for that library will open, showing all links in it, if any is present(name or label of links) in a list .  
@@ -34,13 +34,19 @@ NVDA menu>preferences>inputGestures>Link Library.
 *	Just open firefox, from the bookmarks menu choose show all bookmarks control+shift+b.  
 *	In the menu of the new window, go to Import and Backup submenu, then to Import Bookmarks from HTML… and press enter.  
 *	Navigate through the dialog opened to the html file and select it. After that an entry or folder having the same name of the imported library will be found in the firefox bookmarks menu including all links of the imported library in it.  
-*	Lastly mentioned, but may be most important is that you got the ability to choose the place of data files of your addon.  
+*	Lastly mentioned, but may be most important, is that you got the ability to choose the place of data files of your addon.  
 *	First upon installing the addon, a message box will appear asking you if yo agree to create the folder that hosts the data files for the addon in your home user directory.  
 *	you can if you wish, press cancel and choose the directory required to host data files later from the settings dialog of the addon in preferences menu.  
-*	Afterchoosing the new default path for data files from the addon settings in preferences menu  
-*	If you want to make it perminant, you have to save settings pressing control+nvda+c, especially if your settings is not put to save on exit in general settings dialog.  
+*	Go to NVDA menu>Preferences> Link Library> Link Library Setting..., and open settings dialog.  
+*	Afterchoosing the new default path, for data files or libraries for the addon in that dialog  
+*	If you want to make it perminant, you have to save settings pressing control+nvda+c, especially if your settings is not set to save on exit in general settings dialog.  
 *	Worth noting that creating the folder to host the data files in the home user directory, helps that all instances of the addon on the computer can share the same files or data base  
 *	and choosing another path like dropbox for example, will give the user the ability to share the same folder or data base with instances of the addon on another computer that uses the same dropbox account.  
+
+### Changes for 1.3 ###
+
+*	Replace close button by OK and Cancel in link dialog, and make possible to remove general library in library dialog.  
+*	Change minimum tested version of the addon to 2019.3.  
 
 ### Changes for 1.2 ###
 
@@ -80,4 +86,4 @@ and if he wants to merge the libraries, the imported or existed file will have t
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/1.2/linkLibrary-1.2.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.2.5/linkLibrary-1.2.5.nvda-addon

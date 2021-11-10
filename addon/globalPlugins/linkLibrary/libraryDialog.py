@@ -398,7 +398,7 @@ class LibraryDialog(wx.Dialog):
 		numItems= self.listBox.GetCount()
 		if gui.messageBox(
 		# Translators: Message displayed upon removing a library.
-		_('Are you sure you want to remove {} library, this can not be undone?'.format(toRemove)),
+		_('Are you sure you want to remove {} library, this can not be undone?').format(toRemove),
 		# Translators: Title of dialog.
 		_('Warning'), wx.ICON_QUESTION | wx.YES_NO)== wx.NO:
 			return
