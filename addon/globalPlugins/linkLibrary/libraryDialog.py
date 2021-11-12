@@ -109,10 +109,11 @@ class LibraryPopupMenu(wx.Menu):
 		style=wx.DD_DEFAULT_STYLE
 | wx.DD_DIR_MUST_EXIST
 		)
-		if dlg.ShowModal() == wx.ID_OK:
-			path_chosen= dlg.GetPath()
-			#log.info(path_chosen)
-		#dlg.Destroy()
+		if dlg.ShowModal() != wx.ID_OK:
+			dlg.Destroy()
+			return
+		path_chosen= dlg.GetPath()
+		#log.info(path_chosen)
 
 		if path_chosen:
 			library_name= self.parent.FindWindowById(self.objectId).GetStringSelection()
@@ -153,9 +154,11 @@ class LibraryPopupMenu(wx.Menu):
 		style=wx.DD_DEFAULT_STYLE
 | wx.DD_DIR_MUST_EXIST
 		)
-		if dlg.ShowModal() == wx.ID_OK:
-			path_chosen= dlg.GetPath()
-			#log.info(path_chosen)
+		if dlg.ShowModal() != wx.ID_OK:
+			dlg.Destroy()
+			return
+		path_chosen= dlg.GetPath()
+		#log.info(path_chosen)
 		if path_chosen:
 			html_path= os.path.join(path_chosen, library_name+ '.html')
 			try:
@@ -180,10 +183,12 @@ class LibraryPopupMenu(wx.Menu):
 		"Json Files (*.json)|*.json", 
 		wx.FD_FILE_MUST_EXIST)
 
-		if dlg.ShowModal()== wx.ID_OK:
-			file_path= dlg.GetPath()
-			#log.info(file_path)
+		if dlg.ShowModal()!= wx.ID_OK:
+			dlg.Destroy()
+			return
+		file_path= dlg.GetPath()
 		dlg.Destroy()
+		#log.info(file_path)
 		if file_path:
 			if not validateLibraryFile(file_path):
 			#validation of the json file did not succeed

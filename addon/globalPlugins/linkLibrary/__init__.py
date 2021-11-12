@@ -151,14 +151,17 @@ class LinkDialogSettings(gui.SettingsDialog):
 		_("Choose Path to store Data Files"), wx.Choice, choices=[key for key in pathsHandle["availablePaths"]])
 		#log.info([key for key in pathsHandle["availablePaths"]])
 		self.availablePaths.Bind(wx.EVT_CHOICE, self.onAvailablePaths)
+
 		# Translators: label of button to add a new path.
 		label= _("Add New Path")
 		self.addPathBtn= settingsSizerHelper.addItem( wx.Button(self, -1, label))
 		self.addPathBtn.Bind(wx.EVT_BUTTON, self.onAddPath)
+
 		# Translators: label of Remove path button.
 		label= _("Remove Selected Path")
 		self.removePathBtn= settingsSizerHelper.addItem( wx.Button(self, -1, label))
 		self.removePathBtn.Bind(wx.EVT_BUTTON, self.onRemovePath)
+
 		self.closeDialogCheckBox=settingsSizerHelper.addItem(wx.CheckBox(self,
 		# Translators: label of the check box 
 		label=_("&Close dialog after activating a link")))
@@ -445,6 +448,7 @@ class AddPathDialog(wx.Dialog):
 		parent.availablePaths.SetStringSelection(pathName)
 		parent.onAvailablePaths(None)
 		#log.info(pathName)
+		wx.CallAfter(parent.availablePaths.SetFocus)
 		self.Destroy()
 
 	def onCancelButton(self, evt):

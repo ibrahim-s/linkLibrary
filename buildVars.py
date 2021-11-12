@@ -30,7 +30,7 @@ This addon does not come with a default or assigned gesture or shortcut to it
 You can as always add a gesture or change the existed one going to :
 NVDA menu>preferences>inputGestures>Link Library."""),
 	# version
-	"addon_version" : "1.2.5",
+	"addon_version" : "1.3",
 	# Author(s)
 	"addon_author" : u"ibrahim hamadeh<ibra.hamadeh@hotmail.com>",
 	# URL for the add-on documentation support

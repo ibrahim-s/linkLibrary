@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 1.2.5][1]  
+Download [Version 1.3][1]  
 NVDA compatibility: 2019.3 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -47,6 +47,7 @@ NVDA menu>preferences>inputGestures>Link Library.
 
 *	Replace close button by OK and Cancel in link dialog, and make possible to remove general library in library dialog.  
 *	Change minimum tested version of the addon to 2019.3.  
+*	Add Turkish translation for the addon.  
 
 ### Changes for 1.2 ###
 
@@ -86,4 +87,4 @@ and if he wants to merge the libraries, the imported or existed file will have t
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.2.5/linkLibrary-1.2.5.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.3/linkLibrary-1.3.nvda-addon
