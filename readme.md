@@ -21,7 +21,8 @@ NVDA menu>preferences>inputGestures>Link Library.
 *	On the list of libraries, stand on one of your choice, and press enter.   
 *	A dialog for that library will open, showing all links in it, if any is present(name or label of links) in a list .  
 *	At first the library is empty, and no links in it.  
-*	Press the context menu, to add a link by entering the url, label and optionaly the about of the link.  
+*	We press the context menu (shift + F10), or popup menu, or the
+application key, to add a link by entering the url, label and optionaly the about of the link.  
 *	Standing on any link in this list, pressing enter on it will open it with the default browser.  
 *	Tabing on that dialog you can access the about of the link(some information about the link ) if present, a button to show the source url, another button that gives you the option to open the link with several browsers if found on your computer.  
 *	Stand on the link you want in this list, and press the context menu.  
