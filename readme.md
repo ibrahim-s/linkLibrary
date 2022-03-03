@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 1.3][1]  
+Download [Version 1.4][1]  
 NVDA compatibility: 2019.3 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -42,6 +42,11 @@ NVDA menu>preferences>inputGestures>Link Library.
 *	If you want to make it perminant, you have to save settings pressing control+nvda+c, especially if your settings is not set to save on exit in general settings dialog.  
 *	Worth noting that creating the folder to host the data files in the home user directory, helps that all instances of the addon on the computer can share the same files or data base  
 *	and choosing another path like dropbox for example, will give the user the ability to share the same folder or data base with instances of the addon on another computer that uses the same dropbox account.  
+
+### Changes for 1.4 ###
+
+*	Now whhen closing an opened library, by the escape key or Cancel button  
+The focus will return back to the main window of libraries.
 
 ### Changes for 1.3 ###
 
@@ -87,4 +92,4 @@ and if he wants to merge the libraries, the imported or existed file will have t
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.3/linkLibrary-1.3.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.4/linkLibrary-1.4.nvda-addon

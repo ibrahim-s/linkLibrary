@@ -449,10 +449,11 @@ class LibraryDialog(wx.Dialog):
 				return
 			else:
 				wx.CallAfter(self.openLinkDialog, filename, self.LIBRARIES_DIR)
-			self.Destroy()
+			# We have commented the below line, so that main window will stay open when opening a library, and when closing it focus return to main window.
+			#self.Destroy()
 
 	def openLinkDialog(self, filename, librariesPath):
-		dialog= LinkDialog(gui.mainFrame, filename, librariesPath)
+		dialog= LinkDialog(self, filename, librariesPath)
 		LinkDialog.currentInstance= dialog
 
 	def onClose(self, evt):

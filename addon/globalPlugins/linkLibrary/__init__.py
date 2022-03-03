@@ -14,6 +14,7 @@ import shutil
 from configobj import ConfigObj
 from logHandler import log
 from .libraryDialog import LibraryDialog
+from .linkDialog import LinkDialog
 
 import addonHandler
 addonHandler.initTranslation()
@@ -85,7 +86,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# Link library settings menu item.
 		self.linkLibrarySetting= self.addonMenu.Append(wx.ID_ANY, 
 		# Translators: Label of Link Library Setting menu item
-		_("Link Library Setting"))
+		_("Link Library Setting..."))
 		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.onLinkLibrarySetting, self.linkLibrarySetting)
 		#open library dialog menu item
 		self.openLibraryDialog= self.addonMenu.Append(wx.ID_ANY, 
@@ -128,11 +129,14 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		gui.mainFrame.postPopup()
 
 	def script_openLibraryDialog(self, gesture):
-		global LIBRARYDIALOG
-		if not LIBRARYDIALOG:
-			LIBRARYDIALOG= LibraryDialog(gui.mainFrame, getChosenDataPath())
+		if LinkDialog.currentInstance:
+			LinkDialog.currentInstance.Raise()
 		else:
-			LIBRARYDIALOG.Raise()
+			global LIBRARYDIALOG
+			if not LIBRARYDIALOG:
+				LIBRARYDIALOG= LibraryDialog(gui.mainFrame, getChosenDataPath())
+			else:
+				LIBRARYDIALOG.Raise()
 
 	# Translators: message displayed in input help mode for openning  link library dialog.
 	script_openLibraryDialog.__doc__ = _('Open  Link Library dialog.')
