@@ -1,3 +1,16 @@
+---
+autonumber-headings: false
+extratags: true
+extratags-back: true
+filename: readme
+lang: tr
+mathjax: false
+path: 'C:\Users\ITU\AppData\Roaming\nvda\addons\linkLibrary\doc\tr\'
+template: default
+title: Bağlantı Kitaplığı
+toc: false
+...
+
 # Bağlantı Kitaplığı #
 
 Yazar: İbrahim Hamadeh  
@@ -43,10 +56,16 @@ NVDA menüsü>tercihler>girdi Hareketleri>Bağlantı Kitaplığı.
 *	Veri dosyalarını ana kullanıcı dizininde barındıracak klasörü oluşturmanın, bilgisayardaki tüm eklenti örneklerinin aynı dosyaları veya veri tabanını paylaşabilmesine yardımcı olduğunu belirtmekte fayda var.  
 *	örneğin dropbox gibi başka bir yol seçmek, kullanıcıya, aynı dropbox hesabını kullanan başka bir bilgisayardaki eklenti örnekleriyle aynı klasörü veya veri tabanını paylaşma yeteneği verecektir.  
 
+### 1.4 için değişiklikler ###
+
+*	Şimdi açık bir kitaplığı kapatırken, Escape tuşu veya İptal düğmesi ile
+Odak, kitaplıkların ana penceresine geri dönecektir.  
+
 ### 1.3 için değişiklikler ###
 
 *	Kapat düğmesi bağlantı iletişim kutusunda Tamam ve İptal ile değiştirildi ve kitaplık iletişim kutusunda genel kitaplığı kaldırmak mümkün kılındı.  
 *	Eklentinin minimum test edilmiş sürümü 2019.3 olarak değiştirildi.  
+*	Eklenti için Türkçe çeviri dahil edildi..
 
 ### 1.2 için değişiklikler ###
 
