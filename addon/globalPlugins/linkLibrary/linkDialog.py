@@ -7,6 +7,7 @@
 import wx, gui
 import webbrowser, os
 import subprocess 
+import json
 import queueHandler
 import config
 from .links import Link
@@ -109,6 +110,20 @@ class MyPopupMenu(wx.Menu):
 		self.Append(edit)
 		self.Bind(wx.EVT_MENU, self.onEdit, edit)
 
+		#add a subMenu for moving a link
+		subMenu= wx.Menu()
+		# We want to append to this menu library names.
+		libraryNames= LinkDialog.libraryFiles
+		libraryMenus= (name for name in libraryNames if name!= LinkDialog.activeLibrary)
+		#log.info(f'libraryMenus: {list(libraryMenus)}')
+		# appending library menus to subMenu.
+		for label in libraryMenus:
+			item= subMenu.Append(wx.ID_ANY, label)
+			self.Bind(wx.EVT_MENU, lambda evt , args=label : self.onMoveLink(evt, args), item)
+		self.AppendSubMenu(subMenu, 
+		# Translators: label obj subMenu items for moving a link.
+		_('Move Link To'))
+
 		#Remove Selected Link menu
 		remove= wx.MenuItem(self, -1, 
 		# Translators: label of menu items to remove a link.
@@ -159,6 +174,48 @@ class MyPopupMenu(wx.Menu):
 			if not edited:
 				Link.add_link(l.url, l.label, l.about)
 
+	def onMoveLink(self, evt, menuItem):
+		# menuItem is the menu item or library name that we want to move the link to it.
+		listBox= self.parent.FindWindowById(self.eventObjectId)
+		i= listBox.GetSelection()
+		if i== -1:
+			return
+		linkLabel= self.parent.link_labels[i]
+		link= Link.getLinkByLabel(linkLabel)
+		libraryFileName= menuItem+ '.json'
+		#log.info(f'libraryFileName: {libraryFileName}')
+		# retreaving library data
+		try:
+			with open(os.path.join(Link.SAVING_DIR, libraryFileName), encoding= 'utf-8') as f:
+				libraryDict= json.load(f)
+			if link.url in libraryDict:
+				if gui.messageBox(
+				# Translators: Message displayed when trying to move a link already present in the other library.
+				_("This link is already present in {library} library, under {label} label;\n"
+				" Do you still want to replace it with the one you are about to move?.").format(library= menuItem, label= libraryDict[link.url]['label']),
+				# Translators: Title of message box.
+				_('Warning'),
+				wx.YES|wx.NO|wx.ICON_QUESTION)== wx.NO:
+					return
+
+			libraryDict[link.url]= {"label": link.label, "about": link.about}
+			with open(os.path.join(Link.SAVING_DIR, libraryFileName), 'w', encoding= 'utf-8') as f:
+				json.dump(libraryDict, f, ensure_ascii= False, indent= 4)
+		except Exception as e:
+			# Translators: Message displayed when getting an error trying to move a link from one library to another.
+			gui.messageBox(_("Unable to move the link to another library"), 
+			# Translators: Title of message box
+			_("Error"), wx.OK|wx.ICON_ERROR)
+			raise e
+		else:
+			# We have moved the link, now we want to remove it from current library.
+			Link.remove_link(link.url)
+			# index of the link to be selected and focused on
+			index= i if len(self.parent.link_labels)>= i+2 else i-1
+			self.parent.populateListBox()
+			if index >=0:
+				listBox.SetSelection(index)
+
 	def onRemove(self, evt):
 		listBox= self.parent.FindWindowById(self.eventObjectId)
 		i= listBox.GetSelection()
@@ -203,6 +260,8 @@ class LinkDialog(wx.Dialog):
 	def __init__(self, parent, filename, libraries_path):
 		super(LinkDialog, self).__init__(parent, -1, title= filename, 
 		size=(500, 300))
+		# make class attribute for active library.
+		LinkDialog.activeLibrary= filename
 		self.filename= filename
 		#sending the filename to the Link class
 		Link.filename= filename + ".json"

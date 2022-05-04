@@ -304,11 +304,11 @@ class LibraryDialog(wx.Dialog):
 		self.ok.SetDefault()
 		self.ok.Bind(wx.EVT_BUTTON, self.onOk)
 		buttonSizer.Add(self.ok, 1,wx.ALL, 10)
-		self.close= wx.Button(panel, wx.ID_CANCEL,
+		self.cancel= wx.Button(panel, wx.ID_CANCEL,
 		# Translators: Label of Cancel button
 		_("Cancel"))
-		self.close.Bind(wx.EVT_BUTTON, self.onClose)
-		buttonSizer.Add(self.close, 0, wx.EXPAND|wx.ALL, 10)
+		self.cancel.Bind(wx.EVT_BUTTON, self.onCancel)
+		buttonSizer.Add(self.cancel, 0, wx.EXPAND|wx.ALL, 10)
 		mainSizer.Add(buttonSizer, 0, wx.EXPAND|wx.ALL, 5)
 		panel.SetSizer(mainSizer)
 		self.postInit()
@@ -455,6 +455,7 @@ class LibraryDialog(wx.Dialog):
 	def openLinkDialog(self, filename, librariesPath):
 		dialog= LinkDialog(self, filename, librariesPath)
 		LinkDialog.currentInstance= dialog
+		LinkDialog.libraryFiles= LibraryDialog.libraryFiles[:]
 
-	def onClose(self, evt):
+	def onCancel(self, evt):
 		self.Destroy()

@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 1.4][1]  
+Download [Version 1.5][1]  
 NVDA compatibility: 2019.3 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -26,7 +26,7 @@ application key, to add a link by entering the url, label and optionaly the abou
 *	Standing on any link in this list, pressing enter on it will open it with the default browser.  
 *	Tabing on that dialog you can access the about of the link(some information about the link ) if present, a button to show the source url, another button that gives you the option to open the link with several browsers if found on your computer.  
 *	Stand on the link you want in this list, and press the context menu.  
-*	From there you can add, edit, remove that link or all.  
+*	From there you can add, edit, move link to another library, remove that link or all.  
 *	Now do you want to import a json library, or export any library as json or html file, Yes you can  
 *	For instance to export a library, stand on the library you want to export and press the contact menu, arrow down once to Export library as, choose the type of file you want to be exported, json or html and press enter.  
 *	A dialog will open to choose the folder you want to export to, choose folder and press enter or navigate to select folder button and press on it.  
@@ -44,9 +44,13 @@ application key, to add a link by entering the url, label and optionaly the abou
 *	Worth noting that creating the folder to host the data files in the home user directory, helps that all instances of the addon on the computer can share the same files or data base  
 *	and choosing another path like dropbox for example, will give the user the ability to share the same folder or data base with instances of the addon on another computer that uses the same dropbox account.  
 
+### Changes for 1.5 ###
+
+*	Now you can move a link from one library to another, and this can be achieved through popup menu, then Move link to menu item, then from the submenu there you can choose the library and press enter on it.
+
 ### Changes for 1.4 ###
 
-*	Now whhen closing an opened library, by the escape key or Cancel button  
+*	Now when closing an opened library, by the escape key or Cancel button  
 The focus will return back to the main window of libraries.
 
 ### Changes for 1.3 ###
@@ -93,4 +97,4 @@ and if he wants to merge the libraries, the imported or existed file will have t
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.4/linkLibrary-1.4.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.5/linkLibrary-1.5.nvda-addon
