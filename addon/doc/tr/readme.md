@@ -1,20 +1,7 @@
----
-autonumber-headings: false
-extratags: true
-extratags-back: true
-filename: readme
-lang: tr
-mathjax: false
-path: 'C:\Users\ITU\AppData\Roaming\nvda\addons\linkLibrary\doc\tr\'
-template: default
-title: Bağlantı Kitaplığı
-toc: false
-...
-
 # Bağlantı Kitaplığı #
 
 Yazar: İbrahim Hamadeh  
-[Sürüm 1.2.5][1]  İndir.  
+[Sürüm 1.5][1]  İndir.  
 NVDA uyumluluğu: 2019.3 ve sonrası.  
 
 Bu eklenti, kullanıcının bağlantılarını veya yer imlerini kitaplıkta olduğu gibi düzenlemesine yardımcı olur.  
@@ -55,6 +42,10 @@ NVDA menüsü>tercihler>girdi Hareketleri>Bağlantı Kitaplığı.
 *	Kalıcı yapmak istiyorsanız, özellikle ayarlarınız genel ayarlar iletişim kutusunda çıkışta kaydetmeye ayarlı değilse, kontrol+nvda+c tuşlarına basarak ayarları kaydetmeniz gerekir.  
 *	Veri dosyalarını ana kullanıcı dizininde barındıracak klasörü oluşturmanın, bilgisayardaki tüm eklenti örneklerinin aynı dosyaları veya veri tabanını paylaşabilmesine yardımcı olduğunu belirtmekte fayda var.  
 *	örneğin dropbox gibi başka bir yol seçmek, kullanıcıya, aynı dropbox hesabını kullanan başka bir bilgisayardaki eklenti örnekleriyle aynı klasörü veya veri tabanını paylaşma yeteneği verecektir.  
+
+### 1.5 için değişiklikler ###
+
+*	Artık istediğiniz bağlantıyı bulunduğu kitaplıktan bir başka kitaplığa taşıyabilirsiniz. Bu, işlem, açılır menü aracılığıyla gerçekleştirilebilir. Bağlantıyı şuraya taşı, ardından alt menüden kitaplığı seçebilir ve üzerinde enter tuşuna basabilirsiniz.
 
 ### 1.4 için değişiklikler ###
 
@@ -104,4 +95,4 @@ Kütüphaneleri birleştirmek isterse, içe aktarılan veya var olan dosyanın i
 
 Herhangi bir hata veya öneri olması durumunda [bana bir e-posta gönderebilirsiniz.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.2.5/linkLibrary-1.2.5.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.5/linkLibrary-1.5.nvda-addon

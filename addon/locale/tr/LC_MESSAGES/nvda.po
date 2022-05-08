@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 'linkLibrary' '1.4'\n"
+"Project-Id-Version: 'linkLibrary' '1.5'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2022-03-05 18:50+0300\n"
-"PO-Revision-Date: 2022-03-05 18:54+0300\n"
+"POT-Creation-Date: 2022-05-05 16:29+0300\n"
+"PO-Revision-Date: 2022-05-05 16:43+0300\n"
 "Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language-Team: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language: tr_TR\n"
@@ -34,7 +34,7 @@ msgstr "Bağlantı Kitap&lığı"
 
 #: globalPlugins/linkLibrary/__init__.py:89
 msgid "Link Library Setting..."
-msgstr "Bağlantı Kitaplığı Ayarları"
+msgstr "Bağlantı Kitaplığı Ayarları."
 
 #: globalPlugins/linkLibrary/__init__.py:94
 msgid "Open Library Dialog"
@@ -58,7 +58,7 @@ msgstr "Bağlantı Kitaplığı Ayarları"
 
 #: globalPlugins/linkLibrary/__init__.py:155
 msgid "Choose Path to store Data Files"
-msgstr "Veri Dosyalarını depolamak için Dizin seç."
+msgstr "Veri Dosyalarını depolamak için Dizin seç"
 
 #: globalPlugins/linkLibrary/__init__.py:160
 msgid "Add New Path"
@@ -81,10 +81,11 @@ msgstr "Bu dizin({}) kalıcı olarak kaldırılacak. Bu işlem geri alınamaz."
 #: globalPlugins/linkLibrary/__init__.py:440
 #: globalPlugins/linkLibrary/libraryDialog.py:31
 #: globalPlugins/linkLibrary/libraryDialog.py:408
-#: globalPlugins/linkLibrary/linkDialog.py:35
-#: globalPlugins/linkLibrary/linkDialog.py:53
-#: globalPlugins/linkLibrary/linkDialog.py:172
-#: globalPlugins/linkLibrary/linkDialog.py:193
+#: globalPlugins/linkLibrary/linkDialog.py:36
+#: globalPlugins/linkLibrary/linkDialog.py:54
+#: globalPlugins/linkLibrary/linkDialog.py:197
+#: globalPlugins/linkLibrary/linkDialog.py:229
+#: globalPlugins/linkLibrary/linkDialog.py:250
 msgid "Warning"
 msgstr "Uyarı"
 
@@ -98,7 +99,7 @@ msgid ""
 "press Continue"
 msgstr ""
 "Kitaplıklar klasörünü kopyalamak için lütfen dizini ve diğer seçenekleri "
-"seçin ve ardından Devam'a basın."
+"seçin ve ardından Devam'a basın"
 
 #: globalPlugins/linkLibrary/__init__.py:258
 msgid "Destination &directory:"
@@ -138,7 +139,8 @@ msgstr "Lütfen bir dizin belirtin."
 #: globalPlugins/linkLibrary/libraryDialog.py:145
 #: globalPlugins/linkLibrary/libraryDialog.py:171
 #: globalPlugins/linkLibrary/libraryDialog.py:210
-#: globalPlugins/linkLibrary/linkDialog.py:276
+#: globalPlugins/linkLibrary/linkDialog.py:208
+#: globalPlugins/linkLibrary/linkDialog.py:335
 #: globalPlugins/linkLibrary/links.py:68
 msgid "Error"
 msgstr "Hata"
@@ -166,7 +168,7 @@ msgid ""
 "import, and then press Continue"
 msgstr ""
 "Kitaplıklar klasörünü içe aktarmak için lütfen içe aktarmak istediğiniz "
-"klasörü seçin ve ardından Devam'a basın."
+"klasörü seçin ve ardından Devam'a basın"
 
 #: globalPlugins/linkLibrary/__init__.py:333
 msgid "Directory of folder you want to import:"
@@ -311,12 +313,12 @@ msgid "Remove"
 msgstr "Kaldır"
 
 #: globalPlugins/linkLibrary/libraryDialog.py:303
-#: globalPlugins/linkLibrary/linkDialog.py:234
+#: globalPlugins/linkLibrary/linkDialog.py:293
 msgid "OK"
 msgstr "Tamam"
 
 #: globalPlugins/linkLibrary/libraryDialog.py:309
-#: globalPlugins/linkLibrary/linkDialog.py:237
+#: globalPlugins/linkLibrary/linkDialog.py:296
 msgid "Cancel"
 msgstr "İptal"
 
@@ -326,7 +328,7 @@ msgstr "Bilgi: Dizin oluşturulamadı."
 
 #: globalPlugins/linkLibrary/libraryDialog.py:358
 msgid "Enter library name please"
-msgstr "Kütüphane adını girin lütfen"
+msgstr "Lütfen kütüphane adını girin"
 
 #: globalPlugins/linkLibrary/libraryDialog.py:360
 msgid "Add Library"
@@ -334,11 +336,11 @@ msgstr "Kitaplık Ekle"
 
 #: globalPlugins/linkLibrary/libraryDialog.py:380
 msgid "Enter new name please"
-msgstr "Yeni isim girin lütfen"
+msgstr "Lütfen yeni ad girin"
 
 #: globalPlugins/linkLibrary/libraryDialog.py:382
 msgid "rename"
-msgstr "Yeniden Adlandır"
+msgstr "yeniden Adlandır"
 
 #: globalPlugins/linkLibrary/libraryDialog.py:406
 msgid "Are you sure you want to remove {} library, this can not be undone?"
@@ -354,56 +356,74 @@ msgstr ""
 msgid "information"
 msgstr "bilgi"
 
-#: globalPlugins/linkLibrary/linkDialog.py:34
+#: globalPlugins/linkLibrary/linkDialog.py:35
 msgid "This url is for {}; please enter another one"
 msgstr "Bu url {} içindir; lütfen başka bir tane girin"
 
-#: globalPlugins/linkLibrary/linkDialog.py:52
+#: globalPlugins/linkLibrary/linkDialog.py:53
 msgid "This label({}) is chosen for {}; please enter another one"
 msgstr "Bu etiket({}), {} için seçili; lütfen başka bir tane girin"
 
-#: globalPlugins/linkLibrary/linkDialog.py:101
+#: globalPlugins/linkLibrary/linkDialog.py:102
 msgid "Add A Link"
 msgstr "Bağlantı Ekle"
 
-#: globalPlugins/linkLibrary/linkDialog.py:108
+#: globalPlugins/linkLibrary/linkDialog.py:109
 msgid "Edit Selected "
-msgstr "Seçileni Düzenle"
+msgstr "Seçileni Düzenle "
 
-#: globalPlugins/linkLibrary/linkDialog.py:115
+#: globalPlugins/linkLibrary/linkDialog.py:125
+msgid "Move Link To"
+msgstr "Bağlantıyı Şuraya Taşı"
+
+#: globalPlugins/linkLibrary/linkDialog.py:130
 msgid "Remove Selected "
-msgstr "Seçili olanları Kaldır"
+msgstr "Seçili olanları Kaldır "
 
-#: globalPlugins/linkLibrary/linkDialog.py:122
+#: globalPlugins/linkLibrary/linkDialog.py:137
 msgid "Remove All "
-msgstr "Tümünü kaldır"
+msgstr "Tümünü kaldır "
 
-#: globalPlugins/linkLibrary/linkDialog.py:128
+#: globalPlugins/linkLibrary/linkDialog.py:143
 msgid "Enter Link source(www...)"
 msgstr "Bağlantı kaynağını girin(www...)"
 
-#: globalPlugins/linkLibrary/linkDialog.py:130
-#: globalPlugins/linkLibrary/linkDialog.py:227
+#: globalPlugins/linkLibrary/linkDialog.py:145
+#: globalPlugins/linkLibrary/linkDialog.py:286
 msgid "Url:"
 msgstr "URL:"
 
-#: globalPlugins/linkLibrary/linkDialog.py:135
+#: globalPlugins/linkLibrary/linkDialog.py:150
 msgid "Enter Link Label Please"
-msgstr "Bağlantı Etiketini Girin Lütfen"
+msgstr "Lütfen Bağlantı Etiketini Girin"
 
-#: globalPlugins/linkLibrary/linkDialog.py:137
+#: globalPlugins/linkLibrary/linkDialog.py:152
 msgid "Link Label"
 msgstr "Bağlantı Etiketi"
 
-#: globalPlugins/linkLibrary/linkDialog.py:142
+#: globalPlugins/linkLibrary/linkDialog.py:157
 msgid "Write Something About The Link"
 msgstr "Bağlantı Hakkında Bir Şey Yazın"
 
-#: globalPlugins/linkLibrary/linkDialog.py:144
+#: globalPlugins/linkLibrary/linkDialog.py:159
 msgid "About"
 msgstr "Hakkında"
 
-#: globalPlugins/linkLibrary/linkDialog.py:170
+#: globalPlugins/linkLibrary/linkDialog.py:194
+#, python-brace-format
+msgid ""
+"This link is already present in {library} library, under {label} label;\n"
+" Do you still want to replace it with the one you are about to move?."
+msgstr ""
+"Bu bağlantı {library} kitaplığında, {label} etiketinin altında zaten "
+"mevcut;\n"
+" Var olanı, taşımakta olduğunuz ile değiştirmek istediğinizden emin misiniz?"
+
+#: globalPlugins/linkLibrary/linkDialog.py:206
+msgid "Unable to move the link to another library"
+msgstr "Bağlantı başka bir kitaplığa taşınamıyor"
+
+#: globalPlugins/linkLibrary/linkDialog.py:227
 msgid ""
 "Are you sure you want to remove the link labeled {} from the library?, this "
 "can not be undone."
@@ -411,7 +431,7 @@ msgstr ""
 "{} etiketli bağlantıyı kitaplıktan kaldırmak istediğinizden emin misiniz?, "
 "bu işlem geri alınamaz."
 
-#: globalPlugins/linkLibrary/linkDialog.py:191
+#: globalPlugins/linkLibrary/linkDialog.py:248
 msgid ""
 "Are you sure you want to remove all links from this library?, this can not "
 "be undone."
@@ -419,23 +439,23 @@ msgstr ""
 "Bu kitaplıktan tüm bağlantıları kaldırmak istediğinizden emin misiniz?, bu "
 "işlem geri alınamaz."
 
-#: globalPlugins/linkLibrary/linkDialog.py:214
+#: globalPlugins/linkLibrary/linkDialog.py:273
 msgid "List Of Links"
 msgstr "Bağlantı Listesi"
 
-#: globalPlugins/linkLibrary/linkDialog.py:218
+#: globalPlugins/linkLibrary/linkDialog.py:277
 msgid "About The Link"
 msgstr "Bağlantı Hakkında"
 
-#: globalPlugins/linkLibrary/linkDialog.py:224
+#: globalPlugins/linkLibrary/linkDialog.py:283
 msgid "Show Source Url"
 msgstr "Kaynak URL'yi Göster"
 
-#: globalPlugins/linkLibrary/linkDialog.py:232
+#: globalPlugins/linkLibrary/linkDialog.py:291
 msgid "Open Link With"
 msgstr "Bağlantıyı Şununla Aç"
 
-#: globalPlugins/linkLibrary/linkDialog.py:274
+#: globalPlugins/linkLibrary/linkDialog.py:333
 #: globalPlugins/linkLibrary/links.py:66
 msgid "Unable to load links data"
 msgstr "Bağlantı verileri yüklenemiyor"
