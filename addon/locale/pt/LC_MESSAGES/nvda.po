@@ -1,0 +1,607 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 'linkLibrary' '1.6'\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2022-05-04 18:43+0300\n"
+"PO-Revision-Date: 2022-09-30 22:17+0100\n"
+"Last-Translator: Ângelo Abrantes <ampa4374@gmail.com>\n"
+"Language-Team: Equipa portuguesa do NVDA: Ângelo Abrantes e Rui Fontes "
+"(29-09-2022)\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../../globalPlugins\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#. Translators: message asking the user if he wants to decline creating the data folder in the home user directory.
+#: addon\installTasks.py:31
+msgid ""
+"Creating folder to store data files in home user directory ...\n"
+"You can press on Cancel button to skipt this, and adjust this later from the "
+"addon's settings dialog,Do you wants to proceed in creating the addons data "
+"folder in your home user directory?"
+msgstr ""
+"Criação de pasta para armazenar ficheiros de dados na pasta de utilizadores "
+"domésticos ...\n"
+"Pode pressionar o botão Cancelar para saltar isto, e ajustar mais tarde a "
+"partir do diálogo de configurações do extra, Deseja criar a pasta de dados "
+"do extra na sua pasta de utilizador doméstico?"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+#: addon\globalPlugins\linkLibrary\__init__.py:74 buildVars.py:23
+msgid "Link Library"
+msgstr "Biblioteca de links"
+
+#. Translators: label of submenu.
+#: addon\globalPlugins\linkLibrary\__init__.py:85
+msgid "&Link Library"
+msgstr "&Biblioteca de links"
+
+#. Translators: Label of Link Library Setting menu item
+#: addon\globalPlugins\linkLibrary\__init__.py:89
+msgid "Link Library Setting..."
+msgstr "Configuração da biblioteca de links..."
+
+#. Translators: Label of Open Library Dialog menu item
+#: addon\globalPlugins\linkLibrary\__init__.py:94
+msgid "Open Library Dialog"
+msgstr "Abrir o Diálogo da Biblioteca"
+
+#. Translators: Label of Copy Library Folder menu item
+#: addon\globalPlugins\linkLibrary\__init__.py:99
+msgid "Copy Library Folder"
+msgstr "Copiar pasta da biblioteca"
+
+#. Translators: Label of Import Library Folder menu item
+#: addon\globalPlugins\linkLibrary\__init__.py:104
+msgid "Import Library Folder"
+msgstr "Importar a pasta da biblioteca"
+
+#. Translators: message displayed in input help mode for openning  link library dialog.
+#: addon\globalPlugins\linkLibrary\__init__.py:142
+msgid "Open  Link Library dialog."
+msgstr "Abrir diálogo da Biblioteca de Links."
+
+#. Translators: title of the dialog
+#: addon\globalPlugins\linkLibrary\__init__.py:147
+msgid "Link Library Settings"
+msgstr "Configurações da biblioteca de links"
+
+#. Translators: label of cumbo box of available paths to contain data files.
+#: addon\globalPlugins\linkLibrary\__init__.py:155
+msgid "Choose Path to store Data Files"
+msgstr "Escolha o caminho para armazenar os ficheiros de dados"
+
+#. Translators: label of button to add a new path.
+#: addon\globalPlugins\linkLibrary\__init__.py:160
+msgid "Add New Path"
+msgstr "Adicionar novo caminho"
+
+#. Translators: label of Remove path button.
+#: addon\globalPlugins\linkLibrary\__init__.py:165
+msgid "Remove Selected Path"
+msgstr "Remover o caminho selecionado"
+
+#. Translators: label of the check box
+#: addon\globalPlugins\linkLibrary\__init__.py:171
+msgid "&Close dialog after activating a link"
+msgstr "&Fechar diálogo depois de ativar um link"
+
+#. Translators: The confirmation prompt displayed when the user requests to remove the selected path.
+#: addon\globalPlugins\linkLibrary\__init__.py:199
+msgid ""
+"This path({}) will be permanently removed. This action cannot be undone."
+msgstr ""
+"Este caminho({}) será removido permanentemente. Esta ação não pode ser "
+"desfeita."
+
+#. Translators: The title of the confirmation dialog for removal of selected path.
+#. Translators: Title of messagebox.
+#. Translators: Title of dialog.
+#. Translators: Title of message box.
+#: addon\globalPlugins\linkLibrary\__init__.py:201
+#: addon\globalPlugins\linkLibrary\__init__.py:440
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:31
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:408
+#: addon\globalPlugins\linkLibrary\linkDialog.py:36
+#: addon\globalPlugins\linkLibrary\linkDialog.py:54
+#: addon\globalPlugins\linkLibrary\linkDialog.py:197
+#: addon\globalPlugins\linkLibrary\linkDialog.py:229
+#: addon\globalPlugins\linkLibrary\linkDialog.py:250
+msgid "Warning"
+msgstr "Atenção"
+
+#. Translators: title of Copy Dialog
+#: addon\globalPlugins\linkLibrary\__init__.py:250
+msgid "Copy Libraries Folder"
+msgstr "Copiar a pasta das bibliotecas"
+
+#. Translators: An informational message displayed in the Copy dialog.
+#: addon\globalPlugins\linkLibrary\__init__.py:255
+msgid ""
+"To copy libraries folder , please select the path and other options and then "
+"press Continue"
+msgstr ""
+"Para copiar a pasta bibliotecas, selecione o caminho e outras opções e "
+"pressione Continuar"
+
+#. Translators: The label of a grouping containing controls to select the destination directory
+#: addon\globalPlugins\linkLibrary\__init__.py:258
+msgid "Destination &directory:"
+msgstr "&Pasta de destino:"
+
+#. Translators: The label of a button to browse for a directory.
+#. Translators: The label of a button to browse for the required directory.
+#: addon\globalPlugins\linkLibrary\__init__.py:262
+#: addon\globalPlugins\linkLibrary\__init__.py:336
+#: addon\globalPlugins\linkLibrary\__init__.py:417
+msgid "Browse..."
+msgstr "Localizar..."
+
+#. Translators: The title of the dialog presented when browsing for the destination directory
+#. Translators: The title of the dialog presented when browsing for the directory to be imported.
+#: addon\globalPlugins\linkLibrary\__init__.py:264
+#: addon\globalPlugins\linkLibrary\__init__.py:419
+msgid "Select Directory"
+msgstr "Selecionar pasta"
+
+#. Translators: Label of continue button
+#: addon\globalPlugins\linkLibrary\__init__.py:270
+#: addon\globalPlugins\linkLibrary\__init__.py:342
+msgid "&Continue"
+msgstr "&Continuar"
+
+#. Translators: The message displayed when the user has not specified a destination directory
+#. Translators: Message displayedwhen no directory is specified.
+#. Translators: The message displayed when the user has not specified a directory
+#: addon\globalPlugins\linkLibrary\__init__.py:285
+#: addon\globalPlugins\linkLibrary\__init__.py:356
+#: addon\globalPlugins\linkLibrary\__init__.py:439
+msgid "Please specify a directory."
+msgstr "Por favor, especifique uma pasta."
+
+#. Translators: Title of dialog
+#. label of dialog
+#. Translators: label of dialog
+#. Translators: title of error dialog .
+#. Translators: Title of message box
+#: addon\globalPlugins\linkLibrary\__init__.py:287
+#: addon\globalPlugins\linkLibrary\__init__.py:293
+#: addon\globalPlugins\linkLibrary\__init__.py:312
+#: addon\globalPlugins\linkLibrary\__init__.py:358
+#: addon\globalPlugins\linkLibrary\__init__.py:363
+#: addon\globalPlugins\linkLibrary\__init__.py:375
+#: addon\globalPlugins\linkLibrary\__init__.py:390
+#: addon\globalPlugins\linkLibrary\__init__.py:445
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:127
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:145
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:171
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:210
+#: addon\globalPlugins\linkLibrary\linkDialog.py:208
+#: addon\globalPlugins\linkLibrary\linkDialog.py:335
+#: addon\globalPlugins\linkLibrary\links.py:68
+msgid "Error"
+msgstr "Erro"
+
+#. Translators: The message displayed when the user specifies an invalid destination directory
+#: addon\globalPlugins\linkLibrary\__init__.py:291
+#, python-format
+msgid "%s is invalid, please select a valid directory path."
+msgstr "%s é inválido, favor selecionar um caminho de pasta válido."
+
+#. Translators: message presented when copy fails
+#: addon\globalPlugins\linkLibrary\__init__.py:310
+msgid "Sorry, copying libraries folder did not succeed"
+msgstr "Desculpe, a cópia da pasta das bibliotecas não foi bem sucedida"
+
+#: addon\globalPlugins\linkLibrary\__init__.py:315
+msgid "Information:Folder Copied"
+msgstr "Informações:Pasta copiada"
+
+#. Translators: title of import dialog
+#: addon\globalPlugins\linkLibrary\__init__.py:325
+msgid "Import Libraries Folder"
+msgstr "Importar a Pasta de Bibliotecas"
+
+#. Translators: An informational message displayed in the Import dialog.
+#: addon\globalPlugins\linkLibrary\__init__.py:330
+msgid ""
+"To import libraries folder , please select the path of folder you want to "
+"import, and then press Continue"
+msgstr ""
+"Para importar a pasta das bibliotecas, selecione o caminho da pasta que você "
+"deseja importar e pressione Continuar"
+
+#. Translators: The label of a grouping containing controls to select the destination directory in the Import dialog.
+#: addon\globalPlugins\linkLibrary\__init__.py:333
+msgid "Directory of folder you want to import:"
+msgstr "Diretório da pasta que deseja importar:"
+
+#. Translators: The title of the dialog presented when browsing for the directory to be imported.
+#: addon\globalPlugins\linkLibrary\__init__.py:338
+msgid "Select Directory to import"
+msgstr "Selecionar pasta para importar"
+
+#. Translators: message displayed when path selected is not valid
+#: addon\globalPlugins\linkLibrary\__init__.py:362
+#: addon\globalPlugins\linkLibrary\__init__.py:444
+#, python-format
+msgid "Sorry, but %s is invalid path."
+msgstr "Desculpe, mas %s é um caminho inválido."
+
+#. Translators: message displayed when folder to be imported not named linkLibrary-addonFiles, or all files in it has not .json extension
+#: addon\globalPlugins\linkLibrary\__init__.py:374
+msgid ""
+"Check that the folder name is linkLibrary-addonFiles, and all files in it "
+"has a .json extension."
+msgstr ""
+"Verifique se o nome da pasta é linkLibrary-addonFiles, e todos os ficheiros "
+"nela existentes têm uma extensão .json."
+
+#. Translators: message to warn the user that the old library folder will be removed.
+#: addon\globalPlugins\linkLibrary\__init__.py:378
+msgid ""
+"You should be aware by this import, the old linkLibrary-addonFiles will be "
+"removed and replaced by the newly imported one,\n"
+"and this can not be undone, are you sure you want to proceed?"
+msgstr ""
+"Deve estar ciente dos resultados desta importação: os ficheiros antigos da "
+"biblioteca de links serão removidos e substituídos pelos recém-importados.\n"
+"Isto não pode ser revertido; tem a certeza de que quer prosseguir?"
+
+#. Translators: message presented when import folder fails
+#: addon\globalPlugins\linkLibrary\__init__.py:389
+msgid "Import libraries folder failed."
+msgstr "A pasta de importação de bibliotecas falhou."
+
+#. Translators: message presented when importing libraries folder succeeded.
+#: addon\globalPlugins\linkLibrary\__init__.py:394
+msgid "Information: Libraries folder imported successfuly."
+msgstr "Informações: Pasta de bibliotecas importadas com sucesso."
+
+#. Translators: Title of dialog.
+#: addon\globalPlugins\linkLibrary\__init__.py:403
+msgid "Add new path"
+msgstr "Adicionar novo caminho"
+
+#. Translators: The label of a grouping containing controls to select the destination directory in the Import dialog.
+#: addon\globalPlugins\linkLibrary\__init__.py:410
+msgid "Path of the directory:(c:\\users\\...)"
+msgstr "Caminho da pasta:(c:utilizador...)"
+
+#. Translators: Label of text control to enter path name.
+#: addon\globalPlugins\linkLibrary\__init__.py:414
+msgid ""
+"Enter a general name for the path(example dropbox or Documents or any other)"
+msgstr ""
+"Digite um nome geral para o caminho (exemplo caixa de dropbox ou Documentos "
+"ou qualquer outro)"
+
+#: addon\globalPlugins\linkLibrary\__init__.py:423
+msgid "Ok"
+msgstr "Ok"
+
+#. Translators: message displayed when the name is present for another library.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:29
+msgid ""
+"This name is already present for another library, enter another name please"
+msgstr ""
+"Este nome já está presente para outra biblioteca, digite outro nome, por "
+"favor"
+
+#. Translators: label of menu to export library as json file
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:90
+msgid "Json File"
+msgstr "Ficheiro do JSON"
+
+#. Translators: label of menu to export library as html.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:93
+msgid "Html File"
+msgstr "Ficheiro Html"
+
+#. Translators: label obj subMenu items for exporting a library.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:96
+msgid "Export Library As"
+msgstr "Exportar Biblioteca como"
+
+#. Translators: label obj menu items to import a library.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:103
+msgid "Import Library(as Json)"
+msgstr "Importar Biblioteca (como Json)"
+
+#. Translators: message of error dialog displayed when cannot export library file.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:125
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:169
+msgid "Failed to export library"
+msgstr "Falha na exportação da biblioteca"
+
+#. Translators: Message presented when library has been exported.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:133
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:177
+msgid "Information: Library Exported"
+msgstr "Informações: Biblioteca Exportada"
+
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:144
+msgid "Failed to open library, or may be library file is not valid."
+msgstr ""
+"Falha ao abrir a biblioteca, ou pode ser um ficheiro de biblioteca que não "
+"seja válido."
+
+#. validation of the json file did not succeed
+#. Translators: Message to be displayed when import fails due to validation problem
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:196
+msgid "Importfailed; chosen file seems not valid."
+msgstr "Importação falhada; o ficheiro escolhido parece não ser válido."
+
+#. Translators: Title of message box
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:198
+msgid "Import Error"
+msgstr "Erro de importação"
+
+#. Translators: Message displayed when importing failed after validation succeeded
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:208
+msgid "Sorry, importing of library failed"
+msgstr "Desculpe, a importação da biblioteca falhou"
+
+#. Translators: Message presented when library has been imported.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:220
+msgid "Information: Library imported."
+msgstr "Informações: Biblioteca importada."
+
+#. Translators: Ask the user if he wants to merge the two libraries or not.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:226
+msgid ""
+"A library with similar name already exists, do you want to merge the two "
+"libraries?"
+msgstr ""
+"Já existe uma biblioteca com nome semelhante, quer fundir as duas "
+"bibliotecas?"
+
+#. Translators: Title of message box
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:228
+msgid "Information"
+msgstr "Informações"
+
+#. pathLabel is the label chosen by the user, for the directory that stores the data files
+#. Translators: Title of dialog with the path label as suffix.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:263
+msgid "Link Library - {}"
+msgstr "Biblioteca de Links - {}"
+
+#. Translators: label of libraries list box.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:272
+msgid "Choose a library"
+msgstr "Escolha uma biblioteca"
+
+#. Translators: Label of Add button
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:286
+msgid "Add"
+msgstr "Adicionar"
+
+#. Translators: Label of Rename button
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:292
+msgid "Rename"
+msgstr "Renomear"
+
+#. Translators: Label of Remove button
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:298
+msgid "Remove"
+msgstr "Remover"
+
+#. Translators: Label of OK button
+#. Translators: Label of OK button.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:303
+#: addon\globalPlugins\linkLibrary\linkDialog.py:293
+msgid "OK"
+msgstr "OK"
+
+#. Translators: Label of Cancel button
+#. Label of cancel button.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:309
+#: addon\globalPlugins\linkLibrary\linkDialog.py:296
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. Translators: Message displayed when failing to create new directory for data files
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:330
+msgid "Information:Failed to create directory."
+msgstr "Informações:Falha na criação da pasta."
+
+#. Translators: Message displayed when adding a new library.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:358
+msgid "Enter library name please"
+msgstr "Digite o nome da biblioteca, por favor"
+
+#. Translators: Title of dialog.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:360
+msgid "Add Library"
+msgstr "Adicionar biblioteca"
+
+#. Translators: Message displayed when renaming a library
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:380
+msgid "Enter new name please"
+msgstr "Digite um novo nome, por favor"
+
+#. Translators: Title of dialog to enter new name.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:382
+msgid "rename"
+msgstr "renomear"
+
+#. Translators: Message displayed upon removing a library.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:406
+msgid "Are you sure you want to remove {} library, this can not be undone?"
+msgstr ""
+"Tem a certeza de que quer remover a biblioteca {}, isto não pode ser "
+"desfeito?"
+
+#. Translators: Message be displayed when a library dialog is already opened.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:446
+msgid "A library dialog is already opened; Close it first please."
+msgstr "Um diálogo de biblioteca já está aberto; feche-o primeiro, por favor."
+
+#. Translators: Title of dialog.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:448
+msgid "information"
+msgstr "informação"
+
+#. Translators: message displayed when the url is present for another link.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:35
+msgid "This url is for {}; please enter another one"
+msgstr "Esta url é para {}; por favor, digite outra url"
+
+#. Translators: message displayed when the label is present for another link.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:53
+msgid "This label({}) is chosen for {}; please enter another one"
+msgstr "Esta etiqueta({}) é escolhida para {}; por favor insira outra"
+
+#. Translators: label obj menu items to add a link.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:102
+msgid "Add A Link"
+msgstr "Adicionar um link"
+
+#. Translators: label of menu items to edit a link.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:109
+msgid "Edit Selected "
+msgstr "Editar Selecionado "
+
+#. Translators: label obj subMenu items for moving a link.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:125
+msgid "Move Link To"
+msgstr "Mover link para"
+
+#. Translators: label of menu items to remove a link.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:130
+msgid "Remove Selected "
+msgstr "Remover Selecionado "
+
+#. Translators: label of menu items to remove all links.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:137
+msgid "Remove All "
+msgstr "Remover todos "
+
+#. Translators: getting the url of the link
+#: addon\globalPlugins\linkLibrary\linkDialog.py:143
+msgid "Enter Link source(www...)"
+msgstr "Escreva a fonte do Link (www...)"
+
+#. Translators: title of dialog.
+#. Translators: Label of the text control that shows the url .
+#: addon\globalPlugins\linkLibrary\linkDialog.py:145
+#: addon\globalPlugins\linkLibrary\linkDialog.py:286
+msgid "Url:"
+msgstr "Url:"
+
+#. Translators: getting the label of the link.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:150
+msgid "Enter Link Label Please"
+msgstr "Digite etiqueta para o Link, Por favor"
+
+#. Translators: title of dialog.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:152
+msgid "Link Label"
+msgstr "Rótulo do Link"
+
+#. Translators: getting the about of the link
+#: addon\globalPlugins\linkLibrary\linkDialog.py:157
+msgid "Write Something About The Link"
+msgstr "Escreva algo sobre o link"
+
+#. Translators: title of dialog.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:159
+msgid "About"
+msgstr "Sobre"
+
+#. Translators: Message displayed when trying to move a link already present in the other library.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:194
+msgid ""
+"This link is already present in {library} library, under {label} label;\n"
+" Do you still want to replace it with the one you are about to move?."
+msgstr ""
+"Este link já está presente na biblioteca {library}, sob a etiqueta {label};\n"
+" Ainda quer substituí-lo por aquele que está prestes a mover?."
+
+#. Translators: Message displayed when getting an error trying to move a link from one library to another.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:206
+msgid "Unable to move the link to another library"
+msgstr "Incapaz de mover o link para outra biblioteca"
+
+#. Translators: Message displayed when trying to remove a link.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:227
+msgid ""
+"Are you sure you want to remove the link labeled {} from the library?, this "
+"can not be undone."
+msgstr ""
+"Tem a certeza de que quer remover o link etiquetado {} da biblioteca?, isto "
+"não pode ser desfeito."
+
+#. Translators: Message displayed when trying to remove all links.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:248
+msgid ""
+"Are you sure you want to remove all links from this library?, this can not "
+"be undone."
+msgstr ""
+"Você tem certeza de que quer remover todos os links desta biblioteca?, isto "
+"não pode ser desfeito."
+
+#. Translators: Label for the list of links.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:273
+msgid "List Of Links"
+msgstr "Lista de links"
+
+#. Translators: Label of about the link text control.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:277
+msgid "About The Link"
+msgstr "Sobre o link"
+
+#. Translators: Label of toggle button that shows or hides the source url of the link.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:283
+msgid "Show Source Url"
+msgstr "Mostrar fonte Url"
+
+#. Translators: Label of open link with button.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:291
+msgid "Open Link With"
+msgstr "Abrir Link com"
+
+#. Translators: Message displayed when getting an error trying to retreave links data
+#. Translators: Message displayed when getting an error trying to retreave link data
+#: addon\globalPlugins\linkLibrary\linkDialog.py:333
+#: addon\globalPlugins\linkLibrary\links.py:66
+msgid "Unable to load links data"
+msgstr "Incapaz de carregar dados de links"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#: buildVars.py:26
+msgid ""
+"This addon helps the user to arrange his links or bookmarks in library like "
+"way.\n"
+"From the main dialog of libraries, you can choose the library or category "
+"you like and press enter on it.\n"
+"On the opened dialog, you will have all links in that category in a list and "
+"have access to source url an the about info of each llink if present.\n"
+"This addon does not come with a default or assigned gesture or shortcut to "
+"it\n"
+"You can as always add a gesture or change the existed one going to :\n"
+"NVDA menu>preferences>inputGestures>Link Library."
+msgstr ""
+"Este extra ajuda o utilizador a organizar os seus links ou marcadores de "
+"página em bibliotecas.\n"
+"A partir do diálogo principal das bibliotecas, pode escolher a biblioteca ou "
+"categoria que gosta e pressionar enter nela.\n"
+"No diálogo aberto, terá todos os links dessa categoria, numa lista e terá "
+"acesso à url de origem e à informação sobre cada link, se presente.\n"
+"Este extra não vem com uma tecla de atalho atribuído\n"
+"Pode, como sempre, adicionar um atalho ou mudar o já existente :\n"
+"Menu do NVDA>preferências>definir comandos>biblioteca de links."
