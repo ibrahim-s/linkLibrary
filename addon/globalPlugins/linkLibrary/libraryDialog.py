@@ -371,7 +371,7 @@ class LibraryDialog(wx.Dialog):
 		except Exception as e:
 			raise e
 		LibraryDialog.libraryFiles.append(name)
-		LibraryDialog.libraryFiles.sort()
+		LibraryDialog.libraryFiles.sort(key= str.lower)
 		self.refreshLibraries(str= name)
 		# name is the item to be selected after refresh
 
@@ -393,7 +393,7 @@ class LibraryDialog(wx.Dialog):
 			os.rename(os.path.join(self.LIBRARIES_DIR, oldName+'.json'), os.path.join(self.LIBRARIES_DIR, newname+'.json'))
 			#log.info(LibraryDialog.libraryFiles)
 			LibraryDialog.libraryFiles.append(newname)
-			LibraryDialog.libraryFiles.sort()
+			LibraryDialog.libraryFiles.sort(key= str.lower)
 			self.refreshLibraries(str= newname)
 
 	def onRemove(self, evt):

@@ -8,6 +8,7 @@ import wx, gui
 import webbrowser, os
 import subprocess 
 import json
+import re
 import queueHandler
 import config
 from .links import Link
@@ -259,7 +260,7 @@ class LinkDialog(wx.Dialog):
 
 	def __init__(self, parent, filename, libraries_path):
 		super(LinkDialog, self).__init__(parent, -1, title= filename, 
-		size=(500, 300))
+		size=(500, 400))
 		# make class attribute for active library.
 		LinkDialog.activeLibrary= filename
 		self.filename= filename
@@ -269,6 +270,10 @@ class LinkDialog(wx.Dialog):
 		Link.SAVING_DIR= libraries_path
 
 		panel = wx.Panel(self, -1) 
+		# Translators: Label for search or filter control.
+		filterLabel= wx.StaticText(panel, label= _("Filter by:"))
+		self.filterControl= wx.TextCtrl(panel, -1, )
+
 		# Translators: Label for the list of links.
 		listLabel= wx.StaticText(panel, -1, _("List Of Links"))
 		self.listBox= wx.ListBox(panel, -1, style= wx.LB_SINGLE)
@@ -296,10 +301,11 @@ class LinkDialog(wx.Dialog):
 		self.cancelButton= wx.Button(panel, id= wx.ID_CANCEL, label= _("Cancel"))
 
 		sizer = wx.FlexGridSizer(cols=2, hgap=6, vgap=6)
-		sizer.AddMany([listLabel, self.listBox, aboutLabel, self.aboutText, self.showOrHideUrlButton,urlLabel, self.urlText, self.openLinkWithButton, self.okButton, self.cancelButton])
+		sizer.AddMany([filterLabel, self.filterControl, listLabel, self.listBox, aboutLabel, self.aboutText, self.showOrHideUrlButton,urlLabel, self.urlText, self.openLinkWithButton, self.okButton, self.cancelButton])
 		panel.SetSizer(sizer)
 
 		#make bindings
+		self.filterControl.Bind(wx.EVT_TEXT, self.onFilterTextChange)
 		self.listBox.Bind(wx.EVT_LISTBOX, self.onKillFocus)
 		#self.listBox.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
 		self.listBox.Bind(wx.EVT_CONTEXT_MENU, self.OnRightDown)
@@ -317,14 +323,18 @@ class LinkDialog(wx.Dialog):
 		self.populateListBox()
 		self.urlText.Hide()
 		self.Raise()
+		self.listBox.SetFocus()
 		self.Show()
 
-	def populateListBox(self, selected= None):
+	def populateListBox(self, selected= None, filteredList= None):
 		#log.info('under populateListBox')
 		Link.retreave_from_file()
 		#log.info(Link.myLinks)
-		if not Link.myLinks:
+		if filteredList is None and not Link.myLinks:
 			lst= []
+		elif filteredList is not None:
+			# it may be an empty list or not empty list.
+			lst= filteredList
 		else:
 			try:
 				lst = sorted([Link.myLinks[url]['label'] for url in Link.myLinks], key= lambda s: s.lower())
@@ -357,11 +367,33 @@ class LinkDialog(wx.Dialog):
 		[obj.Show() for obj in (self.showOrHideUrlButton, self.openLinkWithButton)]
 		self.Show()
 
-	def OnRightDown(self, e):
-		obj= e.GetEventObject()
+	def onFilterTextChange(self, evt):
+		'''Searching for text entered, in list of links of present library.'''
+		text= self.filterControl.Value
+		# In case we entered something, and deleted it.
+		if not text:
+			self.populateListBox()
+			return
+		text= text.lower()
+		labels_list= []
+		#log.info(f'text= {text}')
+		for url in Link.myLinks:
+		# Removing the url protocol, or prefex of url.
+			urlBase= re.sub(r"(?:https?://|ftp://|www.)", "", url)
+			label= Link.myLinks[url]['label']
+			# We search for text in main part of url, or in label.
+			if any(text in s.casefold() for s in (label, urlBase)):
+				labels_list.append(label)
+		#log.info(f'labels_list: {labels_list}')
+		if labels_list:
+			labels_list= sorted(labels_list, key= str.lower)
+		self.populateListBox(filteredList= labels_list)
+
+	def OnRightDown(self, evt):
+		obj= evt.GetEventObject()
 		id= obj.GetId()
 		menu= MyPopupMenu(self, id)
-		self.PopupMenu(menu, e.GetPosition())
+		self.PopupMenu(menu, evt.GetPosition())
 		menu.Destroy()
 		#log.info('destroying context menu')
 

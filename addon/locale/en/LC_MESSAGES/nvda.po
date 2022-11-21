@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 'linkLibrary' '1.5'\n"
+"Project-Id-Version: 'linkLibrary' '1.8'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2022-05-04 18:43+0300\n"
-"PO-Revision-Date: 2022-05-04 23:11+0300\n"
+"POT-Creation-Date: 2022-11-21 07:29+0200\n"
+"PO-Revision-Date: 2022-11-21 07:36+0200\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -103,11 +103,11 @@ msgstr ""
 #: addon\globalPlugins\linkLibrary\__init__.py:440
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:31
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:408
-#: addon\globalPlugins\linkLibrary\linkDialog.py:36
-#: addon\globalPlugins\linkLibrary\linkDialog.py:54
-#: addon\globalPlugins\linkLibrary\linkDialog.py:197
-#: addon\globalPlugins\linkLibrary\linkDialog.py:229
-#: addon\globalPlugins\linkLibrary\linkDialog.py:250
+#: addon\globalPlugins\linkLibrary\linkDialog.py:37
+#: addon\globalPlugins\linkLibrary\linkDialog.py:55
+#: addon\globalPlugins\linkLibrary\linkDialog.py:198
+#: addon\globalPlugins\linkLibrary\linkDialog.py:230
+#: addon\globalPlugins\linkLibrary\linkDialog.py:251
 msgid "Warning"
 msgstr ""
 
@@ -175,8 +175,8 @@ msgstr ""
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:145
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:171
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:210
-#: addon\globalPlugins\linkLibrary\linkDialog.py:208
-#: addon\globalPlugins\linkLibrary\linkDialog.py:335
+#: addon\globalPlugins\linkLibrary\linkDialog.py:209
+#: addon\globalPlugins\linkLibrary\linkDialog.py:345
 #: addon\globalPlugins\linkLibrary\links.py:68
 msgid "Error"
 msgstr ""
@@ -374,14 +374,14 @@ msgstr ""
 #. Translators: Label of OK button
 #. Translators: Label of OK button.
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:303
-#: addon\globalPlugins\linkLibrary\linkDialog.py:293
+#: addon\globalPlugins\linkLibrary\linkDialog.py:298
 msgid "OK"
 msgstr ""
 
 #. Translators: Label of Cancel button
 #. Label of cancel button.
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:309
-#: addon\globalPlugins\linkLibrary\linkDialog.py:296
+#: addon\globalPlugins\linkLibrary\linkDialog.py:301
 msgid "Cancel"
 msgstr ""
 
@@ -426,121 +426,126 @@ msgid "information"
 msgstr ""
 
 #. Translators: message displayed when the url is present for another link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:35
+#: addon\globalPlugins\linkLibrary\linkDialog.py:36
 msgid "This url is for {}; please enter another one"
 msgstr ""
 
 #. Translators: message displayed when the label is present for another link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:53
+#: addon\globalPlugins\linkLibrary\linkDialog.py:54
 msgid "This label({}) is chosen for {}; please enter another one"
 msgstr ""
 
 #. Translators: label obj menu items to add a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:102
+#: addon\globalPlugins\linkLibrary\linkDialog.py:103
 msgid "Add A Link"
 msgstr ""
 
 #. Translators: label of menu items to edit a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:109
+#: addon\globalPlugins\linkLibrary\linkDialog.py:110
 msgid "Edit Selected "
 msgstr ""
 
 #. Translators: label obj subMenu items for moving a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:125
+#: addon\globalPlugins\linkLibrary\linkDialog.py:126
 msgid "Move Link To"
 msgstr ""
 
 #. Translators: label of menu items to remove a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:130
+#: addon\globalPlugins\linkLibrary\linkDialog.py:131
 msgid "Remove Selected "
 msgstr ""
 
 #. Translators: label of menu items to remove all links.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:137
+#: addon\globalPlugins\linkLibrary\linkDialog.py:138
 msgid "Remove All "
 msgstr ""
 
 #. Translators: getting the url of the link
-#: addon\globalPlugins\linkLibrary\linkDialog.py:143
+#: addon\globalPlugins\linkLibrary\linkDialog.py:144
 msgid "Enter Link source(www...)"
 msgstr ""
 
 #. Translators: title of dialog.
 #. Translators: Label of the text control that shows the url .
-#: addon\globalPlugins\linkLibrary\linkDialog.py:145
-#: addon\globalPlugins\linkLibrary\linkDialog.py:286
+#: addon\globalPlugins\linkLibrary\linkDialog.py:146
+#: addon\globalPlugins\linkLibrary\linkDialog.py:291
 msgid "Url:"
 msgstr ""
 
 #. Translators: getting the label of the link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:150
+#: addon\globalPlugins\linkLibrary\linkDialog.py:151
 msgid "Enter Link Label Please"
 msgstr ""
 
 #. Translators: title of dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:152
+#: addon\globalPlugins\linkLibrary\linkDialog.py:153
 msgid "Link Label"
 msgstr ""
 
 #. Translators: getting the about of the link
-#: addon\globalPlugins\linkLibrary\linkDialog.py:157
+#: addon\globalPlugins\linkLibrary\linkDialog.py:158
 msgid "Write Something About The Link"
 msgstr ""
 
 #. Translators: title of dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:159
+#: addon\globalPlugins\linkLibrary\linkDialog.py:160
 msgid "About"
 msgstr ""
 
 #. Translators: Message displayed when trying to move a link already present in the other library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:194
+#: addon\globalPlugins\linkLibrary\linkDialog.py:195
 msgid ""
 "This link is already present in {library} library, under {label} label;\n"
 " Do you still want to replace it with the one you are about to move?."
 msgstr ""
 
 #. Translators: Message displayed when getting an error trying to move a link from one library to another.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:206
+#: addon\globalPlugins\linkLibrary\linkDialog.py:207
 msgid "Unable to move the link to another library"
 msgstr ""
 
 #. Translators: Message displayed when trying to remove a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:227
+#: addon\globalPlugins\linkLibrary\linkDialog.py:228
 msgid ""
 "Are you sure you want to remove the link labeled {} from the library?, this "
 "can not be undone."
 msgstr ""
 
 #. Translators: Message displayed when trying to remove all links.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:248
+#: addon\globalPlugins\linkLibrary\linkDialog.py:249
 msgid ""
 "Are you sure you want to remove all links from this library?, this can not "
 "be undone."
 msgstr ""
 
+#. Translators: Label for search or filter control.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:274
+msgid "Filter by:"
+msgstr ""
+
 #. Translators: Label for the list of links.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:273
+#: addon\globalPlugins\linkLibrary\linkDialog.py:278
 msgid "List Of Links"
 msgstr ""
 
 #. Translators: Label of about the link text control.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:277
+#: addon\globalPlugins\linkLibrary\linkDialog.py:282
 msgid "About The Link"
 msgstr ""
 
 #. Translators: Label of toggle button that shows or hides the source url of the link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:283
+#: addon\globalPlugins\linkLibrary\linkDialog.py:288
 msgid "Show Source Url"
 msgstr ""
 
 #. Translators: Label of open link with button.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:291
+#: addon\globalPlugins\linkLibrary\linkDialog.py:296
 msgid "Open Link With"
 msgstr ""
 
 #. Translators: Message displayed when getting an error trying to retreave links data
 #. Translators: Message displayed when getting an error trying to retreave link data
-#: addon\globalPlugins\linkLibrary\linkDialog.py:333
+#: addon\globalPlugins\linkLibrary\linkDialog.py:343
 #: addon\globalPlugins\linkLibrary\links.py:66
 msgid "Unable to load links data"
 msgstr ""

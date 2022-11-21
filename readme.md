@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 1.7][1]  
+Download [Version 1.8][1]  
 NVDA compatibility: 2019.3 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -25,6 +25,7 @@ NVDA menu>preferences>inputGestures>Link Library.
 application key, to add a link by entering the url, label and optionaly the about of the link.  
 *	Standing on any link in this list, pressing enter on it will open it with the default browser.  
 *	Tabing on that dialog you can access the about of the link(some information about the link ) if present, a button to show the source url, another button that gives you the option to open the link with several browsers if found on your computer.  
+*	And using the filter control there, you can filter the links that contain specific words or phrases in the library.
 *	Stand on the link you want in this list, and press the context menu.  
 *	From there you can add, edit, move link to another library, remove that link or all.  
 *	Now do you want to import a json library, or export any library as json or html file, Yes you can  
@@ -43,6 +44,11 @@ application key, to add a link by entering the url, label and optionaly the abou
 *	If you want to make it perminant, you have to save settings pressing control+nvda+c, especially if your settings is not set to save on exit in general settings dialog.  
 *	Worth noting that creating the folder to host the data files in the home user directory, helps that all instances of the addon on the computer can share the same files or data base  
 *	and choosing another path like dropbox for example, will give the user the ability to share the same folder or data base with instances of the addon on another computer that uses the same dropbox account.  
+
+### Changes for 1.8 ###
+
+*	Add a filter control in the dialog of each library, using it the user now can filter links in the library which only contain specific words or phrases, either in the url or label of the link.
+*	In the main dialog of libraries, after adding or renaming library, the list of libraries is arrange now alphabaticaly, and that was missing before.
 
 ### Changes for 1.7 ###
 
@@ -111,4 +117,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.7/linkLibrary-1.7.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.8/linkLibrary-1.8.nvda-addon
