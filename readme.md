@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 1.9][1]  
+Download [Version 2.0][1]  
 NVDA compatibility: 2019.3 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -44,6 +44,10 @@ application key, to add a link by entering the url, label and optionaly the abou
 *	If you want to make it perminant, you have to save settings pressing control+nvda+c, especially if your settings is not set to save on exit in general settings dialog.  
 *	Worth noting that creating the folder to host the data files in the home user directory, helps that all instances of the addon on the computer can share the same files or data base  
 *	and choosing another path like dropbox for example, will give the user the ability to share the same folder or data base with instances of the addon on another computer that uses the same dropbox account.  
+
+### Changes for 2.0 ###
+
+*	Add Simple Chinease locale.
 
 ### Changes for 1.9 ###
 
@@ -121,4 +125,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.9/linkLibrary-1.9.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.0/linkLibrary-2.0.nvda-addon
