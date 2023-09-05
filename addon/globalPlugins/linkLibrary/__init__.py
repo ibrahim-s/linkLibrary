@@ -25,7 +25,7 @@ homeDirectory= os.path.expanduser('~')
 #default configuration 
 configspec={
 	"chosenDataPath": "string(default='Home user directory')",
-	"closeDialogAfterActivatingALink": "boolean(default= False)"
+	"afterActivatingLink": "integer(default=1)"
 }
 config.conf.spec["linkLibrary"]= configspec
 
@@ -111,7 +111,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			pass
 
 	def onLinkLibrarySetting(self, evt):
-		gui.mainFrame._popupSettingsDialog(LinkDialogSettings)
+		if hasattr(gui.mainFrame, 'popupSettingsDialog'):
+			gui.mainFrame.popupSettingsDialog(LinkDialogSettings)
+		else:
+			gui.mainFrame._popupSettingsDialog(LinkDialogSettings)
 
 	def onOpenLibraryDialog(self, evt):
 		self.script_openLibraryDialog(None)
@@ -166,10 +169,19 @@ class LinkDialogSettings(gui.SettingsDialog):
 		self.removePathBtn= settingsSizerHelper.addItem( wx.Button(self, -1, label))
 		self.removePathBtn.Bind(wx.EVT_BUTTON, self.onRemovePath)
 
-		self.closeDialogCheckBox=settingsSizerHelper.addItem(wx.CheckBox(self,
-		# Translators: label of the check box 
-		label=_("&Close dialog after activating a link")))
-		self.closeDialogCheckBox.SetValue(config.conf["linkLibrary"]["closeDialogAfterActivatingALink"])
+		# A combo box, what to do after activating a link.
+		options= [
+			# Translators: Option in combo box to do nothing
+			_("Do nothing"),
+			# Translators: Option in combo box to close library window.
+			_("Close library window only"),
+			# Translators: Option in combo box to close main window of addon.
+			_("Close main window of addon")
+		]
+		self.chooseActionCumbo= settingsSizerHelper.addLabeledControl(
+			# Translators: Label of combo box
+			_("After activating a link:"), wx.Choice, choices= options)
+		self.chooseActionCumbo.SetSelection(config.conf["linkLibrary"]["afterActivatingLink"])
 
 	def postInit(self):
 		self.availablePaths.SetStringSelection(config.conf["linkLibrary"]["chosenDataPath"])
@@ -225,7 +237,7 @@ class LinkDialogSettings(gui.SettingsDialog):
 			pathsHandle["availablePaths"][key]= value
 		pathsHandle.write()
 		config.conf["linkLibrary"]["chosenDataPath"]= pathName
-		config.conf["linkLibrary"]["closeDialogAfterActivatingALink"]= self.closeDialogCheckBox.IsChecked() 
+		config.conf["linkLibrary"]["afterActivatingLink"]= self.chooseActionCumbo.GetSelection() 
 		super(LinkDialogSettings, self).onOk(evt)
 
 #Most of stuff here, copy libraries folder dialog and import libraries folder dialog is borrowed from Read Feeds by Noelia.
@@ -406,7 +418,8 @@ class AddPathDialog(wx.Dialog):
 
 		mainSizer= wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-				# Translators: The label of a grouping containing controls to select the destination directory in the Import dialog.
+
+				# Translators: The label of a grouping containing controls to select the destination directory in the Add new path dialog.
 		directoryGroupText = _("Path of the directory:(c:\\users\\...)")
 		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=directoryGroupText), wx.VERTICAL)))
 
@@ -444,7 +457,14 @@ class AddPathDialog(wx.Dialog):
 			gui.messageBox(_("Sorry, but %s is invalid path.")%pathValue,
 			_("Error"), wx.OK|wx.ICON_ERROR)
 			return
-		pathName= self.nameEntry.Value or pathValue
+		if self.nameEntry.Value.strip():
+			pathName= self.nameEntry.Value
+		else:
+			splittedPath= os.path.normpath(pathValue).split(os.sep)
+			# last part of path
+			baseName= splittedPath[-1]
+			pathName= baseName if baseName!= "linkLibrary-addonFiles" else splittedPath[-2]
+		#pathName= self.nameEntry.Value or pathValue
 		pathName= pathName.strip()
 		parent= self.parent
 		parent.pathInfoDict[pathName]= pathValue

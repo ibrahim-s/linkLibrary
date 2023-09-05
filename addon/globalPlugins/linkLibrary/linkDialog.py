@@ -459,10 +459,15 @@ class LinkDialog(wx.Dialog):
 			#log.info('destroying openWith popup menu')
 
 	def checkCloseAfterActivatingALink(self):
-		if  config.conf["linkLibrary"]["closeDialogAfterActivatingALink"]:
-			if Link.myLinks:
-				Link.save_to_file()
+		if  config.conf["linkLibrary"]["afterActivatingLink"]== 0:
+			return
+		if Link.myLinks:
+			Link.save_to_file()
+		if  config.conf["linkLibrary"]["afterActivatingLink"]== 1:
 			wx.CallLater(4000, self.Destroy)
+		elif  config.conf["linkLibrary"]["afterActivatingLink"]== 2:
+			wx.CallLater(4000, self.GetParent().Destroy)
+
 
 	def onCancel(self, evt):
 		#log.info('under onClose') 

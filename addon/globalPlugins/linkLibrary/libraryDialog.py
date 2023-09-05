@@ -259,6 +259,8 @@ class LibraryDialog(wx.Dialog):
 	def __init__(self, parent, path):
 		pathLabel= config.conf["linkLibrary"]["chosenDataPath"]
 		# pathLabel is the label chosen by the user, for the directory that stores the data files
+		# let us take only the basename of the path, after request from users
+		pathLabel= os.path.basename(pathLabel) if pathLabel.lower().startswith('c:') else pathLabel
 		# Translators: Title of dialog with the path label as suffix.
 		title= _("Link Library - {}").format(pathLabel)
 		super(LibraryDialog, self).__init__(parent, title= title)
