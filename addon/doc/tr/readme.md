@@ -1,7 +1,7 @@
 # Bağlantı Kitaplığı #
 
 Yazar: İbrahim Hamadeh  
-[Sürüm 1.8'i İndirin][1]  
+[Sürüm 2.1'i İndirin][1]  
 NVDA uyumluluğu: 2019.3 ve sonrası.  
 
 Bu eklenti, kullanıcının bağlantılarını veya yer imlerini kitaplıktaki gibi düzenlemesine yardımcı olur.  
@@ -43,6 +43,23 @@ NVDA menüsü>tercihler>Girdi hareketleri>Bağlantı Kitaplığı.
 *	Kalıcı yapmak istiyorsanız, özellikle ayarlarınız genel ayarlar iletişim kutusunda çıkışta kaydedilecek şekilde ayarlanmamışsa, control+nvda+c tuşlarına basarak ayarları kaydetmeniz gerekir.
 *	Ev kullanıcı dizinindeki veri dosyalarını barındıracak klasörü oluşturmanın, bilgisayardaki eklentinin tüm örneklerinin aynı dosyaları veya veri tabanını paylaşmasına yardımcı olduğunu belirtmekte fayda var.
 *	ve örneğin dropbox gibi başka bir yol seçmek, kullanıcıya aynı klasörü veya veri tabanını, aynı dropbox hesabını kullanan başka bir bilgisayardaki eklenti örnekleriyle paylaşma olanağı verecektir.
+
+### 2.1 için değişiklikler ###
+
+*	Bağlantıyı etkinleştirdikten sonra onay kutusu yerine bir eylem seçmek için eklentinin ayar iletişim kutusunda bir açılır kutu oluşturuldu.
+Artık şunlardan birini seçebilirsiniz: Hiçbir şey yapma, Yalnızca kitaplık penceresini kapat veya Bir bağlantıyı etkinleştirdikten sonra eklentinin ana penceresini kapat.
+*	Artık eklentinin ana penceresinin başlığı, veri dosyalarının tüm yolunu içermiyor, yalnızca ana dizini içeriyor.
+Veri klasörünüz örneğin belge klasöründeyse, başlık artık şu şekilde olmayacaktır:
+"Bağlantı Kitaplığı - C:\users\...\Documents". ve bunun yerine şöyle olacak:
+"Bağlantı Kitaplığı - Belgeler".
+
+### 2.0 için değişiklikler ###
+
+*	Basit Çince dil desteği eklendi.
+
+### 1.9 için değişiklikler ###
+
+*	En son test edilen sürüm güncellenerek eklenti NVDA 2023.1 ile uyumlu hale getirildi.
 
 ### 1.8 için değişiklikler ###
 
@@ -117,4 +134,4 @@ Bu kişiler için çok minnettarım:
 
 Herhangi bir hata veya öneri bildirmek istediğinizde bana ulaşmak için: [Bir eposta gönderebilirsiniz.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v1.8/linkLibrary-1.8.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1/linkLibrary-2.1.nvda-addon
