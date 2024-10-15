@@ -30,11 +30,11 @@ This addon does not come with a default or assigned gesture or shortcut to it
 You can as always add a gesture or change the existed one going to :
 NVDA menu>preferences>inputGestures>Link Library."""),
 	# version
-	"addon_version" : "2.1.2",
+	"addon_version" : "2.1.3",
 	# Author(s)
 	"addon_author" : u"ibrahim hamadeh<ibra.hamadeh@hotmail.com>",
 	# URL for the add-on documentation support
-	"addon_url" : "https://github.com/ibrahim-s/linkLibrary.git",
+	"addon_url" : "https://github.com/ibrahim-s/linkLibrary",
 	# Documentation file name
 	"addon_docFileName" : "readme.html",
 	# Minimum NVDA version supported (e.g. "2018.3.0", minor version is optional)

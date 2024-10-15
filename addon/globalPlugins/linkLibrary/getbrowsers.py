@@ -22,7 +22,8 @@ exeLabels= {
 	'wyzo.exe': 'Wyzo', 
 	'waterfox.exe': 'Waterfox',
 	'msedge.exe': 'Microsoft Edge',
-	'brave.exe': 'Brave'
+	'brave.exe': 'Brave',
+	'browser.exe': 'Yandex',
 }
 
 def getKeyRegBrowsers(base_key, sub_key):
