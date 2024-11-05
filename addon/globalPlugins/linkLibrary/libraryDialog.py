@@ -257,6 +257,7 @@ class LibraryPopupMenu(wx.Menu):
 
 class LibraryDialog(wx.Dialog):
 	def __init__(self, parent, path):
+		""" path is the path directory where we chose to preservee data files."""
 		pathLabel= config.conf["linkLibrary"]["chosenDataPath"]
 		# pathLabel is the label chosen by the user, for the directory that stores the data files
 		# let us take only the basename of the path, after request from users
@@ -265,6 +266,9 @@ class LibraryDialog(wx.Dialog):
 		title= _("Link Library - {}").format(pathLabel)
 		super(LibraryDialog, self).__init__(parent, title= title)
 		self.LIBRARIES_DIR= os.path.join(path, 'linkLibrary-addonFiles')
+		#Sending libraries path to the Link class
+		Link.SAVING_DIR= self.LIBRARIES_DIR
+
 		self.createDirectoryIfNotExist()
 
 		panel= wx.Panel(self)
@@ -285,21 +289,24 @@ class LibraryDialog(wx.Dialog):
 		# Add library button
 		self.add= wx.Button(panel, wx.ID_ANY,
 		# Translators: Label of Add button
-		_("Add"))
+		_("Add new library"))
 		self.add.Bind(wx.EVT_BUTTON, self.onAdd)
 		buttonSizer.Add(self.add, 1,wx.ALL, 10)
+
 		# Rename button
 		self.rename= wx.Button(panel, wx.ID_ANY,
 		# Translators: Label of Rename button
-		_("Rename"))
+		_("Rename library"))
 		self.rename.Bind(wx.EVT_BUTTON, self.onRename)
 		buttonSizer.Add(self.rename, 1,wx.ALL, 10)
+
 		# Remove button
 		self.remove= wx.Button(panel, wx.ID_ANY,
 		# Translators: Label of Remove button
-		_("Remove"))
+		_("Remove library"))
 		self.remove.Bind(wx.EVT_BUTTON, self.onRemove)
 		buttonSizer.Add(self.remove, 1,wx.ALL, 10)
+
 		self.ok= wx.Button(panel, wx.ID_OK,
 		# Translators: Label of OK button
 		_('OK'))
@@ -332,14 +339,28 @@ class LibraryDialog(wx.Dialog):
 			_("Information:Failed to create directory."))
 			return
 
+	def addHasSublibrarySuffix(self, name):
+		''' name is the library label or name, without .json suffix
+		Return name(Has sub library) if it has sub library else name.'''
+		path= os.path.join(self.LIBRARIES_DIR, name)
+		if os.path.isdir(path):
+			label= name + '(Has sub library)'
+		else:
+			label= name
+		return label
+
 	def postInit(self):
 		#log.info('under postInit of libraries file dialog...')
 		foundFiles= [os.path.splitext(f) for f in os.listdir(self.LIBRARIES_DIR)]
 		# foundFiles is a list of tuples, first element of the tuple is the name of file and the second is it's extension
-		libraryFiles= sorted([name for name, ext in foundFiles if ext== '.json'], key= lambda s: s.lower())
 		# We picked only .json files, even if there are other files in the folder.
+		libraryFiles= sorted([name for name, ext in foundFiles if ext== '.json'], key= lambda s: s.lower())
 		LibraryDialog.libraryFiles= libraryFiles
-		self.listBox.Set(libraryFiles)
+		# add (Has sub library) suffix for libraries that has sub libraries.
+		libraryNames= list(map(self.addHasSublibrarySuffix, libraryFiles))
+		#log.info(f'libraryNames: {libraryNames}')
+		#self.listBox.Set(libraryFiles)
+		self.listBox.Set(libraryNames)
 		#log.info(f'list count:{self.listBox.GetCount()}')
 		if self.listBox.GetCount()> 0:
 			self.listBox.SetSelection(0)
@@ -383,23 +404,31 @@ class LibraryDialog(wx.Dialog):
 		# Translators: Title of dialog to enter new name.
 		caption= _('rename')
 		oldName= self.listBox.GetStringSelection()
-		i= LibraryDialog.libraryFiles.index(oldName)
-		LibraryDialog.libraryFiles.remove(oldName)
-		newname= addLibrary(message, caption, oldName)
+		#remove (Has sub library) suffix if exists.
+		pureOldName= oldName.split('(Has sub library)')[0] if oldName.endswith('(Has sub library)') else oldName
+		i= LibraryDialog.libraryFiles.index(pureOldName)
+		LibraryDialog.libraryFiles.remove(pureOldName)
+		newname= addLibrary(message, caption, pureOldName)
 		#log.info('newname: %s'%newname)
-		if not newname or newname== oldName:
-			LibraryDialog.libraryFiles.insert(i, oldName)
+		if not newname or newname== pureOldName:
+			LibraryDialog.libraryFiles.insert(i, pureOldName)
 			return
 		else:
 			newname= api.filterFileName(newname)
-			os.rename(os.path.join(self.LIBRARIES_DIR, oldName+'.json'), os.path.join(self.LIBRARIES_DIR, newname+'.json'))
+			os.rename(os.path.join(self.LIBRARIES_DIR, pureOldName+'.json'), os.path.join(self.LIBRARIES_DIR, newname+'.json'))
+			if oldName.endswith('(Has sub library)'):
+				os.rename(os.path.join(self.LIBRARIES_DIR, pureOldName), os.path.join(self.LIBRARIES_DIR, newname))
 			#log.info(LibraryDialog.libraryFiles)
 			LibraryDialog.libraryFiles.append(newname)
 			LibraryDialog.libraryFiles.sort(key= str.lower)
+			if oldName.endswith('(Has sub library)'):
+				newname= newname+ '(Has sub library)'
 			self.refreshLibraries(str= newname)
 
 	def onRemove(self, evt):
 		toRemove= self.listBox.GetStringSelection()
+		# eleminate suffix if found.
+		pureName= toRemove if not toRemove.endswith('(Has sub library)') else toRemove.split('(Has sub library)')[0]
 		i= self.listBox.GetSelection()
 		# number of items or libraries in the list.
 		numItems= self.listBox.GetCount()
@@ -422,7 +451,9 @@ class LibraryDialog(wx.Dialog):
 		@i: index of selected library
 		'''
 		self.Hide()
-		self.listBox.Set(LibraryDialog.libraryFiles)
+		libraryNames= list(map(self.addHasSublibrarySuffix, LibraryDialog.libraryFiles))
+		#log.info(f'under refreshLibraries, libraryNames: {libraryNames}')
+		self.listBox.Set(libraryNames)
 		if str:
 			self.listBox.SetStringSelection(str)
 		if i  is not None and i> -1:
@@ -455,9 +486,10 @@ class LibraryDialog(wx.Dialog):
 			#self.Destroy()
 
 	def openLinkDialog(self, filename, librariesPath):
-		dialog= LinkDialog(self, filename, librariesPath)
+		dialog= LinkDialog(self, filename, librariesPath)#, hasSublibrary)
 		LinkDialog.currentInstance= dialog
 		LinkDialog.libraryFiles= LibraryDialog.libraryFiles[:]
+		LinkDialog.activeLibrary= filename
 
 	def onCancel(self, evt):
 		self.Destroy()

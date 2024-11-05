@@ -64,8 +64,9 @@ def getChosenDataPath():
 		config.conf.save()
 		log.info("Error in getting chosenDataPath from availablePaths", exc_info=1)
 	finally:
+		from .links import Link
+		Link.SAVING_DEFAULT_DIR= os.path.join(chosenPath, 'linkLibrary-addonFiles')
 		return chosenPath
-#log.info(getChosenDataPath())
 
 #initial value when no instance of dialog is opened
 LIBRARYDIALOG= None

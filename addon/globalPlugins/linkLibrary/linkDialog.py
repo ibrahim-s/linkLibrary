@@ -11,14 +11,16 @@ import json
 import re
 import queueHandler
 import config
+import api
 from .links import Link
 #importing the getBrowsers function that retreaves the found browsers in the registry
 from .getbrowsers import getBrowsers
-browsersFound= getBrowsers()
 from logHandler import log
 
 import addonHandler
 addonHandler.initTranslation()
+
+browsersFound= getBrowsers()
 
 def getLinkUrl(message, caption, link= None):
 	''' Entring the source url of the link upon adding or editing a link.'''
@@ -96,6 +98,38 @@ class MyPopupMenu(wx.Menu):
         
 		self.parent = parent
 		self.eventObjectId= eventObjectId
+		self.listBox= self.parent.FindWindowById(self.eventObjectId)
+		# name of class of parent dialog, 'LinkDialog' or 'LinkSublibrary'.
+		self.className= self.parent.__class__.__name__ 
+		self._index = self.listBox.GetSelection()
+		if self._index!= -1:
+			self._label = self.listBox.GetString(self._index)
+		#log.info(f'_index: {self._index}, _label: {self._label}')
+
+		# if it is a sub library,we should not allow to add sub libraries to it.
+		# Add sub library menu should appear only if it is not a sub library.
+		if self.className!= 'LinkSublibrary':
+		#Add sub library  menu
+			self.addSublibrary= wx.MenuItem(self, -1, 
+			# Translators: label of menu items to add a sub library.
+			_('Add Sub library'))
+			self.Append(self.addSublibrary)
+			self.Bind(wx.EVT_MENU, self.onAddSublibrary, self.addSublibrary)
+
+		if self._index!= -1 and self._label.endswith('(Sub library)'):
+			#Rename sub library  menu
+			self.renameSublibrary= wx.MenuItem(self, -1, 
+			# Translators: label of menu items to rename a sub library.
+			_('Rename Sub library'))
+			self.Append(self.renameSublibrary)
+			self.Bind(wx.EVT_MENU, self.onRenameSublibrary, self.renameSublibrary)
+
+			#Remove sub library  menu
+			self.removeSublibrary= wx.MenuItem(self, -1, 
+			# Translators: label of menu items to remove a sub library.
+			_('Remove Sub library'))
+			self.Append(self.removeSublibrary)
+			self.Bind(wx.EVT_MENU, self.onRemoveSublibrary, self.removeSublibrary)
 
 		#Add A Link menu
 		add= wx.MenuItem(self, -1, 
@@ -104,42 +138,166 @@ class MyPopupMenu(wx.Menu):
 		self.Append(add)
 		self.Bind(wx.EVT_MENU, self.onAdd, add)
 
-		#Edit Selected Link menu
-		edit= wx.MenuItem(self, -1, 
-		# Translators: label of menu items to edit a link.
-		_('Edit Selected '))
-		self.Append(edit)
-		self.Bind(wx.EVT_MENU, self.onEdit, edit)
+		if self._index!= -1 and not self._label.endswith('(Sub library)'):
+			#Edit Selected Link menu
+			self.edit= wx.MenuItem(self, -1, 
+			# Translators: label of menu items to edit a link.
+			_('Edit Selected '))
+			self.Append(self.edit)
+			self.Bind(wx.EVT_MENU, self.onEdit, self.edit)
 
-		#add a subMenu for moving a link
-		subMenu= wx.Menu()
-		# We want to append to this menu library names.
-		libraryNames= LinkDialog.libraryFiles
-		libraryMenus= (name for name in libraryNames if name!= LinkDialog.activeLibrary)
-		#log.info(f'libraryMenus: {list(libraryMenus)}')
-		# appending library menus to subMenu.
-		for label in libraryMenus:
-			item= subMenu.Append(wx.ID_ANY, label)
-			self.Bind(wx.EVT_MENU, lambda evt , args=label : self.onMoveLink(evt, args), item)
-		self.AppendSubMenu(subMenu, 
-		# Translators: label obj subMenu items for moving a link.
-		_('Move Link To'))
+			#add a subMenu for moving a link
+			# We want to append to this menu library names.
+			# list of names of major libraries.
+			libraryNames= LinkDialog.libraryFiles
+			#log.info(f'activeLibrary: {LinkDialog.activeLibrary}')
+			libraryMenus= (name for name in libraryNames if name!= LinkDialog.activeLibrary)
+			self.subMenu= wx.Menu()
+			# appending library menus to subMenu.
+			for label in libraryMenus:
+				item= self.subMenu.Append(wx.ID_ANY, label)
+				self.Bind(wx.EVT_MENU, lambda evt , args=label : self.onMoveLink(evt, args), item)
+			self.AppendSubMenu(self.subMenu, 
+			# Translators: label obj subMenu items for moving a link.
+			_('Move Link To'))
 
-		#Remove Selected Link menu
-		remove= wx.MenuItem(self, -1, 
-		# Translators: label of menu items to remove a link.
-		_('Remove Selected '))
-		self.Append(remove)
-		self.Bind(wx.EVT_MENU, self.onRemove, remove)
+			# if we are in sub library, we will make menu of the other sublibraries, and prepend it to library menus, under name of the library in which the are present.
+			# subMenu2 is the menu to append to it sub libraries.
+			self.subMenu2= wx.Menu()
+			# make submenu only if we have more than 1 sublibrary.
+			# or it is a major library, but has sub libraries.
+			hasSublibrary= self.parent.sublibraries
+			#log.info(f'hasSublibrary: {hasSublibrary}')
+			# if we are in sub library, return back the parent libraries, and append it to main menu.
+			if self.className== 'LinkSublibrary' :
+				extraItem=self.subMenu.Append(wx.ID_ANY, self.parent.parent.filename)
+				self.Bind(wx.EVT_MENU, lambda evt,arg= self.parent.parent.filename: self.onMoveLink(evt, arg), extraItem)
+			# in these two cases, we want to make a sub menu.
+			if (self.className== 'LinkSublibrary' and len(os.listdir(Link.sublibraries_path))>1) or hasSublibrary:
+				if self.className== 'LinkSublibrary':
+					activeSublibraryName= self.parent.filename
+					sublibraryNames= filter(lambda x: x!= activeSublibraryName,[name.split('.json')[0] for name in os.listdir(Link.sublibraries_path)])
+				# we are in major library, but has sub libraries.
+				elif hasSublibrary:
+					sublibraryNames= [label.split('(Sub library)')[0] for label in hasSublibrary]
+				for label in sublibraryNames:
+					item= self.subMenu2.Append(wx.ID_ANY, label)
+					self.Bind(wx.EVT_MENU, lambda evt , args=label : self.onMoveLink(evt, args), item)
+				# insert subMenu2 as first item in subMenu.
+				# label of subMenu2
+				subMenu2Label= self.parent.filename if hasSublibrary else self.parent.parent.filename
+				self.subMenu.Prepend(wx.ID_ANY, subMenu2Label, self.subMenu2)
 
-		#Remove All Links menu
-		removeAll= wx.MenuItem(self, -1, 
-		# Translators: label of menu items to remove all links.
-		_('Remove All '))
-		self.Append(removeAll)
-		self.Bind(wx.EVT_MENU, self.onRemoveAll, removeAll)
+			#Remove Selected Link menu
+			remove= wx.MenuItem(self, -1, 
+			# Translators: label of menu items to remove a link.
+			_('Remove Selected '))
+			self.Append(remove)
+			self.Bind(wx.EVT_MENU, self.onRemove, remove)
+
+			#Remove All Links menu
+			removeAll= wx.MenuItem(self, -1, 
+			# Translators: label of menu items to remove all links.
+			_('Remove All Links'))
+			self.Append(removeAll)
+			self.Bind(wx.EVT_MENU, self.onRemoveAll, removeAll)
+
+	def onAddSublibrary(self, evt):
+		libraryName= self.parent.filename
+		sublibrary_path= self.parent.sublibrariesPath
+		#log.info(f'LibraryName: {libraryName}')
+		# Translators: Message displayed when adding a sublibrary.
+		message= _('Enter sublibrary name please')
+		# Translators: Title of dialog.
+		caption= _('Add subLibrary for {}').format(libraryName)
+		while True:
+			name=wx.GetTextFromUser(message, caption).strip()
+			#log.info(f'name entered: {name}')
+			if not name:
+				return
+			if not os.path.isdir(sublibrary_path):
+				os.mkdir(sublibrary_path)
+				# in self.sublibraries the label has (Sub library) suffix.
+			if name in [label.split('(Sub library)')[0] for label in self.parent.sublibraries]:
+				gui.messageBox(
+				# Translators: message displayed when the name is present for another sub library.
+				_('This name is already present for another sub library, enter another name please'), 
+				# Translators: Title of messagebox.
+				_('Warning'))
+			else:
+				break
+		filename= api.filterFileName(name)+'.json'
+		filepath= os.path.join(sublibrary_path, filename)
+		#log.info('filepath to add: %s'%filepath)
+		try:
+			with open(filepath, 'w') as f:
+				f.write("{}")
+		except Exception as e:
+			raise e
+		# refresh main or background window of libraries
+		nameOfLibraryWithSuffix = libraryName+ '(Has sub library)'
+		self.parent.parent.refreshLibraries(str= nameOfLibraryWithSuffix)
+		# Reflect the changes in self.sublibraries list
+		self.parent.getSublibraries(self.parent.sublibrariesPath)
+		self.parent.populateListBox()
+		self.listBox.SetStringSelection(name+'(Sub library)')
+
+	def onRenameSublibrary(self, evt):
+		sublibraryPath= self.parent.sublibrariesPath
+		# Translators: Message displayed when renaming a sub library
+		message= _('Enter new name please')
+		# Translators: Title of dialog to enter new name.
+		caption= _('Rename sub library')
+		oldName= self._label.split('(Sub library)')[0]
+		while True:
+			newName= wx.GetTextFromUser(message, caption, oldName).strip()
+			if not newName or newName== oldName:
+				return
+			try:
+				os.rename(os.path.join(sublibraryPath, oldName+'.json'), os.path.join(sublibraryPath, api.filterFileName(newName) +'.json'))
+			except FileExistsError:
+				gui.messageBox(
+				# Translators: message displayed when the name is present for another sub library.
+				_('This name is already present for another sub library, enter another name please'), 
+				# Translators: Title of messagebox.
+				_('Warning'))
+			else:
+				break
+		#log.info(f'newName: {newName}')
+		# Reflect the change in sublibraries list
+		self.parent.getSublibraries(self.parent.sublibrariesPath)
+		self.parent.populateListBox()
+		self.listBox.SetStringSelection(newName+'(Sub library)')
+
+	def onRemoveSublibrary(self, evt):
+		sublibraryPath= self.parent.sublibrariesPath
+		filename= self._label.split('(Sub library)')[0]
+		# number of items or libraries in the list.
+		numItems= self.listBox.GetCount()
+		if gui.messageBox(
+		# Translators: Message displayed upon removing a sub library.
+		_('Are you sure you want to remove the sub library {}, this can not be undone?').format(filename),
+		# Translators: Title of dialog.
+		_('Warning'), wx.ICON_QUESTION | wx.YES_NO)== wx.NO:
+			return
+		os.remove(os.path.join(sublibraryPath, filename+'.json'))
+		if len([filename for filename in os.listdir(sublibraryPath) if filename.endswith('.json')])== 0:
+			os.rmdir(sublibraryPath)
+			libraryDialog= self.parent.parent
+			# No sub libraries, then stand on the bare name of library in main window.
+			libraryDialog.refreshLibraries(os.path.basename(sublibraryPath))
+		# reflect the changes in self.sublibraries
+		self.parent.getSublibraries(self.parent.sublibrariesPath)
+		sel= self._index if self._index!= numItems-1 else self._index-1
+		if sel>= 0:
+			#item= self.listBox.GetString(sel)
+			self.parent.populateListBox()
+			self.listBox.SetSelection(sel)
+		else:
+			self.parent.populateListBox()
 
 	def onAdd(self, evt= None, link= None):
+		''' Adding a link '''
 		# Translators: getting the url of the link
 		url= getLinkUrl(_("Enter Link source(www...)"),
 		# Translators: title of dialog.
@@ -158,16 +316,16 @@ class MyPopupMenu(wx.Menu):
 		about= getLinkAbout(_("Write Something About The Link"),
 		# Translators: title of dialog.
 		_("About"), link)
-
+		#log.info(f'link to be added: {url}, {label}, {about}')
 		Link.add_link(url, label, about)
 		self.parent.populateListBox(selected= label)
 		return True
 
 	def onEdit(self, evt):
-		listBox= self.parent.FindWindowById(self.eventObjectId)
+		listBox= self.listBox
 		i= listBox.GetSelection()
 		if i!= -1:
-			label= self.parent.link_labels[i]
+			label= listBox.GetString(i)
 			l= Link.getLinkByLabel(label)
 			Link.remove_link(l.url)
 			edited= self.onAdd(link= l)
@@ -175,19 +333,37 @@ class MyPopupMenu(wx.Menu):
 			if not edited:
 				Link.add_link(l.url, l.label, l.about)
 
-	def onMoveLink(self, evt, menuItem):
+	def onMoveLink(self, event, menuItem):
+		#log.info(f'menuItem: {menuItem}')
+		menu = event.GetEventObject()
+		#l=[self, self.subMenu, self.subMenu2]
+		#for x in l:
+			#if menu== x:
+				#log.info(l.index(x))
 		# menuItem is the menu item or library name that we want to move the link to it.
-		listBox= self.parent.FindWindowById(self.eventObjectId)
+		listBox= self.listBox
 		i= listBox.GetSelection()
 		if i== -1:
 			return
-		linkLabel= self.parent.link_labels[i]
+		linkLabel= listBox.GetString(i)
+		#log.info(f'linkLabel: {linkLabel}')
 		link= Link.getLinkByLabel(linkLabel)
 		libraryFileName= menuItem+ '.json'
-		#log.info(f'libraryFileName: {libraryFileName}')
+		if self.className== 'LinkSublibrary' and menu== self.subMenu and self.parent.parent.filename== menuItem:
+			self.moveToParentLibrary(link, linkLabel, menuItem, i)
+			return
+		if self.className== 'LinkSublibrary' and menu== self.subMenu and self.parent.parent.filename!= menuItem:
+		# we are in sub library, and want to move the link to major library.
+			saving_path= os.path.split(Link.SAVING_DIR)[0]
+		elif self.className!= 'LinkSublibrary' and menu== self.subMenu2:
+		# we are in library dialog, and want to move the link to sub library.
+			saving_path= os.path.join(Link.SAVING_DIR, self.parent.filename)
+		else:
+			saving_path= Link.SAVING_DIR
+		#log.info(f'saving_path: {saving_path}')
 		# retreaving library data
 		try:
-			with open(os.path.join(Link.SAVING_DIR, libraryFileName), encoding= 'utf-8') as f:
+			with open(os.path.join(saving_path, libraryFileName), encoding= 'utf-8') as f:
 				libraryDict= json.load(f)
 			if link.url in libraryDict:
 				if gui.messageBox(
@@ -200,7 +376,7 @@ class MyPopupMenu(wx.Menu):
 					return
 
 			libraryDict[link.url]= {"label": link.label, "about": link.about}
-			with open(os.path.join(Link.SAVING_DIR, libraryFileName), 'w', encoding= 'utf-8') as f:
+			with open(os.path.join(saving_path, libraryFileName), 'w', encoding= 'utf-8') as f:
 				json.dump(libraryDict, f, ensure_ascii= False, indent= 4)
 		except Exception as e:
 			# Translators: Message displayed when getting an error trying to move a link from one library to another.
@@ -208,20 +384,53 @@ class MyPopupMenu(wx.Menu):
 			# Translators: Title of message box
 			_("Error"), wx.OK|wx.ICON_ERROR)
 			raise e
-		else:
-			# We have moved the link, now we want to remove it from current library.
-			Link.remove_link(link.url)
-			# index of the link to be selected and focused on
-			index= i if len(self.parent.link_labels)>= i+2 else i-1
-			self.parent.populateListBox()
-			if index >=0:
-				listBox.SetSelection(index)
+			return
+		# We have moved the link, now we want to remove it from current library.
+		Link.remove_link(link.url)
+		# index of the link to be selected and focused on
+		index= i if listBox.GetCount() >= i+2 else i-1
+		self.parent.populateListBox()
+		#log.info('after populating the list box ...')
+		if index >=0:
+			listBox.SetSelection(index)
+
+	def moveToParentLibrary(self, link, linkLabel, menuItem, i):
+		#i is the index of link to be moved
+		# if we have moved the link from the current sub library to parent library, and parent library opened in background
+		# writing the link to file is not appropriate, so we will add the link to myLinks dictionary in Link class
+		if link.url in Link.myLinks:
+			if gui.messageBox(
+			# Translators: Message displayed when trying to move a link already present in the other library.
+			_("This link is already present in {library} library, under {label} label;\n"
+			" Do you still want to replace it with the one you are about to move?.").format(library= menuItem, label= Link.myLinks[link.url]['label']),
+			# Translators: Title of message box.
+			_('Warning'),
+			wx.YES|wx.NO|wx.ICON_QUESTION)== wx.NO:
+				return
+		Link.myLinks[link.url]= {"label": link.label, "about": link.about}
+		Link.remove_link(link.url)
+		# refresh parent library in the background
+		# change Link class attributes, to work for parent major library.
+		Link.filename= menuItem + '.json'
+		Link.changeClassAttributes()
+		LinkDialog.currentInstance.populateListBox()
+		LinkDialog.currentInstance.listBox.SetStringSelection(self.parent.filename+ '(Sub library)')
+		# return Link class attributes, to work for current sub library.
+		Link.isSublibrary= True
+		Link.sublibraries_path= self.parent.parent.sublibrariesPath
+		Link.changeClassAttributes(default= False)
+		# index of the link to be selected and focused on
+		index= i if self.listBox.GetCount() >= i+2 else i-1
+		self.parent.populateListBox()
+		#log.info('after populating the list box in sub library...')
+		if index >=0:
+			self.listBox.SetSelection(index)
 
 	def onRemove(self, evt):
-		listBox= self.parent.FindWindowById(self.eventObjectId)
+		listBox= self.listBox
 		i= listBox.GetSelection()
 		if i!= -1:
-			label= self.parent.link_labels[i]
+			label= listBox.GetString(i)
 			l= Link.getLinkByLabel(label)
 			if gui.messageBox(
 			# Translators: Message displayed when trying to remove a link.
@@ -232,7 +441,7 @@ class MyPopupMenu(wx.Menu):
 				return
 			Link.remove_link(l.url)
 			# index of the link to be selected and focused on
-			index= i if len(self.parent.link_labels)>= i+2 else i-1
+			index= i if listBox.GetCount()>= i+2 else i-1
 			if index >=0:
 				self.parent.populateListBox()
 				listBox.SetSelection(index)
@@ -240,7 +449,8 @@ class MyPopupMenu(wx.Menu):
 				self.parent.populateListBox()
 
 	def onRemoveAll(self, evt):
-		listBox= self.parent.FindWindowById(self.eventObjectId)
+		''' Remove all links.'''
+		listBox= self.listBox
 		i= listBox.GetSelection()
 		if i== -1:
 			return
@@ -255,19 +465,20 @@ class MyPopupMenu(wx.Menu):
 		self.parent.populateListBox()
 
 class LinkDialog(wx.Dialog):
+	''' Dialog of library that contains list of links, and it may contain also sub libraries.
+	sub libraries will reside in the top of listBox, and they will have (Sub library) suffix.'''
 	#to insure that there is only one instance of LinkDialog class is running
 	currentInstance= None
 
 	def __init__(self, parent, filename, libraries_path):
 		super(LinkDialog, self).__init__(parent, -1, title= filename, 
 		size=(500, 400))
-		# make class attribute for active library.
-		LinkDialog.activeLibrary= filename
+		self.parent= parent
+		self.sublibrariesPath = os.path.join(libraries_path, filename)
+		self.sublibraries= self.getSublibraries(self.sublibrariesPath) 
 		self.filename= filename
 		#sending the filename to the Link class
 		Link.filename= filename + ".json"
-		#Sending libraries path to the Link class
-		Link.SAVING_DIR= libraries_path
 
 		panel = wx.Panel(self, -1) 
 		# Translators: Label for search or filter control.
@@ -315,9 +526,21 @@ class LinkDialog(wx.Dialog):
 		self.urlText.Bind(wx.EVT_TEXT_ENTER, self.onOpenWithDefault)
 		self.Bind(wx.EVT_BUTTON, self.onOpenLinkWith, self.openLinkWithButton)
 		self.Bind(wx.EVT_BUTTON, self.onOpenWithDefault, self.okButton)
-		#self.Bind(wx.EVT_BUTTON, self.onClose, self.closeButton)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, self.cancelButton)
 		self.postInit()
+
+	def getSublibraries(self, sublibrariesPath):
+		''' Get name of sub libraries  with (Sub library ) suffix
+		return type list.'''
+		if not os.path.isdir(sublibrariesPath):
+			sublibraries= []
+		else:
+			foundFiles= [os.path.splitext(f) for f in os.listdir(sublibrariesPath)]
+			# foundFiles is a list of tuples, first element of the tuple is the name of file and the second is it's extension
+			sublibraries= sorted([f'{name}(Sub library)' for name, ext in foundFiles if ext== '.json'], key= str.lower)
+		self.sublibraries = sublibraries
+		#log.info(f'sublibraries: {sublibraries}')
+		return sublibraries
 
 	def postInit(self):
 		self.populateListBox()
@@ -326,45 +549,61 @@ class LinkDialog(wx.Dialog):
 		self.listBox.SetFocus()
 		self.Show()
 
-	def populateListBox(self, selected= None, filteredList= None):
+	def populateListBox(self, selected: str=None, filteredList= None):
 		#log.info('under populateListBox')
 		Link.retreave_from_file()
-		#log.info(Link.myLinks)
-		if filteredList is None and not Link.myLinks:
+		# get linksDictionary from Link class, it may be myLinksfor libraries or sublibraryLinks for sublibraries.
+		linksDictionary= Link.get_linksDictionary()
+		#log.info(f'linksDictionary during populateListBox: {linksDictionary}')
+		if filteredList is None and not linksDictionary:
 			lst= []
 		elif filteredList is not None:
 			# it may be an empty list or not empty list.
 			lst= filteredList
 		else:
 			try:
-				lst = sorted([Link.myLinks[url]['label'] for url in Link.myLinks], key= lambda s: s.lower())
+				lst = sorted([linksDictionary[url]['label'] for url in linksDictionary], key= lambda s: s.lower())
 			except Exception as e:
 				# Translators: Message displayed when getting an error trying to retreave links data
 				gui.messageBox(_("Unable to load links data"), 
 				# Translators: Title of message box
 				_("Error"), wx.OK|wx.ICON_ERROR)
-				Link.myLinks= {}
+				if not Link.isSublibrary:
+					Link.myLinks= {}
+				else: 
+					Link.sublibraryLinks= {}
 				raise e
 
 		self.Hide()
 		self.link_labels= lst
 		self.listBox.Set(lst)
+		if self.sublibraries:
+			self.listBox.InsertItems(self.sublibraries, 0)
 		self.numberOfLinks= len(lst)
-		self.SetTitle(u"{}({})".format(self.filename, self.numberOfLinks))
-		if not lst:
+		# Translators: suffix of title.
+		suffix= _("link") if self.numberOfLinks== 1 else _("links")
+		self.SetTitle("{}({} {})".format(self.filename, self.numberOfLinks, suffix))
+		if self.listBox.IsEmpty():
 			self.aboutText.Disable()
 			[obj.Hide() for obj in (self.showOrHideUrlButton, self.urlText, self.openLinkWithButton)]
 			self.Show()
 			return
 		if not selected:
 			i= 0
-			self.listBox.SetSelection(i)
+			if self.sublibraries:
+				self.aboutText.Disable()
+				[obj.Hide() for obj in (self.showOrHideUrlButton, self.urlText, self.openLinkWithButton)]
 		else:
 			i= self.link_labels.index(selected)
-			self.listBox.SetSelection(i)
-		link= Link.getLinkByLabel(self.link_labels[i])
-		self.showOrHideAboutControl(link.about)
-		[obj.Show() for obj in (self.showOrHideUrlButton, self.openLinkWithButton)]
+			# adjusting the selected index, by adding the len of sublibraries in the listBox.
+			i= i+ len(self.sublibraries)
+		self.listBox.SetSelection(i)
+		#log.info(f'i: {i}')
+		link= Link.getLinkByLabel(self.listBox.GetString(i))
+		# it may be a sub library and not a link
+		if link:
+			self.showOrHideAboutControl(link.about)
+			[obj.Show() for obj in (self.showOrHideUrlButton, self.openLinkWithButton)]
 		self.Show()
 
 	def onFilterTextChange(self, evt):
@@ -377,10 +616,11 @@ class LinkDialog(wx.Dialog):
 		text= text.lower()
 		labels_list= []
 		#log.info(f'text= {text}')
-		for url in Link.myLinks:
+		myLinks= Link.myLinks if not Link.isSublibrary else Link.sublibraryLinks
+		for url in myLinks:
 		# Removing the url protocol, or prefex of url.
 			urlBase= re.sub(r"(?:https?://|ftp://|www.)", "", url)
-			label= Link.myLinks[url]['label']
+			label= myLinks[url]['label']
 			# We search for text in main part of url, or in label.
 			if any(text in s.casefold() for s in (label, urlBase)):
 				labels_list.append(label)
@@ -401,8 +641,15 @@ class LinkDialog(wx.Dialog):
 		#log.info('under kill focus event')
 		i= self.listBox.GetSelection()
 		if i!= -1:
-			link= Link.getLinkByLabel(self.link_labels[i])
+			label= self.listBox.GetString(i)
+			if label.endswith('(Sub library)'):
+				#log.info(f'item is sub library named {label}')
+				self.aboutText.Disable()
+				[obj.Hide() for obj in (self.showOrHideUrlButton, self.urlText, self.openLinkWithButton)]
+				return
+			link= Link.getLinkByLabel(label)
 			if link:
+				#log.info(f'link: {link}-under onKillFocus')
 				self.showOrHideAboutControl(link.about)
 				if self.showOrHideUrlButton.GetLabel()== "Hide Source Url":
 					self.showOrHideUrlButton.SetLabel("Show Source Url")
@@ -412,8 +659,9 @@ class LinkDialog(wx.Dialog):
 		evt.Skip()
 
 	def onShowOrHideUrl(self, evt):
-		i= self.listBox.GetSelection()
-		link= Link.getLinkByLabel(self.link_labels[i])
+		label= self.listBox.GetStringSelection()
+		#log.info(f'label: {label} -under showOrHideUrlButton')
+		link= Link.getLinkByLabel(label)
 		if self.showOrHideUrlButton.GetLabel()== "Show Source Url":
 			self.urlText.SetValue(link.url)
 			self.urlText.SetSelection(0, -1)
@@ -437,19 +685,40 @@ class LinkDialog(wx.Dialog):
 	def onOpenWithDefault(self, evt):
 		#log.info('under onOpenWithDefault handler')
 		i= self.listBox.GetSelection()
-		if i!= -1:
+		if i== -1:
+			return
+		label= self.listBox.GetString(i)
+		if label.endswith('(Sub library)'):
+			self.openSublibrary(label)
+		else:
 			try:
-				link= Link.getLinkByLabel(self.link_labels[i])
+				link= Link.getLinkByLabel(label)
 			except KeyError:
 				pass
 			else:
-				queueHandler.queueFunction(queueHandler.eventQueue, webbrowser.open, link.url)
+				queueHandler.queueFunction(queueHandler.eventQueue, webbrowser.open, link.url, new=2)
 				self.checkCloseAfterActivatingALink()
+
+	def openSublibrary(self, name):
+		name= name.split('(Sub library)')[0]
+		Link.isSublibrary= True
+		Link.sublibraries_path= self.sublibrariesPath
+		Link.changeClassAttributes(default= False)
+		if LinkSublibrary.sublibraryInstance:
+			gui.messageBox(
+			# Translators: Message displayed if another sub library is opened.
+			_("Another sub library is opened, close it first please"),
+			# Translators: title of message box.
+			_("Warning")
+			)
+			return
+		d=LinkSublibrary(self, name, self.sublibrariesPath)
+		LinkSublibrary.sublibraryInstance = d
 
 	def onOpenLinkWith(self, evt):
 		#log.info('under onOpenLinkWith handler')
 		i= self.listBox.GetSelection()
-		link= Link.getLinkByLabel(self.link_labels[i])
+		link= Link.getLinkByLabel(self.listBox.GetString(i))
 		if link:
 			btn = evt.GetEventObject()
 			pos = btn.ClientToScreen( (0,0) )
@@ -468,9 +737,37 @@ class LinkDialog(wx.Dialog):
 		elif  config.conf["linkLibrary"]["afterActivatingLink"]== 2:
 			wx.CallLater(4000, self.GetParent().Destroy)
 
-
 	def onCancel(self, evt):
 		#log.info('under onClose') 
 		if Link.myLinks:
 			Link.save_to_file()
+		self.Destroy()
+
+class LinkSublibrary(LinkDialog):
+	sublibraryInstance= None
+	def __init__(self, parent, filename, sublibrariesPath):
+		super(LinkSublibrary, self).__init__(parent, filename, sublibrariesPath)
+		#		size=(500, 400))
+		self.parent= parent
+		self.sublibraries= False
+
+	def checkCloseAfterActivatingALink(self):
+		''' overide the parent method, to deal with sub libraries. '''
+		if  config.conf["linkLibrary"]["afterActivatingLink"]== 0:
+			return
+		self.onCancel(None)
+		if  config.conf["linkLibrary"]["afterActivatingLink"]== 1:
+			pass
+		elif  config.conf["linkLibrary"]["afterActivatingLink"]== 2:
+			if Link.myLinks:
+				wx.CallLater(2000, Link.save_to_file())
+				wx.CallLater(4000, self.parent.GetParent().Destroy)
+
+	def onCancel(self, evt):
+		#log.info('under onClose') 
+		if Link.sublibraryLinks:
+			Link.save_to_file()
+		Link.filename= self.parent.filename + '.json'
+		#log.info(f'self.parent.filename: {self.parent.filename}')
+		Link.changeClassAttributes()
 		self.Destroy()
