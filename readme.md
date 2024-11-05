@@ -54,6 +54,10 @@ You can add if you like sub libraries to any library.
 *	Great, now you have from there the option to add, and remame or remove any sub libraries if they are present.
 Easy , isn't it, enjoy!
 
+### Changes for 2.1.4 ###
+
+*	Add sub library feature, the user now can add to a library a sub library, rename or remove it.
+
 ### Changes for 2.1.3 ###
 
 *	Add Yandex browser to the list of browsers, that you can open the link with. Thanks to the user who requested that.
