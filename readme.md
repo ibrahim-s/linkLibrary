@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 2.1.4][1]  
+Download [Version 2.1.5][1]  
 NVDA compatibility: 2019.3 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -53,6 +53,12 @@ You can add if you like sub libraries to any library.
 *	Press the context or popup or application menu
 *	Great, now you have from there the option to add, and remame or remove any sub libraries if they are present.
 Easy , isn't it, enjoy!
+
+### Changes for 2.1.5 ###
+
+*	Make "Has sub library" and "Sub library" translatable strings.
+*	It is now possible to remove a library with sub libraries, it was a bug fixed, reported by Umut KORKMAZ
+*	when trying to remove a library that has sub libraries in it, now the message will warn you that you are going to remove a library with it's sub libraries, to be clear about that.
 
 ### Changes for 2.1.4 ###
 
@@ -160,4 +166,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.4/linkLibrary-2.1.4.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.5/linkLibrary-2.1.5.nvda-addon

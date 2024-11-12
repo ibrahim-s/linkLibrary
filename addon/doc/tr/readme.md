@@ -1,7 +1,7 @@
 # Bağlantı Kitaplığı #
 
 Yazar: İbrahim Hamadeh  
-[Sürüm 2.1'i İndirin][1]  
+[Sürüm 2.1.4'ü İndirin][1]  
 NVDA uyumluluğu: 2019.3 ve sonrası.  
 
 Bu eklenti, kullanıcının bağlantılarını veya yer imlerini kitaplıktaki gibi düzenlemesine yardımcı olur.  
@@ -43,6 +43,32 @@ NVDA menüsü>tercihler>Girdi hareketleri>Bağlantı Kitaplığı.
 *	Kalıcı yapmak istiyorsanız, özellikle ayarlarınız genel ayarlar iletişim kutusunda çıkışta kaydedilecek şekilde ayarlanmamışsa, control+nvda+c tuşlarına basarak ayarları kaydetmeniz gerekir.
 *	Ev kullanıcı dizinindeki veri dosyalarını barındıracak klasörü oluşturmanın, bilgisayardaki eklentinin tüm örneklerinin aynı dosyaları veya veri tabanını paylaşmasına yardımcı olduğunu belirtmekte fayda var.
 *	ve örneğin dropbox gibi başka bir yol seçmek, kullanıcıya aynı klasörü veya veri tabanını, aynı dropbox hesabını kullanan başka bir bilgisayardaki eklenti örnekleriyle paylaşma olanağı verecektir.
+
+## Alt Kitaplık özelliği ##
+
+Alt kitaplıkları seviyorsanız herhangi bir kitaplığa ekleyebilirsiniz.
+
+*	İstediğiniz kitaplığı açın.
+*	Bağlam veya açılır menü ya da uygulama menüsüne basın.
+*	Harika, artık varsa alt kitaplıkları ekleme, yeniden adlandırma veya kaldırma seçeneğiniz var.
+Kolay, değil mi, tadını çıkarın!
+
+### 2.1.4 için değişiklikler: ###
+
+*	Alt kitaplık ekleme özelliği, kullanıcı artık bir kitaplığa alt kitaplık ekleyebilir, yeniden adlandırabilir veya kaldırabilir.
+
+### 2.1.3 için değişiklikler: ###
+
+*	Bağlantıyı açabileceğiniz tarayıcılar listesine Yandex tarayıcısı eklendi. Bunu talep eden kullanıcıya teşekkür ederiz.
+
+### 2.1.2 için değişiklikler: ###
+
+*	Rusça yerelleştirme eklendi, Kostenkov-2021 tarafından.
+*	VovaMobile tarafından yapılan güncel Ukraynaca çeviri.
+
+### 2.1.1 için değişiklikler: ###
+
+*	En son test edilen sürüm güncellendi, böylece eklenti artık NVDA 2024.1 ile uyumludur.
 
 ### 2.1 için değişiklikler ###
 
@@ -134,4 +160,4 @@ Bu kişiler için çok minnettarım:
 
 Herhangi bir hata veya öneri bildirmek istediğinizde bana ulaşmak için: [Bir eposta gönderebilirsiniz.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1/linkLibrary-2.1.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.4/linkLibrary-2.1.4.nvda-addon

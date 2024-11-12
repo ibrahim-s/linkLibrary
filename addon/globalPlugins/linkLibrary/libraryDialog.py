@@ -339,12 +339,19 @@ class LibraryDialog(wx.Dialog):
 			_("Information:Failed to create directory."))
 			return
 
+	def hasSublibrary(self, libraryName):
+		''' Return True if library has sub libraries else False.'''
+		path= os.path.join(self.LIBRARIES_DIR, libraryName)
+		return os.path.isdir(path)
+
 	def addHasSublibrarySuffix(self, name):
 		''' name is the library label or name, without .json suffix
 		Return name(Has sub library) if it has sub library else name.'''
-		path= os.path.join(self.LIBRARIES_DIR, name)
-		if os.path.isdir(path):
-			label= name + '(Has sub library)'
+		#if os.path.isdir(path):
+		if self.hasSublibrary(name):
+			# Translators: Suffix of library name, if it has sub libraries.
+			librarySuffix= _("Has sub library")
+			label= name + '({})'.format(librarySuffix)
 		else:
 			label= name
 		return label
@@ -359,7 +366,6 @@ class LibraryDialog(wx.Dialog):
 		# add (Has sub library) suffix for libraries that has sub libraries.
 		libraryNames= list(map(self.addHasSublibrarySuffix, libraryFiles))
 		#log.info(f'libraryNames: {libraryNames}')
-		#self.listBox.Set(libraryFiles)
 		self.listBox.Set(libraryNames)
 		#log.info(f'list count:{self.listBox.GetCount()}')
 		if self.listBox.GetCount()> 0:
@@ -403,10 +409,8 @@ class LibraryDialog(wx.Dialog):
 		message= _('Enter new name please')
 		# Translators: Title of dialog to enter new name.
 		caption= _('rename')
-		oldName= self.listBox.GetStringSelection()
-		#remove (Has sub library) suffix if exists.
-		pureOldName= oldName.split('(Has sub library)')[0] if oldName.endswith('(Has sub library)') else oldName
-		i= LibraryDialog.libraryFiles.index(pureOldName)
+		i= self.listBox.GetSelection()
+		pureOldName= LibraryDialog.libraryFiles[i]
 		LibraryDialog.libraryFiles.remove(pureOldName)
 		newname= addLibrary(message, caption, pureOldName)
 		#log.info('newname: %s'%newname)
@@ -416,34 +420,41 @@ class LibraryDialog(wx.Dialog):
 		else:
 			newname= api.filterFileName(newname)
 			os.rename(os.path.join(self.LIBRARIES_DIR, pureOldName+'.json'), os.path.join(self.LIBRARIES_DIR, newname+'.json'))
-			if oldName.endswith('(Has sub library)'):
+			if self.hasSublibrary(pureOldName):
 				os.rename(os.path.join(self.LIBRARIES_DIR, pureOldName), os.path.join(self.LIBRARIES_DIR, newname))
 			#log.info(LibraryDialog.libraryFiles)
 			LibraryDialog.libraryFiles.append(newname)
 			LibraryDialog.libraryFiles.sort(key= str.lower)
-			if oldName.endswith('(Has sub library)'):
-				newname= newname+ '(Has sub library)'
-			self.refreshLibraries(str= newname)
+			indx= LibraryDialog.libraryFiles.index(newname)
+			self.refreshLibraries(i= indx)
 
 	def onRemove(self, evt):
-		toRemove= self.listBox.GetStringSelection()
-		# eleminate suffix if found.
-		pureName= toRemove if not toRemove.endswith('(Has sub library)') else toRemove.split('(Has sub library)')[0]
 		i= self.listBox.GetSelection()
+		pureName= LibraryDialog.libraryFiles[i]
 		# number of items or libraries in the list.
 		numItems= self.listBox.GetCount()
+
+		if self.hasSublibrary(pureName):
+			# Translators: Message displayed upon removing a library, that contains sub libraries.
+			message= _("This library has sub libraries.\nAre you sure you want to remove {} library with it's sub libraries, this can not be undone?")
+		else:
+			# Translators: Message displayed upon removing a library.
+			message= _("Are you sure you want to remove {} library, this can not be undone?")
 		if gui.messageBox(
-		# Translators: Message displayed upon removing a library.
-		_('Are you sure you want to remove {} library, this can not be undone?').format(toRemove),
+		message.format(pureName),
 		# Translators: Title of dialog.
 		_('Warning'), wx.ICON_QUESTION | wx.YES_NO)== wx.NO:
 			return
-		os.remove(os.path.join(self.LIBRARIES_DIR, toRemove+'.json'))
-		LibraryDialog.libraryFiles.remove(toRemove)
+		try:
+			os.remove(os.path.join(self.LIBRARIES_DIR, pureName+'.json'))
+			shutil.rmtree(os.path.join(self.LIBRARIES_DIR, pureName), ignore_errors= True)
+		except Exception as e:
+			raise e
+		#log.info(f'LibraryDialog.libraryFiles: {LibraryDialog.libraryFiles}')
+		LibraryDialog.libraryFiles.remove(pureName)
 		sel= i if i!= numItems-1 else i-1
-		#log.info(f'sel after onRemove: {sel}')
-		self.refreshLibraries(i= sel)
 		# i is the index of item to be selected after refresh
+		self.refreshLibraries(i= sel)
 
 	def refreshLibraries(self, str=None, i= None):
 		'''
@@ -486,7 +497,7 @@ class LibraryDialog(wx.Dialog):
 			#self.Destroy()
 
 	def openLinkDialog(self, filename, librariesPath):
-		dialog= LinkDialog(self, filename, librariesPath)#, hasSublibrary)
+		dialog= LinkDialog(self, filename, librariesPath)
 		LinkDialog.currentInstance= dialog
 		LinkDialog.libraryFiles= LibraryDialog.libraryFiles[:]
 		LinkDialog.activeLibrary= filename

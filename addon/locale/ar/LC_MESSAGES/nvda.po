@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 'linkLibrary' '2.1'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2024-11-05 20:57+0200\n"
-"PO-Revision-Date: 2024-11-05 21:33+0200\n"
+"POT-Creation-Date: 2024-11-10 02:25+0200\n"
+"PO-Revision-Date: 2024-11-10 02:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -126,7 +126,7 @@ msgstr "هذا المَسار({}) سيتم إزالته بشكل داءم. هذ�
 #: addon\globalPlugins\linkLibrary\__init__.py:214
 #: addon\globalPlugins\linkLibrary\__init__.py:454
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:31
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:439
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:449
 #: addon\globalPlugins\linkLibrary\linkDialog.py:39
 #: addon\globalPlugins\linkLibrary\linkDialog.py:57
 #: addon\globalPlugins\linkLibrary\linkDialog.py:226
@@ -136,7 +136,7 @@ msgstr "هذا المَسار({}) سيتم إزالته بشكل داءم. هذ�
 #: addon\globalPlugins\linkLibrary\linkDialog.py:407
 #: addon\globalPlugins\linkLibrary\linkDialog.py:439
 #: addon\globalPlugins\linkLibrary\linkDialog.py:461
-#: addon\globalPlugins\linkLibrary\linkDialog.py:712
+#: addon\globalPlugins\linkLibrary\linkDialog.py:716
 msgid "Warning"
 msgstr "تنبيه"
 
@@ -205,7 +205,7 @@ msgstr "الرجاء اختيار المسار."
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:171
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:210
 #: addon\globalPlugins\linkLibrary\linkDialog.py:385
-#: addon\globalPlugins\linkLibrary\linkDialog.py:570
+#: addon\globalPlugins\linkLibrary\linkDialog.py:573
 #: addon\globalPlugins\linkLibrary\links.py:106
 msgid "Error"
 msgstr "خَطَأ"
@@ -419,40 +419,57 @@ msgstr "إلغاء"
 msgid "Information:Failed to create directory."
 msgstr "تنبيه: لَم يَنجح إنشاء المسار."
 
+#. label= name + '(Has sub library)'
+#. Translators: Suffix of library name, if it has sub libraries.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:349
+msgid "Has sub library"
+msgstr "لديها مكتبة فرعية"
+
 #. Translators: Message displayed when adding a new library.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:381
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:384
 msgid "Enter library name please"
 msgstr "أدخِلْ إسم المكتبة لو سَمَحْت"
 
 #. Translators: Title of dialog.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:383
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:386
 msgid "Add Library"
 msgstr "أضِفْ مكتبة"
 
 #. Translators: Message displayed when renaming a library
 #. Translators: Message displayed when renaming a sub library
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:403
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:406
 #: addon\globalPlugins\linkLibrary\linkDialog.py:248
 msgid "Enter new name please"
 msgstr "أدخِلْ إسماً جديداً لو سَمَحْت"
 
 #. Translators: Title of dialog to enter new name.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:405
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:408
 msgid "rename"
 msgstr "إعادةْ التسمية"
 
+#. Translators: Message displayed upon removing a library, that contains sub libraries.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:441
+msgid ""
+"This library has sub libraries.\n"
+"Are you sure you want to remove {} library with it's sub libraries, this can not be "
+"undone?"
+msgstr ""
+"هذه المكتبة فيها مكتبات فرعية.\n"
+"هل أنتَ مُتأكِدْ مِن أنكَ تُريد إزالةْ المكتبة {} مع مكتباتها الفرعية, فهذا الأمر لا يُمكنْ التراجع "
+"عنه؟"
+
 #. Translators: Message displayed upon removing a library.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:437
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:444
 msgid "Are you sure you want to remove {} library, this can not be undone?"
 msgstr "هل أنتَ مُتأكِدْ مِن أنكَ تُريد إزالةْ المكتبة {}, فهذا الأمر لا يُمكنْ التراجع عنه؟"
 
 #. Translators: Message be displayed when a library dialog is already opened.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:479
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:494
 msgid "A library dialog is already opened; Close it first please."
 msgstr "هناكْ مكتبة مفتوحة مِن قبلْ; أغلِقْها أولا لو سمَحْت"
 
 #. Translators: Title of dialog.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:481
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:496
 msgid "information"
 msgstr "تعليمات"
 
@@ -621,24 +638,31 @@ msgstr "إظهارُ قيمةِ الرابط"
 msgid "Open Link With"
 msgstr "إفْتَحْ الرابط بِواسطةْ ..."
 
+#. foundFiles is a list of tuples, first element of the tuple is the name of file and the second is it's extension
+#. sublibraries= sorted([f'{name}(Sub library)' for name, ext in foundFiles if ext== '.json'], key= str.lower)
+#. Translators: Suffix of sub library label.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:542
+msgid "Sub library"
+msgstr "مكتبة فرعية"
+
 #. Translators: Message displayed when getting an error trying to retreave links data
 #. Translators: Message displayed when getting an error trying to retreave link data
-#: addon\globalPlugins\linkLibrary\linkDialog.py:568
+#: addon\globalPlugins\linkLibrary\linkDialog.py:571
 #: addon\globalPlugins\linkLibrary\links.py:104
 msgid "Unable to load links data"
 msgstr "لم يكن بالإمكان تحميل بيانات الروابط"
 
 #. Translators: suffix of title.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:584
+#: addon\globalPlugins\linkLibrary\linkDialog.py:587
 msgid "link"
 msgstr "رابط"
 
-#: addon\globalPlugins\linkLibrary\linkDialog.py:584
+#: addon\globalPlugins\linkLibrary\linkDialog.py:587
 msgid "links"
 msgstr "روابط"
 
 #. Translators: Message displayed if another sub library is opened.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:710
+#: addon\globalPlugins\linkLibrary\linkDialog.py:714
 msgid "Another sub library is opened, close it first please"
 msgstr "هناكْ مكتبة فرعية مفتوحة مِن قبلْ; أغلِقْها أولا لو سمَحْت"
 
