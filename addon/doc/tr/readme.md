@@ -53,6 +53,12 @@ Alt kitaplıkları seviyorsanız herhangi bir kitaplığa ekleyebilirsiniz.
 *	Harika, artık varsa alt kitaplıkları ekleme, yeniden adlandırma veya kaldırma seçeneğiniz var.
 Kolay, değil mi, tadını çıkarın!
 
+### 2.1.5 için değişiklikler ###
+
+*	Alt Kitaplığı var ve Alt Kitaplık dizgeleri çevrilebilir hale getirildi.
+*	Artık alt Kitaplıkları olan bir Kitaplığı kaldırmak mümkün, bu hata düzeltildi, Umut KORKMAZ tarafından bildirildi.
+*	Alt kitaplıkları olan bir kitaplığı silmek istediğinizde: Artık çıkan uyarı mesajı Bu kitaplığın alt kitaplıklarının da bulunduğuna dair net bilgi verecektir.
+
 ### 2.1.4 için değişiklikler: ###
 
 *	Alt kitaplık ekleme özelliği, kullanıcı artık bir kitaplığa alt kitaplık ekleyebilir, yeniden adlandırabilir veya kaldırabilir.
@@ -160,4 +166,4 @@ Bu kişiler için çok minnettarım:
 
 Herhangi bir hata veya öneri bildirmek istediğinizde bana ulaşmak için: [Bir eposta gönderebilirsiniz.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.4/linkLibrary-2.1.4.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.5/linkLibrary-2.1.5.nvda-addon

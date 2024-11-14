@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 'linkLibrary' '2.1.4'\n"
+"Project-Id-Version: 'linkLibrary' '2.1.5'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2024-11-05 20:38+0200\n"
-"PO-Revision-Date: 2024-11-06 12:33+0300\n"
+"POT-Creation-Date: 2024-11-13 00:10+0200\n"
+"PO-Revision-Date: 2024-11-13 21:44+0300\n"
 "Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language-Team: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language: tr_TR\n"
@@ -131,17 +131,17 @@ msgstr "Bu dizin({}) kalıcı olarak kaldırılacak. Bu işlem geri alınamaz."
 #: addon\globalPlugins\linkLibrary\__init__.py:214
 #: addon\globalPlugins\linkLibrary\__init__.py:454
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:31
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:439
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:446
 #: addon\globalPlugins\linkLibrary\linkDialog.py:39
 #: addon\globalPlugins\linkLibrary\linkDialog.py:57
-#: addon\globalPlugins\linkLibrary\linkDialog.py:226
-#: addon\globalPlugins\linkLibrary\linkDialog.py:263
-#: addon\globalPlugins\linkLibrary\linkDialog.py:281
-#: addon\globalPlugins\linkLibrary\linkDialog.py:374
-#: addon\globalPlugins\linkLibrary\linkDialog.py:407
-#: addon\globalPlugins\linkLibrary\linkDialog.py:439
-#: addon\globalPlugins\linkLibrary\linkDialog.py:461
-#: addon\globalPlugins\linkLibrary\linkDialog.py:712
+#: addon\globalPlugins\linkLibrary\linkDialog.py:237
+#: addon\globalPlugins\linkLibrary\linkDialog.py:276
+#: addon\globalPlugins\linkLibrary\linkDialog.py:295
+#: addon\globalPlugins\linkLibrary\linkDialog.py:387
+#: addon\globalPlugins\linkLibrary\linkDialog.py:420
+#: addon\globalPlugins\linkLibrary\linkDialog.py:456
+#: addon\globalPlugins\linkLibrary\linkDialog.py:478
+#: addon\globalPlugins\linkLibrary\linkDialog.py:738
 msgid "Warning"
 msgstr "Uyarı"
 
@@ -211,8 +211,8 @@ msgstr "Lütfen bir dizin belirtin."
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:145
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:171
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:210
-#: addon\globalPlugins\linkLibrary\linkDialog.py:385
-#: addon\globalPlugins\linkLibrary\linkDialog.py:570
+#: addon\globalPlugins\linkLibrary\linkDialog.py:398
+#: addon\globalPlugins\linkLibrary\linkDialog.py:594
 #: addon\globalPlugins\linkLibrary\links.py:106
 msgid "Error"
 msgstr "Hata"
@@ -404,33 +404,30 @@ msgstr "Bir kitaplık seçin"
 
 #. Translators: Label of Add button
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:292
-#| msgid "Add Library"
 msgid "Add new library"
 msgstr "Yeni kitaplık ekle"
 
 #. Translators: Label of Rename button
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:299
-#| msgid "Choose a library"
 msgid "Rename library"
 msgstr "Kitaplığı yeniden adlandır"
 
 #. Translators: Label of Remove button
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:306
-#| msgid "Choose a library"
 msgid "Remove library"
 msgstr "Kitaplığı kaldır"
 
 #. Translators: Label of OK button
 #. Translators: Label of OK button.
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:312
-#: addon\globalPlugins\linkLibrary\linkDialog.py:509
+#: addon\globalPlugins\linkLibrary\linkDialog.py:529
 msgid "OK"
 msgstr "Tamam"
 
 #. Translators: Label of Cancel button
 #. Label of cancel button.
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:318
-#: addon\globalPlugins\linkLibrary\linkDialog.py:512
+#: addon\globalPlugins\linkLibrary\linkDialog.py:532
 msgid "Cancel"
 msgstr "İptal"
 
@@ -439,42 +436,62 @@ msgstr "İptal"
 msgid "Information:Failed to create directory."
 msgstr "Bilgi: Dizin oluşturulamadı."
 
+#. Translators: Suffix of library name, if it has sub libraries.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:353
+#| msgid "Rename sub library"
+msgid "Has sub library"
+msgstr "Alt kitaplığı var"
+
 #. Translators: Message displayed when adding a new library.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:381
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:387
 msgid "Enter library name please"
 msgstr "Lütfen Kitaplık adını girin"
 
 #. Translators: Title of dialog.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:383
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:389
 msgid "Add Library"
 msgstr "Kitaplık Ekle"
 
 #. Translators: Message displayed when renaming a library
 #. Translators: Message displayed when renaming a sub library
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:403
-#: addon\globalPlugins\linkLibrary\linkDialog.py:248
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:409
+#: addon\globalPlugins\linkLibrary\linkDialog.py:261
 msgid "Enter new name please"
 msgstr "Lütfen yeni ad girin"
 
 #. Translators: Title of dialog to enter new name.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:405
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:411
 msgid "rename"
 msgstr "yeniden Adlandır"
 
+#. Translators: Message displayed upon removing a library, that contains sub libraries.
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:439
+#| msgid ""
+#| "Are you sure you want to remove the sub library {}, this can not be "
+#| "undone?"
+msgid ""
+"This library has sub libraries.\n"
+"Are you sure you want to remove {} library with it's sub libraries, this can "
+"not be undone?"
+msgstr ""
+"Bu kitaplığın alt kitaplıkları var.\n"
+"{} kitaplığını alt kitaplıklarıyla birlikte kaldırmak istediğinizden emin "
+"misiniz, bu işlem geri alınamaz?"
+
 #. Translators: Message displayed upon removing a library.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:437
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:442
 msgid "Are you sure you want to remove {} library, this can not be undone?"
 msgstr ""
-"{} kitaplığını kaldırmak istediğinizden emin misiniz? bu işlem geri alınamaz."
+"{} kitaplığını kaldırmak istediğinizden emin misiniz, bu işlem geri alınamaz?"
 
 #. Translators: Message be displayed when a library dialog is already opened.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:479
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:490
 msgid "A library dialog is already opened; Close it first please."
 msgstr ""
 "Bir kitaplık iletişim kutusu zaten açık; Lütfen önce açık olanıkapatın."
 
 #. Translators: Title of dialog.
-#: addon\globalPlugins\linkLibrary\libraryDialog.py:481
+#: addon\globalPlugins\linkLibrary\libraryDialog.py:492
 msgid "information"
 msgstr "bilgi"
 
@@ -489,80 +506,71 @@ msgid "This label({}) is chosen for {}; please enter another one"
 msgstr "Bu etiket({}), {} için seçili; lütfen başka bir tane girin"
 
 #. Translators: label of menu items to add a sub library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:115
-#| msgid "Add Library"
+#: addon\globalPlugins\linkLibrary\linkDialog.py:126
 msgid "Add Sub library"
 msgstr "Alt kitaplık ekle"
 
 #. Translators: label of menu items to rename a sub library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:123
+#: addon\globalPlugins\linkLibrary\linkDialog.py:134
 msgid "Rename Sub library"
 msgstr "Alt kitaplığı yeniden adlandır"
 
 #. Translators: label of menu items to remove a sub library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:130
-#| msgid "Choose a library"
+#: addon\globalPlugins\linkLibrary\linkDialog.py:141
 msgid "Remove Sub library"
 msgstr "Alt kitaplığı kaldır"
 
 #. Translators: label obj menu items to add a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:137
+#: addon\globalPlugins\linkLibrary\linkDialog.py:148
 msgid "Add A Link"
 msgstr "Bağlantı Ekle"
 
 #. Translators: label of menu items to edit a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:145
+#: addon\globalPlugins\linkLibrary\linkDialog.py:156
 msgid "Edit Selected "
 msgstr "Seçileni Düzenle "
 
 #. Translators: label obj subMenu items for moving a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:162
+#: addon\globalPlugins\linkLibrary\linkDialog.py:173
 msgid "Move Link To"
 msgstr "Bağlantıyı Şuraya Taşı"
 
 #. Translators: label of menu items to remove a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:194
+#: addon\globalPlugins\linkLibrary\linkDialog.py:205
 msgid "Remove Selected "
 msgstr "Seçili olanları Kaldır "
 
 #. Translators: label of menu items to remove all links.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:201
-#| msgid "Remove All "
+#: addon\globalPlugins\linkLibrary\linkDialog.py:212
 msgid "Remove All Links"
 msgstr "Tüm Bağlantıları Kaldır"
 
 #. log.info(f'LibraryName: {libraryName}')
 #. Translators: Message displayed when adding a sublibrary.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:210
-#| msgid "Enter library name please"
+#: addon\globalPlugins\linkLibrary\linkDialog.py:221
 msgid "Enter sublibrary name please"
 msgstr "Lütfen Alt Kitaplık adını girin"
 
 #. Translators: Title of dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:212
-#| msgid "Add Library"
+#: addon\globalPlugins\linkLibrary\linkDialog.py:223
 msgid "Add subLibrary for {}"
 msgstr "{} için alt Kitaplık ekle"
 
 #. Translators: message displayed when the name is present for another sub library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:224
-#: addon\globalPlugins\linkLibrary\linkDialog.py:261
-#| msgid ""
-#| "This name is already present for another library, enter another name "
-#| "please"
+#: addon\globalPlugins\linkLibrary\linkDialog.py:235
+#: addon\globalPlugins\linkLibrary\linkDialog.py:274
 msgid ""
 "This name is already present for another sub library, enter another name "
 "please"
 msgstr "Bu ad zaten başka bir alt kitaplık için mevcut, lütfen başka ad girin"
 
 #. Translators: Title of dialog to enter new name.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:250
+#: addon\globalPlugins\linkLibrary\linkDialog.py:263
 msgid "Rename sub library"
 msgstr "Alt kitaplığı yeniden adlandır"
 
 #. Translators: Message displayed upon removing a sub library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:279
-#| msgid "Are you sure you want to remove {} library, this can not be undone?"
+#: addon\globalPlugins\linkLibrary\linkDialog.py:293
 msgid ""
 "Are you sure you want to remove the sub library {}, this can not be undone?"
 msgstr ""
@@ -570,40 +578,40 @@ msgstr ""
 "alınamaz?"
 
 #. Translators: getting the url of the link
-#: addon\globalPlugins\linkLibrary\linkDialog.py:302
+#: addon\globalPlugins\linkLibrary\linkDialog.py:315
 msgid "Enter Link source(www...)"
 msgstr "Bağlantı kaynağını girin(www...)"
 
 #. Translators: title of dialog.
 #. Translators: Label of the text control that shows the url .
-#: addon\globalPlugins\linkLibrary\linkDialog.py:304
-#: addon\globalPlugins\linkLibrary\linkDialog.py:502
+#: addon\globalPlugins\linkLibrary\linkDialog.py:317
+#: addon\globalPlugins\linkLibrary\linkDialog.py:522
 msgid "Url:"
 msgstr "URL:"
 
 #. Translators: getting the label of the link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:309
+#: addon\globalPlugins\linkLibrary\linkDialog.py:322
 msgid "Enter Link Label Please"
 msgstr "Lütfen Bağlantı Etiketini Girin"
 
 #. Translators: title of dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:311
+#: addon\globalPlugins\linkLibrary\linkDialog.py:324
 msgid "Link Label"
 msgstr "Bağlantı Etiketi"
 
 #. Translators: getting the about of the link
-#: addon\globalPlugins\linkLibrary\linkDialog.py:316
+#: addon\globalPlugins\linkLibrary\linkDialog.py:329
 msgid "Write Something About The Link"
 msgstr "Bağlantı Hakkında Bir Şey Yazın"
 
 #. Translators: title of dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:318
+#: addon\globalPlugins\linkLibrary\linkDialog.py:331
 msgid "About"
 msgstr "Hakkında"
 
 #. Translators: Message displayed when trying to move a link already present in the other library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:371
-#: addon\globalPlugins\linkLibrary\linkDialog.py:404
+#: addon\globalPlugins\linkLibrary\linkDialog.py:384
+#: addon\globalPlugins\linkLibrary\linkDialog.py:417
 msgid ""
 "This link is already present in {library} library, under {label} label;\n"
 " Do you still want to replace it with the one you are about to move?."
@@ -612,12 +620,12 @@ msgstr ""
 " Hala taşımak üzere olduğunuzla değiştirmek istiyor musunuz?"
 
 #. Translators: Message displayed when getting an error trying to move a link from one library to another.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:383
+#: addon\globalPlugins\linkLibrary\linkDialog.py:396
 msgid "Unable to move the link to another library"
 msgstr "Bağlantı başka bir kitaplığa taşınamıyor"
 
 #. Translators: Message displayed when trying to remove a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:437
+#: addon\globalPlugins\linkLibrary\linkDialog.py:454
 msgid ""
 "Are you sure you want to remove the link labeled {} from the library?, this "
 "can not be undone."
@@ -626,7 +634,7 @@ msgstr ""
 "bu işlem geri alınamaz."
 
 #. Translators: Message displayed when trying to remove all links.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:459
+#: addon\globalPlugins\linkLibrary\linkDialog.py:476
 msgid ""
 "Are you sure you want to remove all links from this library?, this can not "
 "be undone."
@@ -635,49 +643,54 @@ msgstr ""
 "işlem geri alınamaz."
 
 #. Translators: Label for search or filter control.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:485
+#: addon\globalPlugins\linkLibrary\linkDialog.py:505
 msgid "Filter by:"
 msgstr "Filtrele:"
 
 #. Translators: Label for the list of links.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:489
+#: addon\globalPlugins\linkLibrary\linkDialog.py:509
 msgid "List Of Links"
 msgstr "Bağlantı Listesi"
 
 #. Translators: Label of about the link text control.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:493
+#: addon\globalPlugins\linkLibrary\linkDialog.py:513
 msgid "About The Link"
 msgstr "Bağlantı Hakkında"
 
 #. Translators: Label of toggle button that shows or hides the source url of the link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:499
+#: addon\globalPlugins\linkLibrary\linkDialog.py:519
 msgid "Show Source Url"
 msgstr "Kaynak URL'yi Göster"
 
 #. Translators: Label of open link with button.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:507
+#: addon\globalPlugins\linkLibrary\linkDialog.py:527
 msgid "Open Link With"
 msgstr "Bağlantıyı Şununla Aç"
 
+#. Translators: Suffix of sub library label.
+#: addon\globalPlugins\linkLibrary\linkDialog.py:562
+#| msgid "Add Sub library"
+msgid "Sub library"
+msgstr "Alt kitaplık"
+
 #. Translators: Message displayed when getting an error trying to retreave links data
 #. Translators: Message displayed when getting an error trying to retreave link data
-#: addon\globalPlugins\linkLibrary\linkDialog.py:568
+#: addon\globalPlugins\linkLibrary\linkDialog.py:592
 #: addon\globalPlugins\linkLibrary\links.py:104
 msgid "Unable to load links data"
 msgstr "Bağlantı verileri yüklenemiyor"
 
 #. Translators: suffix of title.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:584
+#: addon\globalPlugins\linkLibrary\linkDialog.py:608
 msgid "link"
 msgstr "bağlantı"
 
-#: addon\globalPlugins\linkLibrary\linkDialog.py:584
+#: addon\globalPlugins\linkLibrary\linkDialog.py:608
 msgid "links"
 msgstr "bağlantı"
 
 #. Translators: Message displayed if another sub library is opened.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:710
-#| msgid "A library dialog is already opened; Close it first please."
+#: addon\globalPlugins\linkLibrary\linkDialog.py:736
 msgid "Another sub library is opened, close it first please"
 msgstr "Başka bir alt kitaplık açık. Lütfen önce açık olanı kapatın"
 
