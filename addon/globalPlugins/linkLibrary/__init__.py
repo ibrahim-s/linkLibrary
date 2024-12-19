@@ -14,7 +14,7 @@ import shutil
 from configobj import ConfigObj
 from logHandler import log
 from .libraryDialog import LibraryDialog
-from .linkDialog import LinkDialog
+from .linkDialog import LinkDialog, LinkSublibrary
 
 import addonHandler
 addonHandler.initTranslation()
@@ -133,7 +133,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		gui.mainFrame.postPopup()
 
 	def script_openLibraryDialog(self, gesture):
-		if LinkDialog.currentInstance:
+		if LinkSublibrary.sublibraryInstance:
+			LinkSublibrary.sublibraryInstance.Raise()
+		elif LinkDialog.currentInstance:
 			LinkDialog.currentInstance.Raise()
 		else:
 			global LIBRARYDIALOG
