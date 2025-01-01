@@ -20,8 +20,6 @@ from logHandler import log
 import addonHandler
 addonHandler.initTranslation()
 
-browsersFound= getBrowsers()
-
 def getLinkUrl(message, caption, link= None):
 	''' Entring the source url of the link upon adding or editing a link.'''
 	if not link:
@@ -72,11 +70,22 @@ def isSublibrary(name):
 	pattern = r'\([^()]+\)$'
 	result= re.search(pattern, name)
 	return result
+
 def getSublibraryName(name):
 	''' use regular expression to get pure name without sub library suffix.'''
 	pattern = r'\([^()]+\)$'
 	result= re.split(pattern, name)[0]
 	return result
+
+browsersFound= getBrowsers()
+
+# browsersGoPrivate is adictionary with this signuture:
+# {browserName: [labelOfPrivateButton, privateFlag]}
+browsersGoPrivate= {
+	'Firefox': ['Firefox(Private mode)', '--private-window'],
+	'Google Chrome': ['Google Chrome(Incognito mode)', '--incognito'],
+	'Microsoft Edge': ['Microsoft Edge(InPrivate mode)', '--inprivate'],
+}
 
 class OpenWithMenu(wx.Menu):
 	''' The menu that pops up when pressing openlink with button
@@ -94,11 +103,23 @@ class OpenWithMenu(wx.Menu):
 			item= wx.MenuItem(self, -1, label)
 			self.Append(item)
 			self.Bind(wx.EVT_MENU, lambda evt , args=executable_path : self.onOpen(evt, args), item)
+			if label in browsersGoPrivate:
+				item2 = wx.MenuItem(self, -1, browsersGoPrivate[label][0])
+				self.Append(item2)
+				self.Bind(wx.EVT_MENU, lambda evt , args=executable_path : self.onOpenPrivate(evt, args), item2)
 
 	def onOpen(self, evt, executable_path):
 		url= self.link.url
 		if url:
 			subprocess.Popen(executable_path+' '+url)
+			self.parentDialog.checkCloseAfterActivatingALink()
+
+	def onOpenPrivate(self,event, executable_path):
+		url= self.link.url
+		if url:
+			browser = [browserName for browserName, exePath in browsersFound if exePath== executable_path][0]
+			flag= browsersGoPrivate[browser][1]
+			subprocess.Popen([executable_path, flag, url])
 			self.parentDialog.checkCloseAfterActivatingALink()
 
 #the popup menu class

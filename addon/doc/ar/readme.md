@@ -1,7 +1,7 @@
 # مكتبةْ الروابط #
 
 تأليف: ابراهيم حمادة  
-تحميل [Version 2.1.7][1]  
+تحميل [Version 2.1.8][1]  
 التوافقية مع NVDA: 2019.3 فما بعد  
 
 هذه الإضافةُ تتيحُ للمستخدمِ عمل مكتبة لِتنظيم و ترتيب الروابط الخاصة به.  
@@ -53,6 +53,10 @@
 *	رائع، الآن لديك خيار إضافة أو إعادة تسمية أو إزالة أي مكتبات فرعية إذا كانت موجودة.
 
 الأمر سهل، أليس كذلك، استمتع!
+
+### التغييرات في 2.1.8 ###
+
+*	أضف خيار فتح الرابط في الوضع الخاص لمتصفحات فايرفوكس وكروم وإيدج، ويمكنك الوصول إلى ذلك بعد الضغط على زر "فتح الرابط باستخدام" في مربع حوار الرابط.
 
 ### التغييرات في 2.1.6 ###
 
@@ -159,4 +163,4 @@ and if he wants to merge the libraries, the imported or existed file will have t
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.7/linkLibrary-2.1.7.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.8/linkLibrary-2.1.8.nvda-addon

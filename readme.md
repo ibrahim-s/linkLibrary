@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 2.1.7][1]  
+Download [Version 2.1.8][1]  
 NVDA compatibility: 2019.3 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -53,6 +53,10 @@ You can add if you like sub libraries to any library.
 *	Press the context or popup or application menu
 *	Great, now you have from there the option to add, and remame or remove any sub libraries if they are present.
 Easy , isn't it, enjoy!
+
+### Changes for 2.1.8 ###
+
+*	Add the option to open the link in private mode for firefox, Chrome and Edge, and you can access that after pressing the "Open link with" button  in link dialog.
 
 ### Changes for 2.1.6 ###
 
@@ -170,4 +174,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.7/linkLibrary-2.1.7.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.8/linkLibrary-2.1.8.nvda-addon
