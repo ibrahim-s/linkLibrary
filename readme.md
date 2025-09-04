@@ -1,8 +1,8 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 2.1.8][1]  
-NVDA compatibility: 2019.3 and beyond  
+Download [Version 2.1.9][1]  
+NVDA compatibility: 2021.1 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
 From the main dialog of libraries, you can add, rename or remove any existing one  
@@ -18,7 +18,7 @@ NVDA menu>preferences>inputGestures>Link Library.
 *	A dialog will open, listing all libraries or categories of links that are found.  
 *	At first no libraries found, it is empty, ready to host the libraries you wish to establish  .  
 *	Tabing on that dialog, you can rename, remove, or add any libraries or category of links you want at any time.  
-*	On the list of libraries, stand on one of your choice, and press enter.   
+*	Having some libraries, On the list of libraries, stand on one of your choice, and press enter.   
 *	A dialog for that library will open, showing all links in it, if any is present(name or label of links) in a list .  
 *	At first the library is empty, and no links in it.  
 *	We press the context menu (shift + F10), or popup menu, or the
@@ -40,7 +40,8 @@ application key, to add a link by entering the url, label and optionaly the abou
 *	First upon installing the addon, a message box will appear asking you if yo agree to create the folder that hosts the data files for the addon in your home user directory.  
 *	you can if you wish, press cancel and choose the directory required to host data files later from the settings dialog of the addon in preferences menu.  
 *	Go to NVDA menu>Preferences> Link Library> Link Library Setting..., and open settings dialog.  
-*	Afterchoosing the new default path, for data files or libraries for the addon in that dialog  
+*	You can by "Add new path" button, add one or more paths, or remove, by remove button, any of the paths you have added.
+*	After choosing the new default path, for data files or libraries for the addon in that dialog  
 *	If you want to make it perminant, you have to save settings pressing control+nvda+c, especially if your settings is not set to save on exit in general settings dialog.  
 *	Worth noting that creating the folder to host the data files in the home user directory, helps that all instances of the addon on the computer can share the same files or data base  
 *	and choosing another path like dropbox for example, will give the user the ability to share the same folder or data base with instances of the addon on another computer that uses the same dropbox account.  
@@ -53,6 +54,20 @@ You can add if you like sub libraries to any library.
 *	Press the context or popup or application menu
 *	Great, now you have from there the option to add, and remame or remove any sub libraries if they are present.
 Easy , isn't it, enjoy!
+
+## Add a link on the fly ##
+
+Wonderful feature: Add link of web page on the fly
+
+To use this feature, first you have to assign a gesture or shortcut to it , by going to: NVDA menu(NVDA+N)/preferences/Input gestures/Link Library/Add the link and title of web page on the fly to library you choose.
+
+Now while browsing the net, if you like to add a page to any library in Link library addon you can do that. From any place on the page you like, press the gesture or shortcut for this feature, a window will open saying "Add link and title of web page to library", In it a button saying "Choose library:", press the button, and from the popup menu displayed choose the library you like and press enter.
+
+That's it , the link or url of the web page is added to library, with it's title as label, and you will hear a confirmation message telling you that. beautiful thing really.
+
+### Changes for 2.1.9 ###
+
+*	Make possible to add a link of web page on the fly, assign a gesture to this feature, and on any page press it, from the popup menu Choose the library,and the link will be added, with title of page as label.
 
 ### Changes for 2.1.8 ###
 
@@ -174,4 +189,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.8/linkLibrary-2.1.8.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.9/linkLibrary-2.1.9.nvda-addon

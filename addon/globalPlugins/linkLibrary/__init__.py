@@ -8,9 +8,13 @@ import globalPluginHandler
 import core, ui
 import wx, gui
 import os, sys
+import api
 import config
 import globalVars
+import browseMode
 import shutil
+import json
+from scriptHandler import script
 from configobj import ConfigObj
 from logHandler import log
 from .libraryDialog import LibraryDialog
@@ -70,6 +74,8 @@ def getChosenDataPath():
 
 #initial value when no instance of dialog is opened
 LIBRARYDIALOG= None
+# Instance of HelperFrame , that contains the popup menu, to add a link on the fly
+helperFrameInstance= None
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	scriptCategory = _("Link Library")
@@ -132,6 +138,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		d.Show()
 		gui.mainFrame.postPopup()
 
+	@script(
+	# Translators: message displayed in input help mode for openning  link library dialog.
+	description= _("Open  Link Library dialog."),
+	)
 	def script_openLibraryDialog(self, gesture):
 		if LinkSublibrary.sublibraryInstance:
 			LinkSublibrary.sublibraryInstance.Raise()
@@ -144,10 +154,32 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			else:
 				LIBRARYDIALOG.Raise()
 
-	# Translators: message displayed in input help mode for openning  link library dialog.
-	script_openLibraryDialog.__doc__ = _('Open  Link Library dialog.')
+	@script(
+	# Translators: message displayed in input help mode for adding a link on the fly.
+	description=_("Add the link and title of web page on the fly to library you choose."),
+	)
+	def script_addLinkOnTheFly(self, gesture):
+		obj = api.getNavigatorObject().treeInterceptor
+		if not isinstance(obj, browseMode.BrowseModeTreeInterceptor):
+			gesture.send()
+			return
+		# Send the navigatorObjectTreeInterceptor to HelperFrame, to get link of web page.
+		# because when the frame is shown, these properties of web page can not b accessed
+		HelperFrame.navigatorObjectTreeInterceptor= obj
+		# Send foregroundObject to HelperFrame to get title of web page
+		HelperFrame.foregroundObject= api.getForegroundObject()
+		def showPopupMenuInFrame():
+			global helperFrameInstance
+			if not helperFrameInstance:
+				f= HelperFrame(gui.mainFrame)
+				f.Raise()
+				f.Show()
+				helperFrameInstance = f
+			else:
+				helperFrameInstance.Raise()
+		wx.CallAfter(showPopupMenuInFrame)
 
-#Link Library Dialog Settings class
+	#Link Library Dialog Settings class
 class LinkDialogSettings(gui.SettingsDialog):
 	# Translators: title of the dialog
 	title= _("Link Library Settings")
@@ -479,4 +511,134 @@ class AddPathDialog(wx.Dialog):
 		self.Destroy()
 
 	def onCancelButton(self, evt):
+		self.Destroy()
+
+class HelperFrame(wx.Frame):
+	"""A frame, contains a button, that triggers the popup menu of libraries to add the web page link to one of them.
+	"""
+	def __init__(self, parent):
+		super(HelperFrame, self).__init__(parent, wx.ID_ANY,
+		# Translators: title of frame
+		title="Add link and title of web page to library",
+		size=(300,200))
+		# dictionary that tracks submenu ids as keys, and the name of the folder in which they reside as valid.
+		self.subMenuId2parent: dict[int, str] = {}
+		panel = wx.Panel(self)
+		sizer= wx.BoxSizer(wx.VERTICAL)
+		self.chooseLibraryButton= wx.Button(panel, wx.ID_ANY,
+		# Translators: Label of choose library button
+		_("Choose library:"))
+		self.chooseLibraryButton.Bind(wx.EVT_BUTTON, self.onChooseLibrary)
+		sizer.Add(self.chooseLibraryButton, 0, wx.ALL | wx.CENTER, 20)
+		panel.SetSizer(sizer)
+		self.Bind(wx.EVT_CLOSE, self.onExit)
+		# To dismiss the frame with the escape key.
+		panel.Bind(wx.EVT_CHAR_HOOK, self.on_key)
+
+		self.libraries_dir= os.path.join(getChosenDataPath(), 'linkLibrary-addonFiles')
+		#log.info(f'libraries_dir: {self.libraries_dir}')
+		allFiles= [os.path.splitext(f) for f in os.listdir(self.libraries_dir)]
+		self.libraryNames= sorted([name for name, ext in allFiles if ext== '.json'], key= lambda s: s.lower())
+		#log.info(f'libraryNames: {self.libraryNames}')
+		self.sublibraryNames= [name for name, ext in allFiles if ext== '' and name in self.libraryNames]
+		#log.info(f'sublibraryNames: {self.sublibraryNames}')
+
+	def makePopupMenu(self):
+		self.menu= wx.Menu()
+		for library in self.libraryNames:
+			item = self.menu.Append(wx.ID_ANY, library)
+			self.Bind(wx.EVT_MENU, lambda evt , args= library : self.onMenuItem(evt, args), item)
+			if library in self.sublibraryNames:
+				# It has sub libraries.
+				self.appendsubmenu(self.menu, submenuLabel= library)
+		return self.menu
+
+	def appendsubmenu(self, mainMenu, submenuLabel: str):
+		sublibrary_dir= os.path.join(self.libraries_dir, submenuLabel)
+		sublibraries = [
+		name for f in os.listdir(sublibrary_dir)
+		for name, ext in [os.path.splitext(f)]
+		if ext == '.json'
+		]
+		#log.info(f'sublibraries: {sublibraries}')
+		sublibraries= sorted(sublibraries, key= str.lower)
+		menu_sub= wx.Menu()
+		for sublibrary in sublibraries:
+			item= menu_sub.Append(wx.ID_ANY, sublibrary)
+			# Add item id to subMenuId2parent dictionary, and parent library as value.
+			self.subMenuId2parent[item.GetId()]= submenuLabel
+			self.Bind(wx.EVT_MENU, lambda evt , args=sublibrary: self.onMenuItem(evt, args), item)
+		mainMenu.AppendSubMenu(menu_sub, submenuLabel)
+
+	def onMenuItem(self,event, label: str):
+		#label is the name of library or menu item press.
+		menu_id = event.GetId()
+		isSubmenu= menu_id in self.subMenuId2parent
+		# if it is a sublibraries
+		if isSubmenu:
+			# name of folder in which this sublibraries is found.
+			subMenuLabel= self.subMenuId2parent.get(menu_id)
+			#log.info(f'subMenu label: {subMenuLabel}')
+			libraryPath= os.path.join(self.libraries_dir, subMenuLabel, label+'.json')
+		else:
+			# it is a major library and not sub library.
+			libraryPath= os.path.join(self.libraries_dir, label+'.json')
+		#log.info(f'libraryPath: {libraryPath}')
+		link, title= self.getLinkAndTitleOfWebPage()
+		# Add the link, and title as label to the library
+		try:
+			with open(libraryPath, encoding= 'utf-8') as f:
+				libraryDict= json.load(f)
+			if link in libraryDict:
+				if gui.messageBox(
+				# Translators: Message displayed when trying to add a link already present in the library.
+				_("This link is already present in {library} library, under {label} label;\n"
+				" Do you still want to replace it with the one you are about to add?.").format(library= label, label= libraryDict[link]['label']),
+				# Translators: Title of message box.
+				_('Warning'),
+				wx.YES|wx.NO|wx.ICON_QUESTION)== wx.NO:
+					return
+
+			libraryDict[link]= {"label": title, "about": ""}
+			with open(libraryPath, 'w', encoding= 'utf-8') as f:
+				json.dump(libraryDict, f, ensure_ascii= False, indent= 4)
+		except Exception as e:
+			gui.messageBox(
+			# Translators: Message displayed when getting an error trying to add a link on the fly.
+			_("Unable to add the link to the library"), 
+			# Translators: Title of message box
+			_("Error"), wx.OK|wx.ICON_ERROR)
+			raise e
+			return
+		core.callLater(100, ui.message, 
+		# Translators: Message displayed after adding the link successfuly.
+		_("Information: The link was added successfuly to {library} library").format(library= label))
+		self.Destroy()
+
+	def getLinkAndTitleOfWebPage(self):
+		obj= self.navigatorObjectTreeInterceptor
+		link = obj.documentConstantIdentifier
+		#log.info(f'link: {link}')
+		#get title
+		title= self.foregroundObject.name
+		title = title.rsplit(" - ", 1)[0].rsplit(" — ", 1)[0]
+		#log.info(f'title: {title}')
+		return link, title
+
+	def onChooseLibrary(self, event):
+		# clear the dictionary that maps id to subMenu label
+		self.subMenuId2parent= {}
+		btn = event.GetEventObject()
+		pos = btn.ClientToScreen( (0,0) )
+		menu= self.makePopupMenu()
+		self.PopupMenu(menu, pos)
+		self.menu.Destroy()
+
+	def on_key(self, event):
+		if event.GetKeyCode() == wx.WXK_ESCAPE:
+			self.Destroy()
+		else:
+			event.Skip()
+
+	def onExit(self,event):
 		self.Destroy()
