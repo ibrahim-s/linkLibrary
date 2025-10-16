@@ -8,6 +8,7 @@ import globalPluginHandler
 import core, ui
 import wx, gui
 import os, sys
+import re
 import api
 import config
 import globalVars
@@ -621,7 +622,11 @@ class HelperFrame(wx.Frame):
 		#log.info(f'link: {link}')
 		#get title
 		title= self.foregroundObject.name
-		title = title.rsplit(" - ", 1)[0].rsplit(" — ", 1)[0]
+		pattern, text = r'[-—]', title[::-1]
+		# we will split either on - or —, after we have reversed the title
+		lst= re.split(pattern, text, maxsplit= 1)
+		if len(lst)> 1:
+			title= lst[-1][::-1].strip()
 		#log.info(f'title: {title}')
 		return link, title
 
