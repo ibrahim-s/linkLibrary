@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 2.2.1][1]  
+Download [Version 2.2.2][1]  
 NVDA compatibility: 2021.1 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -64,6 +64,10 @@ To use this feature, first you have to assign a gesture or shortcut to it , by g
 Now while browsing the net, if you like to add a page to any library in Link library addon you can do that. From any place on the page you like, press the gesture or shortcut for this feature, a window will open saying "Add link and title of web page to library", In it a button saying "Choose library:", press the button, and from the popup menu displayed choose the library you like and press enter.
 
 That's it , the link or url of the web page is added to library, with it's title as label, and you will hear a confirmation message telling you that. beautiful thing really.
+
+### Changes for 2.2.2 ###
+
+*	Now, it is possible to export a library with it's sublibraries as html file, and then if you wish, integrate it into firefox bookmarks.
 
 ### Changes for 2.2.1 ###
 
@@ -197,4 +201,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.2.1/linkLibrary-2.2.1.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.2.2/linkLibrary-2.2.2.nvda-addon

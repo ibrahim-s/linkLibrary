@@ -32,22 +32,69 @@ def addLibrary(message, caption, oldName=None):
 		return addLibrary(message, caption, oldName)
 	return name
 
-def makeHtmlFile(libraryName, libraryData, newpath):
-	''' Make Html file out of json library file.
+def getLibraryData(path):
+	'''Return a list of tuples, (url, label, about), sorted by the second item or label.
+	path is the full path of the json library file.
 	'''
-	with codecs.open(newpath, 'wb', encoding= 'utf-8') as html:
-		html.write(u"""<!DOCTYPE html><html lang="en"><head>
-			<meta charset="UTF-8">
-<title>Bookmarks </title>
-		</head><body>
-		<h1>Link Library Bookmarks</h1>
-		<DT><H3>{}</H3>
-		<DL><p>""".format(libraryName)
-		)
-		for url, label, about in libraryData:
-			html.write(u'<DT><a href= "{}">{}</a></DT>'.format('http://'+url if url.startswith('www.') else url, label))
-			html.write(u'{}'.format(about))
-		html.write(u'</DL></body></html>')
+	try:
+		with open(path, 'r', encoding='utf-8') as f:
+			d= json.load(f)
+	except Exception as e:
+		gui.messageBox(
+		# Translators: Message displayed when error happens during opening library file.
+		_('Failed to open library, or may be library file is not valid.'),
+		# Translators: TITLE of message box.
+		_('Error'), wx.OK|wx.ICON_ERROR)
+		log.info('Failed to open library', exc_info= True)
+		return
+	else:
+		# Opening the library file succeeded
+		#the library data as list of tuple of three items url, label, about sorted by the second that is the label of the link.
+		library_data= sorted([(url, d[url]['label'], d[url]['about']) for url in d], key= lambda x: x[1])
+		return library_data
+
+def writeLibraryToFile(libraryName, libraryData, handle, isSublibrary=False):
+	''' Helper function to be used inside makeHtmlFile function.
+	it's purpose to Write library or sublibrary data to html file.
+	'''
+	handle.write(
+	f"""
+	<DT><H3>{libraryName}</H3>
+	\n""")
+	if not libraryData:
+		return
+	handle.write("<DL><p>\n")
+	for url, label, about in libraryData:
+		handle.write(f"<DT><a href='{('http://' + url) if url.startswith('www.') else url}'>{label}</a>")
+		handle.write(f'<p>{about}')
+	if isSublibrary:
+		handle.write("</DL><p>")
+
+def makeHtmlFile(libraryName, libraryData, newpath, sublibrariesPath= None):
+	''' Make Html file out of json library file
+	sublibrariesPath is the path of sublibraries, if the exported library has sublibraries.
+	'''
+	with codecs.open(newpath, 'w', encoding= 'utf-8') as html:
+		html.write(
+		"""<!DOCTYPE NETSCAPE-Bookmark-file-1>
+		<!-- This is an automatically generated file.
+		It will be read and overwritten.
+		DO NOT EDIT! -->
+		<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+		<TITLE>Bookmarks</TITLE>
+		<h1>{}</h1>\n""".format(_('Link Library Bookmarks')))
+		html.write("<DL><p>\n")
+		writeLibraryToFile(libraryName, libraryData, html)
+		if sublibrariesPath:
+			# The library has sublibraries.
+			sublibraryNames= [name[0] for name in [os.path.splitext(f) for f in os.listdir(sublibrariesPath)] if name[1]== '.json']
+			#log.info(f'{sublibraryNames=}')
+			for sub in sublibraryNames:
+				filePath= os.path.join(sublibrariesPath, sub+ '.json')
+				subData= getLibraryData(filePath)
+				writeLibraryToFile(sub, subData, html, isSublibrary= True)
+		html.write('</DL><p>')
+		html.write('</DL><p>')
 		return True
 
 def validateLibraryFile(filePath):
@@ -116,7 +163,9 @@ class LibraryPopupMenu(wx.Menu):
 		#log.info(path_chosen)
 
 		if path_chosen:
-			library_name= self.parent.FindWindowById(self.objectId).GetStringSelection()
+			i= self.parent.FindWindowById(self.objectId).GetSelection()
+			# The pure name of library without any suffix like (has sublibrary)
+			library_name= LibraryDialog.libraryFiles[i]
 			try:
 				shutil.copy(os.path.join(self.LIBRARIES_DIR, library_name+'.json'), path_chosen)
 			except Exception as e:
@@ -134,22 +183,11 @@ class LibraryPopupMenu(wx.Menu):
 		dlg.Destroy()
 
 	def onExportHtml(self, evt):
-		library_name= self.parent.FindWindowById(self.objectId).GetStringSelection()
+		i= self.parent.FindWindowById(self.objectId).GetSelection()
+		# The pure name of library without any suffix like (has sublibrary)
+		library_name= LibraryDialog.libraryFiles[i]
 		path= os.path.join(self.LIBRARIES_DIR, library_name+'.json')
-		try:
-			with open(path, 'r') as f:
-				d= json.load(f)
-		except Exception as e:
-			gui.messageBox(
-			_('Failed to open library, or may be library file is not valid.'),
-			_('Error'), wx.OK|wx.ICON_ERROR)
-			log.info('Failed to open library', exc_info= True)
-			return
-		else:
-			# Opening the library file succeeded
-			#the library data as list of tuple of three items url, label, about sorted by the second that is the label of the link.
-			library_data= sorted([(url, d[url]['label'], d[url]['about']) for url in d], key= lambda x: x[1])
-
+		library_data= getLibraryData(path)
 		dlg = wx.DirDialog(self.parent, "Choose a directory:",
 		style=wx.DD_DEFAULT_STYLE
 | wx.DD_DIR_MUST_EXIST
@@ -160,9 +198,13 @@ class LibraryPopupMenu(wx.Menu):
 		path_chosen= dlg.GetPath()
 		#log.info(path_chosen)
 		if path_chosen:
+			# Does the library has sublibraries or not
+			hasSublibrary= self.parent.hasSublibrary(library_name)
+			# if True, let's get the parent directory of sublibraries 
+			subPath= os.path.join(self.LIBRARIES_DIR, library_name) if hasSublibrary else None
 			html_path= os.path.join(path_chosen, library_name+ '.html')
 			try:
-				makeHtmlFile(library_name, library_data, html_path)
+				makeHtmlFile(library_name, library_data, html_path, sublibrariesPath= subPath)
 			except Exception as e:
 				wx.CallAfter(gui.messageBox,
 				# Translators: message of error dialog displayed when cannot export library file.
