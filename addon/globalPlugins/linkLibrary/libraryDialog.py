@@ -127,6 +127,7 @@ class LibraryPopupMenu(wx.Menu):
 		super(LibraryPopupMenu, self).__init__()
         
 		self.parent = parent
+		#log.info(f'self.parent={self.parent}')
 		self.LIBRARIES_DIR= libraries_directory
 		self.objectId= objectId
 
@@ -150,6 +151,13 @@ class LibraryPopupMenu(wx.Menu):
 		_('Import Library(as Json)'))
 		self.Append(importLibrary)
 		self.Bind(wx.EVT_MENU, self.onImport, importLibrary)
+
+		#Add Import firefox bookmarks menu
+		importFirefoxBookmarks = wx.MenuItem(self, wx.ID_ANY, 
+		# Translators: label obj menu items to import firefox bookmarks.
+		_('Import Firefox Bookmark Libraries(as Json)'))
+		self.Append(importFirefoxBookmarks)
+		self.Bind(wx.EVT_MENU, self.onImportBookmarks, importFirefoxBookmarks)
 
 	def onExportJson(self, evt):
 		dlg = wx.DirDialog(self.parent, "Choose a directory:",
@@ -249,7 +257,7 @@ class LibraryPopupMenu(wx.Menu):
 			# Translators: Message displayed when importing failed after validation succeeded
 				gui.messageBox(_('Sorry, importing of library failed'),
 				# Translators: Title of message box
-				_('Error', wx.OK|wx.ICON_ERROR))
+				_('Error'), wx.OK|wx.ICON_ERROR)
 				raise e
 			else:
 				if library_name not in LibraryDialog.libraryFiles:
@@ -260,6 +268,148 @@ class LibraryPopupMenu(wx.Menu):
 				core.callLater(200, ui.message,
 				# Translators: Message presented when library has been imported.
 				_("Information: Library imported."))
+
+	def extract_bookmarks(self, node, group_root=False, special_key=None):
+		"""Helper function for importing firefox bookmarks
+		Recursively extract bookmarks from a Firefox JSON node.
+		Returns a dictionary: {folderName: {bookmarkTitle: bookmarkURL, ...}, ...}
+		If group_root=True, root-level bookmarks are grouped under a special key.
+		"""
+		result = {}
+
+		# If this node is a folder
+		if node.get("type") == "text/x-moz-place-container" and node.get("title") != 'Mozilla Firefox':
+			folder_name = node.get("title", "Unnamed Folder")
+			folder_dict = {}
+			root_bookmarks = {}  # collect only root-level bookmarks if group_root=True
+
+			for child in node.get("children", []):
+				if child.get("type") == "text/x-moz-place-container":
+					# Subfolder → recurse
+					folder_dict.update(self.extract_bookmarks(child))
+				elif child.get("type") == "text/x-moz-place":
+					# Bookmark
+					title = child.get("title", "Untitled")
+					uri = child.get("uri", "")
+					if group_root:
+						root_bookmarks[title] = uri
+					else:
+						folder_dict[title] = uri
+
+			# If grouping root bookmarks, put them under the special key
+			if group_root and root_bookmarks:
+				folder_dict[special_key] = root_bookmarks
+
+			result[folder_name] = folder_dict
+		return result
+
+	def build_bookmark_dict(self, json_file):
+		''' Helper function for importing firefox bookmarks.
+		process firefox json bookmark file, and return a dictionary, to extract from it libraries and sublibraries'''
+		with open(json_file, "r", encoding="utf-8") as f:
+			data = json.load(f)
+		if data.get("type") != "text/x-moz-place-container":
+			# Translators: Message displayed when failing to import firefox bookmarks.
+			gui.messageBox(_('Sorry, but it seems that the file is not a firefox bookmarks json file'),
+			# Translators: Title of message box
+			_('Error'), wx.OK|wx.ICON_ERROR)
+			return None
+
+		bookmarks_dict = {}
+
+		# Root contains top-level folders like Bookmarks Menu, Toolbar, Other Bookmarks
+		for child in data.get("children", []):
+			if child.get("type") == "text/x-moz-place-container" and child.get("title") == 'mobile':
+				continue
+			# Group root-level bookmarks only for menu and unfiled
+			if child.get("title") == 'menu':
+				bookmarks_dict.update(self.extract_bookmarks(child, group_root=True, special_key="menuIndividualUrls"))
+			elif child.get("title") == 'toolbar':
+				bookmarks_dict.update(self.extract_bookmarks(child, group_root=True, special_key="toolbarIndividualUrls"))
+			elif child.get("title") == 'unfiled':
+				bookmarks_dict.update(self.extract_bookmarks(child, group_root=True, special_key="unfiledIndividualUrls"))
+			else:
+				bookmarks_dict.update(self.extract_bookmarks(child))
+		return bookmarks_dict
+
+	def onImportBookmarks(self, evt):
+		''' Importing  Firefox bookmarks from a json file, to be included as libraries and sublibraries in linkLibrary addon.'''
+		documents_dir = os.path.expanduser("~/Documents")
+		dlg = wx.FileDialog(
+		self.parent,
+		"Choose File",
+		documents_dir,     # defaultDir
+		"",                # defaultFile
+		"Json Files (*.json)|*.json",
+		wx.FD_FILE_MUST_EXIST)
+		if dlg.ShowModal()!= wx.ID_OK:
+			dlg.Destroy()
+			return
+		file_path= dlg.GetPath()
+		dlg.Destroy()
+		#log.info(file_path)
+		bookmarks_dict= self.build_bookmark_dict(file_path)
+		if bookmarks_dict is None:
+			return
+
+		mainDictionaries= (bookmarks_dict['menu'], bookmarks_dict['toolbar'], bookmarks_dict['unfiled'])
+		#log.info(menu)
+		for mainDict in mainDictionaries:
+			for key in mainDict:
+				libraryName = key
+				libraryName=api.filterFileName(libraryName)
+				# ensure uniqueness, if sameFile exist, name the library sameFile(2) and so on.
+				uniqueLibraryName= self.get_unique_filename(self.LIBRARIES_DIR, libraryName)
+				libraryDict= {}
+
+				for k, v in mainDict[key].items():
+					if isinstance(v, str):
+						libraryDict[v]= {"label": k, "about": ""}
+					elif isinstance(v,dict):
+						sublibraryName= k
+						self.buildSublibraryAndwriteToFile(uniqueLibraryName, sublibraryName, v)
+				#log.info(f'writing library to file...\n{libraryName}= {libraryDict}')	
+				with open(os.path.join(self.LIBRARIES_DIR, f'{uniqueLibraryName}.json'), "w", encoding="utf-8") as f:
+					json.dump(libraryDict, f, indent=4, ensure_ascii=False)
+
+		self.parent.Hide()
+		self.parent.postInit()
+		core.callLater(200, ui.message,
+		# Translators: Message presented when firefox bookmarks has been imported.
+		_("Information: Firefox bookmarks imported."))
+
+	def get_unique_filename(self, directory, base_name, extension=".json"):
+		""" Helper function for importing firefox bookmarks.
+		Returns a unique filename in the given directory.
+		If 'base_name.json' exists, it will return 'base_name(2).json', 'base_name(3).json', etc.
+		"""
+		filename = f"{base_name}{extension}"
+		full_path = os.path.join(directory, filename)
+		counter = 2
+
+		while os.path.exists(full_path):
+			filename = f"{base_name}({counter}){extension}"
+			full_path = os.path.join(directory, filename)
+			counter += 1
+		#return full_path
+		return os.path.splitext(filename)[0]
+
+	def buildSublibraryAndwriteToFile(self, libraryName, sublibraryName, d):
+		""" Helper function for importing firefox bookmarks
+		d is a dictionary"""
+		sublibraryDict= {}
+		for key, val in d.items():
+			if isinstance(val, str):
+				sublibraryDict[val]= {"label": key, "about": ""}
+		# end building the sublibraryDict
+		sublibrary_path= os.path.join(self.LIBRARIES_DIR, libraryName)
+		if not os.path.isdir(sublibrary_path):
+			os.mkdir(sublibrary_path)
+		sublibraryFileName= api.filterFileName(sublibraryName)+'.json'
+		#sublibraryFileName= sublibraryName+'.json'
+		sublibraryFilePath= os.path.join(sublibrary_path, sublibraryFileName)
+		with open(sublibraryFilePath, "w", encoding="utf-8") as f:
+			json.dump(sublibraryDict, f, indent=4, ensure_ascii=False)
 
 	def importingLibraryWithNamePresent(self, filename, filepath):
 		'''Importing a library, that has a name already present in existing libraries'''
