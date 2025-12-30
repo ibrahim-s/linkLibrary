@@ -1,3 +1,3 @@
-### Changes for 2.2.2 ###
+### Changes for 2.2.3 ###
 
-*	Now, it is possible to export a library with it's sublibraries as html file, and then if you wish, integrate it into firefox bookmarks.
+*	Add a new feature, to import the whole firefox bookmarks(as json file), to be included in the addon, and you can access that through an option in the context menu while standing on the list of libraries.

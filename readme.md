@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 2.2.2][1]  
+Download [Version 2.2.3][1]  
 NVDA compatibility: 2021.1 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -28,7 +28,7 @@ application key, to add a link by entering the url, label and optionaly the abou
 *	And using the filter control there, you can filter the links that contain specific words or phrases in the library.
 *	Stand on the link you want in this list, and press the context menu.  
 *	From there you can add, edit, move link to another library, remove that link or all.  
-*	Now do you want to import a json library, or export any library as json or html file, Yes you can  
+*	Now do you want to import a json library, or export any library as json or html file, Yes you can, and moreover if you want to import whole firefox bookmarks as json, you can do that also.
 *	For instance to export a library, stand on the library you want to export and press the contact menu, arrow down once to Export library as, choose the type of file you want to be exported, json or html and press enter.  
 *	A dialog will open to choose the folder you want to export to, choose folder and press enter or navigate to select folder button and press on it.  
 *	That's it, an information message will be displayed telling you that the library has been exported, congratulations.  
@@ -64,6 +64,10 @@ To use this feature, first you have to assign a gesture or shortcut to it , by g
 Now while browsing the net, if you like to add a page to any library in Link library addon you can do that. From any place on the page you like, press the gesture or shortcut for this feature, a window will open saying "Add link and title of web page to library", In it a button saying "Choose library:", press the button, and from the popup menu displayed choose the library you like and press enter.
 
 That's it , the link or url of the web page is added to library, with it's title as label, and you will hear a confirmation message telling you that. beautiful thing really.
+
+### Changes for 2.2.3 ###
+
+*	Add a new feature, to import the whole firefox bookmarks(as json file), to be included in the addon, and you can access that through an option in the context menu while standing on the list of libraries.
 
 ### Changes for 2.2.2 ###
 
@@ -201,4 +205,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.2.2/linkLibrary-2.2.2.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.2.3/linkLibrary-2.2.3.nvda-addon
