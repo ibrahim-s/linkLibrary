@@ -174,7 +174,7 @@ class MyPopupMenu(wx.Menu):
 			#Edit Selected Link menu
 			self.edit= wx.MenuItem(self, -1, 
 			# Translators: label of menu items to edit a link.
-			_('Edit Selected '))
+			_('Edit Selected link'))
 			self.Append(self.edit)
 			self.Bind(wx.EVT_MENU, self.onEdit, self.edit)
 
@@ -223,7 +223,7 @@ class MyPopupMenu(wx.Menu):
 			#Remove Selected Link menu
 			remove= wx.MenuItem(self, -1, 
 			# Translators: label of menu items to remove a link.
-			_('Remove Selected '))
+			_('Remove Selected link'))
 			self.Append(remove)
 			self.Bind(wx.EVT_MENU, self.onRemove, remove)
 

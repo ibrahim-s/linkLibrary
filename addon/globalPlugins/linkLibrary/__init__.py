@@ -577,12 +577,21 @@ class HelperFrame(wx.Frame):
 		isSubmenu= menu_id in self.subMenuId2parent
 		# if it is a sublibraries
 		if isSubmenu:
+			# Close any sublibrary dialog if opened.
+			# if it stays opened, the json file will be overwritten, and link not added.
+			if LinkSublibrary.sublibraryInstance:
+				LinkSublibrary.sublibraryInstance.onCancel(None)
 			# name of folder in which this sublibraries is found.
 			subMenuLabel= self.subMenuId2parent.get(menu_id)
 			#log.info(f'subMenu label: {subMenuLabel}')
 			libraryPath= os.path.join(self.libraries_dir, subMenuLabel, label+'.json')
 		else:
 			# it is a major library and not sub library.
+			# Close any library dialog if opened.
+			# if it stays opened, the json file will be overwritten, and link not added.
+			if LinkDialog.currentInstance:
+				LinkDialog.currentInstance.onCancel(None)
+
 			libraryPath= os.path.join(self.libraries_dir, label+'.json')
 		#log.info(f'libraryPath: {libraryPath}')
 		link, title= self.getLinkAndTitleOfWebPage()
