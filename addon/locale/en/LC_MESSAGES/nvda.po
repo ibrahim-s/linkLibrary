@@ -6,10 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 'linkLibrary' '2.2.3'\n"
+"Project-Id-Version: 'linkLibrary' '2.2.4'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2025-12-30 02:25+0200\n"
-"PO-Revision-Date: 2025-12-30 02:33+0200\n"
+"POT-Creation-Date: 2026-01-26 21:52+0200\n"
+"PO-Revision-Date: 2026-01-26 21:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -56,7 +56,7 @@ msgstr ""
 #: addon\globalPlugins\linkLibrary\linkDialog.py:759
 #: addon\globalPlugins\linkLibrary\__init__.py:249
 #: addon\globalPlugins\linkLibrary\__init__.py:489
-#: addon\globalPlugins\linkLibrary\__init__.py:599
+#: addon\globalPlugins\linkLibrary\__init__.py:608
 msgid "Warning"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 #: addon\globalPlugins\linkLibrary\__init__.py:423
 #: addon\globalPlugins\linkLibrary\__init__.py:438
 #: addon\globalPlugins\linkLibrary\__init__.py:494
-#: addon\globalPlugins\linkLibrary\__init__.py:611
+#: addon\globalPlugins\linkLibrary\__init__.py:620
 msgid "Error"
 msgstr ""
 
@@ -302,7 +302,7 @@ msgstr ""
 
 #. Translators: label of menu items to edit a link.
 #: addon\globalPlugins\linkLibrary\linkDialog.py:177
-msgid "Edit Selected "
+msgid "Edit Selected link"
 msgstr ""
 
 #. Translators: label obj subMenu items for moving a link.
@@ -312,7 +312,7 @@ msgstr ""
 
 #. Translators: label of menu items to remove a link.
 #: addon\globalPlugins\linkLibrary\linkDialog.py:226
-msgid "Remove Selected "
+msgid "Remove Selected link"
 msgstr ""
 
 #. Translators: label of menu items to remove all links.
@@ -690,19 +690,19 @@ msgid "Choose library:"
 msgstr ""
 
 #. Translators: Message displayed when trying to add a link already present in the library.
-#: addon\globalPlugins\linkLibrary\__init__.py:596
+#: addon\globalPlugins\linkLibrary\__init__.py:605
 msgid ""
 "This link is already present in {library} library, under {label} label;\n"
 " Do you still want to replace it with the one you are about to add?."
 msgstr ""
 
 #. Translators: Message displayed when getting an error trying to add a link on the fly.
-#: addon\globalPlugins\linkLibrary\__init__.py:609
+#: addon\globalPlugins\linkLibrary\__init__.py:618
 msgid "Unable to add the link to the library"
 msgstr ""
 
 #. Translators: Message displayed after adding the link successfuly.
-#: addon\globalPlugins\linkLibrary\__init__.py:616
+#: addon\globalPlugins\linkLibrary\__init__.py:625
 msgid "Information: The link was added successfuly to {library} library"
 msgstr ""
 
@@ -726,6 +726,7 @@ msgstr ""
 #. Translators: what's new content for the add-on version to be shown in the add-on store
 #: buildVars.py:34
 msgid ""
-"Now, it is possible to export a library with it's sublibraries as html file, "
-"and then if you wish, integrate it into firefox bookmarks.\n"
+"Fix a bug in Add a link on the fly feature,\n"
+"now you can add a link to an opened library or sublibrary, which wasn't "
+"possible before.\n"
 msgstr ""

@@ -1,3 +1,3 @@
-### Changes for 2.2.3 ###
+### Changes for 2.2.4 ###
 
-*	Add a new feature, to import the whole firefox bookmarks(as json file), to be included in the addon, and you can access that through an option in the context menu while standing on the list of libraries.
+*	Fix a bug in 'Add a link on the fly' feature, so now you can add a link to an opened library or sublibrary, which wasn't possible before.

@@ -28,10 +28,11 @@ This addon does not come with a default or assigned gesture or shortcut to it
 You can as always add a gesture or change the existed one going to :
 NVDA menu>preferences>inputGestures>Link Library."""),
 	# version
-	addon_version="2.2.3",
+	addon_version="2.2.4",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""Now, it is possible to export a library with it's sublibraries as html file, and then if you wish, integrate it into firefox bookmarks.
+	addon_changelog=_("""Fix a bug in Add a link on the fly feature,
+now you can add a link to an opened library or sublibrary, which wasn't possible before.
 """),
 	# Author(s)
 	addon_author="ibrahim hamadeh<ibra.hamadeh@hotmail.com>",
