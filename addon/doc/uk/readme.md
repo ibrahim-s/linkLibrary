@@ -44,67 +44,25 @@ NVDA меню>параметри>жести вводу>Бібліотека по
 *	Варто зазначити, що створення папки для розміщення файлів даних у домашньому каталозі користувача сприяє тому, що всі екземпляри додатка на комп'ютері можуть спільно використовувати ті самі файли або базу даних  
 *	а при виборі іншого шляху, наприклад, dropbox, дасть користувачеві можливість спільно використовувати ту ж папку або базу даних з екземплярами додатка на іншому комп'ютері, який використовує той же обліковий запис dropbox.  
 
-### Зміни для 1.8
+## Функція підбібліотеки ##
 
-* Додано елемент керування фільтром у діалозі кожної бібліотеки, за допомогою якого користувач тепер може відфільтрувати посилання у бібліотеці, які містять лише певні слова або фрази в url або мітці посилання.
-* У головному діалозі бібліотек, після додавання або перейменування бібліотеки, список бібліотек тепер впорядковано в алфавітному порядку, чого раніше не було.
+Ви можете додати підбібліотеки до будь-якої бібліотеки, якщо бажаєте.
 
-### Зміни для 1.7
+*    Відкрийте потрібну бібліотеку.
+*    Натисніть контекстне меню, спливаюче меню або меню додатка.
+*    Чудово, тепер у вас є можливість додавати, перейменовувати або видаляти будь-які підбібліотеки, якщо вони є.
+Просто, чи не так? Насолоджуйтесь!
 
-* Додано португальський переклад.
+## Додавання миттєвого посилання ##
 
-### Зміни для 1.6
+Чудова функція: додавання миттєвого посилання на веб-сторінку.
 
-* Додано український переклад.
+Щоб скористатися цією функцією, спочатку потрібно призначити їй жест або комбінацію клавіш, перейшовши до: меню NVDA (NVDA+N)/налаштування/жести вводу/бібліотека посилань/додавання миттєвого посилання та назви веб-сторінки до вибраної бібліотеки.
 
-### Зміни для 1.5 ###
+Тепер, переглядаючи мережу, якщо ви хочете додати сторінку до будь-якої бібліотеки в додатку Бібліотека посилань, ви можете це зробити. З будь-якого місця на сторінці, яке вам подобається, натисніть жест або комбінацію клавіш для цієї функції, відкриється вікно з написом «Додати посилання та заголовок веб-сторінки до бібліотеки», в ньому буде кнопка «Вибрати бібліотеку:», натисніть кнопку, і з випадаючого меню виберіть бібліотеку, яка вам подобається, і натисніть Enter.
 
-*	Тепер ви можете перемістити посилання з однієї бібліотеки до іншої, це можна зробити через спливаюче меню, далі пункт меню Перемістити посилання до, потім з підменю ви можете вибрати бібліотеку і натиснути Enter.
+Ось і все, посилання або URL-адреса веб-сторінки додана до бібліотеки з її заголовком як міткою, і ви почуєте підтверджувальне повідомлення про це. Це дійсно чудова річ.
 
-### Зміни для 1.4 ###
-
-*	Тепер під час закриття відкритої бібліотеки за допомогою клавіші Escape або кнопки «Скасувати»  
-Фокус повернеться до головного діалогу бібліотек.
-
-### Changes for 1.3 ###
-
-*	Replace close button by OK and Cancel in link dialog, and make possible to remove general library in library dialog.  
-*	Change minimum tested version of the addon to 2019.3.  
-*	Add Turkish translation for the addon.  
-
-### Changes for 1.2 ###
-
-*	Fixing a bug activating context menu in NVDA 2021.1 api.  
-*	Removing edge legacy from open link with in link dialog.  
-
-### Changes for 1.1 ###
-
-*	Now links in libraries, that is to say their labels are sorted ignoring case sensetivity.  
-*	During importing a json library, now if similar name exists  
-the user will be asked if he wishes to merge the two libraries or not, if he says No, the library will be imported having a number between paranthesis as suffix denoting number of similar libraries  
-and if he wants to merge the libraries, the imported or existed file will have the two dictionaries merged inside it.  
-
-### Changes for 1.0 ###
-
-*	Change Data or library files from .pickle to .json files
-*	In the title of link library dialog, now the label of the path chosen by the user to store data files, is now appended to the title.  
-
-### Changes for 0.5 ###
-
-*	Add dialog in the addon settings dialog to let the user add or choose the directory that he wishes to host the data file of the addon.  
-*	So now he can keep on the default path which is the home user directory, or choose from the settings dialog the path he wants.  
-
-### Changes for 0.4 ###
-
-*	Make the addon python3 compatible  
-
-### Changes for 0.2 ###
-
-*	Make the only place to save and retreave data, a folder named "linkLibrary-addonFiles" in the home user directory. So that it will be used by all instances of the addon in installed or portable versions of NVDA.
-
-### Changes for 0.1 ###
-
-*	Initial version.
 
 ### Зв’яжіться зі мною ###
 
