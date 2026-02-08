@@ -28,7 +28,7 @@ This addon does not come with a default or assigned gesture or shortcut to it
 You can as always add a gesture or change the existed one going to :
 NVDA menu>preferences>inputGestures>Link Library."""),
 	# version
-	addon_version="2.2.4",
+	addon_version="2.2.5",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
 	addon_changelog=_("""Fix a bug in Add a link on the fly feature,
