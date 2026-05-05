@@ -184,14 +184,15 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 class LinkDialogSettings(gui.SettingsDialog):
 	# Translators: title of the dialog
 	title= _("Link Library Settings")
-	#The dictionary in which we will store in it temporarly the label an value of the new added path
-	pathInfoDict= {}
 
 	def makeSettings(self, sizer):
 		settingsSizerHelper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
 		self.availablePaths= settingsSizerHelper.addLabeledControl(
 		# Translators: label of cumbo box of available paths to contain data files.
-		_("Choose Path to store Data Files"), wx.Choice, choices=[key for key in pathsHandle["availablePaths"]])
+		_("Choose Path to store Data Files"),
+		wx.Choice,
+		choices=[value for key, value in pathsHandle["availablePaths"].items()]
+		)
 		#log.info([key for key in pathsHandle["availablePaths"]])
 		self.availablePaths.Bind(wx.EVT_CHOICE, self.onAvailablePaths)
 
@@ -220,16 +221,46 @@ class LinkDialogSettings(gui.SettingsDialog):
 		self.chooseActionCumbo.SetSelection(config.conf["linkLibrary"]["afterActivatingLink"])
 
 	def postInit(self):
-		self.availablePaths.SetStringSelection(config.conf["linkLibrary"]["chosenDataPath"])
-		#log.info(config.conf["linkLibrary"]["chosenDataPath"])
-		#log.info(self.availablePaths.GetStringSelection())
-		if self.availablePaths.GetStringSelection()== "Home user directory":
-			#log.info('under if')
+		pathLabel= config.conf["linkLibrary"]["chosenDataPath"]
+		#log.info(f'path label: {pathLabel}')
+		availablePathsDict= pathsHandle["availablePaths"]
+		# pathLabel is a key in paths.ini file.
+		if pathLabel in availablePathsDict:
+			path= pathsHandle["availablePaths"][pathLabel]
+		# label found as a value, and it is a directory
+		elif pathLabel in availablePathsDict.values() and os.path.isdir(pathLabel):
+			label= [k for k, v in availablePathsDict.items() if v== pathLabel][0]
+			config.conf["linkLibrary"]["chosenDataPath"]= label
+			path= pathLabel
+		# found in values, but it is not a directory
+		elif pathLabel in availablePathsDict.values() and not os.path.isdir(pathLabel):
+			key= [k for k, v in pathsHandle["availablePaths"].items() if v== pathLabel][0]
+			del pathsHandle["availablePaths"][key]
+			#return to default path
+			config.conf["linkLibrary"]["chosenDataPath"]= "Home user directory"
+			path= os.path.expanduser('~')
+		# not in keys or values, but it is a directory
+		elif os.path.isdir(pathLabel):
+			lastPart= os.path.basename(pathLabel)
+			config.conf["linkLibrary"]["chosenDataPath"]= lastPart
+			# add it to availablePaths ini file
+			pathsHandle["availablePaths"][lastPart]= pathLabel
+			pathsHandle.write()
+			path= pathLabel
+		else:
+			# not found in paths.ini, and it is not a directory, so return to default path
+			config.conf["linkLibrary"]["chosenDataPath"]= "Home user directory"
+			path = os.path.expanduser('~')
+		#log.info(f'path :{path}')
+		self.availablePaths.SetStringSelection(path)
+
+		if self.availablePaths.GetStringSelection()== os.path.expanduser('~'):# "Home user directory"
+		#if pathLabel== "Home user directory":
 			self.removePathBtn.Enabled= False
 		self.availablePaths.SetFocus()
 
 	def onAvailablePaths(self, evt):
-		state= self.availablePaths.StringSelection != 'Home user directory'
+		state= self.availablePaths.GetStringSelection()!= os.path.expanduser('~')
 		self.removePathBtn.Enabled= state
 
 	def onAddPath(self, evt):
@@ -239,40 +270,33 @@ class LinkDialogSettings(gui.SettingsDialog):
 		gui.mainFrame.postPopup()
 
 	def onRemovePath(self, evt):
-		name= self.availablePaths.GetStringSelection()
+		path= self.availablePaths.GetStringSelection()
 		i= self.availablePaths.GetSelection()
-		if name and name!= "Home user directory":
+		if path and path!= os.path.expanduser('~'):
 			if gui.messageBox(
 			# Translators: The confirmation prompt displayed when the user requests to remove the selected path.
-			_("This path({}) will be permanently removed. This action cannot be undone.").format(name),
+			_("This path({}) will be permanently removed. This action cannot be undone.").format(path),
 			# Translators: The title of the confirmation dialog for removal of selected path.
 			_("Warning"),
 			wx.OK | wx.CANCEL | wx.ICON_QUESTION
 			) != wx.OK:
 				return
 			self.Hide()
+			pathLabel= [k for k, v in pathsHandle["availablePaths"].items() if v== path][0]
 			self.availablePaths.Delete(i)
-			if name== config.conf["linkLibrary"]["chosenDataPath"]:
+			# deleting a path it's label in nvda config
+			if config.conf["linkLibrary"]["chosenDataPath"]== pathLabel:
 				#return to default path
 				config.conf["linkLibrary"]["chosenDataPath"]= "Home user directory"
-			if name in pathsHandle["availablePaths"]:
-				del pathsHandle["availablePaths"][name]
-			if name in self.pathInfoDict:
-				del self.pathInfoDict[name]
+				if pathLabel in pathsHandle["availablePaths"]:
+					del pathsHandle["availablePaths"][pathLabel]
 			self.postInit()
 			self.Show()
 
 	def onOk(self, evt):
 		pathName= self.availablePaths.GetStringSelection()
-		#log.info(self.pathInfoDict)
-		for key, value in self.pathInfoDict.items():
-			#if value or directory ends with 'linkLibrary-addonFiles', remove it's base
-			if os.path.basename(value)== 'linkLibrary-addonFiles':
-				value= os.path.dirname(value)
-			#store the addedpaths in the ini file
-			pathsHandle["availablePaths"][key]= value
-		pathsHandle.write()
-		config.conf["linkLibrary"]["chosenDataPath"]= pathName
+		pathLabel = [key for key, val in pathsHandle["availablePaths"].items() if val == pathName][0]
+		config.conf["linkLibrary"]["chosenDataPath"]= pathLabel
 		config.conf["linkLibrary"]["afterActivatingLink"]= self.chooseActionCumbo.GetSelection() 
 		super(LinkDialogSettings, self).onOk(evt)
 
@@ -479,6 +503,17 @@ class AddPathDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 
+	def writeNewlyAddedPathToFile(self, pathLabel, path):
+		''' This function write the newly added path to ini file, as label as key and path as value.
+		This function will be called from onOkButton method.'''
+		# If there are newly added path, write it to availablePaths ini file.
+			#if value or directory ends with 'linkLibrary-addonFiles', remove it's base
+		if os.path.basename(path)== 'linkLibrary-addonFiles':
+			path= os.path.dirname(path)
+		#store the addedpaths in the ini file
+		pathsHandle["availablePaths"][pathLabel]= path
+		pathsHandle.write()
+
 	def onOkButton(self, evt):
 		pathValue= self.directoryEdit.Value
 		#log.info(pathValue)
@@ -500,12 +535,13 @@ class AddPathDialog(wx.Dialog):
 			# last part of path
 			baseName= splittedPath[-1]
 			pathName= baseName if baseName!= "linkLibrary-addonFiles" else splittedPath[-2]
-		#pathName= self.nameEntry.Value or pathValue
 		pathName= pathName.strip()
 		parent= self.parent
-		parent.pathInfoDict[pathName]= pathValue
-		parent.availablePaths.Append(pathName)
-		parent.availablePaths.SetStringSelection(pathName)
+		# write the newly added path to availablePaths ini file.
+		self.writeNewlyAddedPathToFile(pathName, pathValue)
+
+		parent.availablePaths.Append(pathValue)
+		parent.availablePaths.SetStringSelection(pathValue)
 		parent.onAvailablePaths(None)
 		#log.info(pathName)
 		wx.CallAfter(parent.availablePaths.SetFocus)
