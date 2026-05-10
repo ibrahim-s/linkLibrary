@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
-  # This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 'linkLibrary' '2.2.6'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2026-01-26 21:52+0200\n"
-"PO-Revision-Date: 2026-05-07 20:24-0300\n"
+"PO-Revision-Date: 2026-05-10 18:07-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -265,14 +265,14 @@ msgid ""
 msgstr ""
 "Esta biblioteca tiene subbibliotecas.\n"
 "¿Está seguro de que desea eliminar la biblioteca {} junto con sus sub-"
-"bibliotecas? Esto no se puede deshacer."
+"bibliotecas? Esto no se puede deshacer?"
 
 #. Translators: Message displayed upon removing a library.
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:634
 msgid "Are you sure you want to remove {} library, this can not be undone?"
 msgstr ""
 "¿Está seguro de que desea eliminar la biblioteca {}? Esto no se puede "
-"deshacer."
+"deshacer?"
 
 #. Translators: Message be displayed when a library dialog is already opened.
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:682
@@ -367,7 +367,7 @@ msgid ""
 "Are you sure you want to remove the sub library {}, this can not be undone?"
 msgstr ""
 "¿Está seguro de que desea eliminar la subbiblioteca {}? Esto no se puede "
-"deshacer."
+"deshacer?"
 
 #. Translators: getting the url of the link
 #: addon\globalPlugins\linkLibrary\linkDialog.py:336
@@ -769,15 +769,15 @@ msgid ""
 "NVDA menu>preferences>inputGestures>Link Library."
 msgstr ""
 "Este complemento ayuda al usuario a organizar sus enlaces o marcadores al "
-"estilo de una biblioteca.\\n\n"
+"estilo de una biblioteca.\n"
 "Desde el diálogo principal de bibliotecas, puede elegir la biblioteca o "
-"categoría que prefiera y pulsar intro sobre ella.\\n\n"
+"categoría que prefiera y pulsar intro sobre ella.\n"
 "En el diálogo que se abre, tendrá todos los enlaces de esa categoría en una "
 "lista y tendrá acceso a la URL de origen y a la información \"acerca de\" de "
-"cad  a enlace si estuviera presente.\\n\n"
+"cada enlace si estuviera presente.\n"
 "Este complemento no incluye un gesto o atajo de teclado asignado de forma "
-"predeterminada.\\n\n"
-"Como siempre, puede añadir un gesto o cambiar el existente yendo a:\\n\n"
+"predeterminada.\n"
+"Como siempre, puede añadir un gesto o cambiar el existente yendo a:\n"
 "Menú NVDA > Preferencias > Gestos de entrada > Link Library."
 
 #. Brief changelog for this version
@@ -791,4 +791,3 @@ msgstr ""
 "Corregir un error en la función de añadir enlace automáticamente,\n"
 "ahora puede añadir un enlace a una biblioteca o sub-biblioteca abierta, lo "
 "cual no era posible antes.\n"
-    
