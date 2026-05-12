@@ -1,3 +1,3 @@
-### Changes for 2.2.7 ###
+### Changes for 2.2.8 ###
 
-*	Add Spanish localization, contributed by [Ana Giselle](https://github.com/ana-giselle-ar86).
+*	Development version

@@ -28,10 +28,10 @@ This addon does not come with a default or assigned gesture or shortcut to it
 You can as always add a gesture or change the existed one going to :
 NVDA menu>preferences>inputGestures>Link Library."""),
 	# version
-	addon_version="2.2.7",
+	addon_version="2.2.8",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""- Add Spanish localization, contributed by [Ana Giselle](https://github.com/ana-giselle-ar86).
+	addon_changelog=_("""
 """),
 	# Author(s)
 	addon_author="ibrahim hamadeh<ibra.hamadeh@hotmail.com>",
