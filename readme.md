@@ -65,6 +65,11 @@ Now while browsing the net, if you like to add a page to any library in Link lib
 
 That's it , the link or url of the web page is added to library, with it's title as label, and you will hear a confirmation message telling you that. beautiful thing really.
 
+### Changes for 2.2.8 ###
+
+*	Fix a bug in 'Show source url' button in link dialog, that appeared in languages other than English.
+*	Add Spanish documentation, contributed by [Ana Giselle](https://github.com/ana-giselle-ar86).
+
 ### Changes for 2.2.7 ###
 
 *	Add Spanish translation, contributed by [Ana Giselle](https://github.com/ana-giselle-ar86).
