@@ -535,9 +535,13 @@ class LinkDialog(wx.Dialog):
 		self.aboutText = wx.TextCtrl(panel, -1,
 			   size=(200, 100), style=wx.TE_MULTILINE|wx.TE_READONLY)
 
+		# These two translatable string are made as instance attributes, because we will use them in several methods in the class.
+		# Translators: Label of showOrHideUrlButton, in state to show source url.
+		self.SHOW_URL= _("Show Source Url")
+		# Translators: Label of showOrHideUrlButton, in state to hide source url.
+		self.HIDE_URL= _("Hide Source Url")
 		self.showOrHideUrlButton= wx.Button(panel, -1,
-		   # Translators: Label of toggle button that shows or hides the source url of the link.
-		_("Show Source Url"))
+		self.SHOW_URL)
 
 		# Translators: Label of the text control that shows the url .
 		urlLabel = wx.StaticText(panel, -1, _("Url:"))
@@ -698,26 +702,28 @@ class LinkDialog(wx.Dialog):
 			if link:
 				#log.info(f'link: {link}-under onKillFocus')
 				self.showOrHideAboutControl(link.about)
-				if self.showOrHideUrlButton.GetLabel()== "Hide Source Url":
-					self.showOrHideUrlButton.SetLabel("Show Source Url")
+				if self.showOrHideUrlButton.GetLabel()== self.HIDE_URL:
+					self.showOrHideUrlButton.SetLabel(self.SHOW_URL)
 				self.showOrHideUrlButton.Show()
 				self.urlText.Hide()
 				self.openLinkWithButton.Show()
 		evt.Skip()
 
 	def onShowOrHideUrl(self, evt):
+		"""Event handler for showOrHideUrlButton, to show source url, then it's label will be changed to hide source url.
+		"""
 		label= self.listBox.GetStringSelection()
 		#log.info(f'label: {label} -under showOrHideUrlButton')
 		link= Link.getLinkByLabel(label)
-		if self.showOrHideUrlButton.GetLabel()== "Show Source Url":
+		if self.showOrHideUrlButton.GetLabel()== self.SHOW_URL:
 			self.urlText.SetValue(link.url)
 			self.urlText.SetSelection(0, -1)
 			self.urlText.Show()
 			self.urlText.SetFocus()
-			self.showOrHideUrlButton.SetLabel("Hide Source Url")
+			self.showOrHideUrlButton.SetLabel(self.HIDE_URL)
 		else:
 			self.urlText.Hide()
-			self.showOrHideUrlButton.SetLabel("Show Source Url")
+			self.showOrHideUrlButton.SetLabel(self.SHOW_URL)
 
 	def showOrHideAboutControl(self, value):
 		if value: # The about text control has some information about the link.

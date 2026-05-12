@@ -1,3 +1,4 @@
-### Changes for 2.2.7 ###
+### Changes for 2.2.8 ###
 
-*	Add Spanish localization, contributed by [Ana Giselle](https://github.com/ana-giselle-ar86).
+*	Fix a bug in 'Show source url' button in link dialog, that appeared in languages other than English.
+*	Add Spanish documentation, contributed by [Ana Giselle](https://github.com/ana-giselle-ar86).
