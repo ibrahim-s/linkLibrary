@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 2.2.8][1]  
+Download [Version 2.2.9][1]  
 NVDA compatibility: 2021.1 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -65,7 +65,7 @@ Now while browsing the net, if you like to add a page to any library in Link lib
 
 That's it , the link or url of the web page is added to library, with it's title as label, and you will hear a confirmation message telling you that. beautiful thing really.
 
-### Changes for 2.2.8 ###
+### Changes for 2.2.9 ###
 
 *	Fix a bug in 'Show source url' button in link dialog, that appeared in languages other than English.
 *	Add Spanish documentation, contributed by [Ana Giselle](https://github.com/ana-giselle-ar86).
@@ -227,4 +227,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.2.8/linkLibrary-2.2.8.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.2.9/linkLibrary-2.2.9.nvda-addon

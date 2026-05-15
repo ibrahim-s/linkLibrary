@@ -1,7 +1,7 @@
 # مكتبةْ الروابط #
 
 تأليف: ابراهيم حمادة  
-تحميل [Version 2.2.8][1]  
+تحميل [Version 2.2.9][1]  
 التوافقية مع NVDA: 2021.1 فما بعد  
 
 هذه الإضافةُ تتيحُ للمستخدمِ عمل مكتبة لِتنظيم و ترتيب الروابط الخاصة به.  
@@ -64,7 +64,7 @@
 
 هذا كل شيء ، فقد تمَّ إضافة الرابط أو URL لصفحة الويب إلى المكتبة ، بعنوانها كإسم للرابط، وستسمع رسالة تأكيد تخبرك بذلك. شيء جميل أليس كذلك!
 
-### التغييرات في 2.2.8 ###
+### التغييرات في 2.2.9 ###
 
 *	إصلاح الخلل في زر "إظهار قيمة الرابط" في مربع حوار الروابط، والذي ظهر بلغات أخرى غير الإنجليزية.
 *	إضافة الترجمة إلى اللغة الإسبانية، بمساهمة مِن [Ana Giselle](https://github.com/ana-giselle-ar86).
@@ -216,4 +216,4 @@ and if he wants to merge the libraries, the imported or existed file will have t
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.2.8/linkLibrary-2.2.8.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.2.9/linkLibrary-2.2.9.nvda-addon
