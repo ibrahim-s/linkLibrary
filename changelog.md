@@ -1,4 +1,3 @@
-### Changes for 2.2.9 ###
+### Changes for 2.3 ###
 
-*	Fix a bug in 'Show source url' button in link dialog, that appeared in languages other than English.
-*	Add Spanish documentation, contributed by [Ana Giselle](https://github.com/ana-giselle-ar86).
+*	Add two letter navigation feature in listboxes,so that now the user can navigate using two consecutive letters in library and link dialogs, and cycle through items as in file explorer.

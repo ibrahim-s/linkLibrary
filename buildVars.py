@@ -28,11 +28,10 @@ This addon does not come with a default or assigned gesture or shortcut to it
 You can as always add a gesture or change the existed one going to :
 NVDA menu>preferences>inputGestures>Link Library."""),
 	# version
-	addon_version="2.2.9",
+	addon_version="2.3",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""- Fix a bug in 'Show source url' button in link dialog, that appeared in languages other than English.
-- Add Spanish documentation, contributed by [Ana Giselle](https://github.com/ana-giselle-ar86).
+	addon_changelog=_("""- Add two letter navigation feature in listboxes,so that now the user can navigate using two consecutive letters in library and link dialogs, and cycle through items as in file explorer.
 """),
 	# Author(s)
 	addon_author="ibrahim hamadeh<ibra.hamadeh@hotmail.com>",

@@ -10,7 +10,7 @@ import json
 import re
 from logHandler import log
 from .links import Link
-from .linkDialog import LinkDialog
+from .linkDialog import LinkDialog, ListBoxNavigationMixin
 
 import addonHandler
 addonHandler.initTranslation()
@@ -447,7 +447,7 @@ class LibraryPopupMenu(wx.Menu):
 				json.dump(mergedDict, f, ensure_ascii= False, indent= 4)
 			return filename
 
-class LibraryDialog(wx.Dialog):
+class LibraryDialog(wx.Dialog, ListBoxNavigationMixin):
 	def __init__(self, parent, path):
 		""" path is the path directory where we chose to preservee data files."""
 		pathLabel= config.conf["linkLibrary"]["chosenDataPath"]
@@ -457,6 +457,7 @@ class LibraryDialog(wx.Dialog):
 		# Translators: Title of dialog with the path label as suffix.
 		title= _("Link Library - {}").format(pathLabel)
 		super(LibraryDialog, self).__init__(parent, title= title)
+		ListBoxNavigationMixin.__init__(self)  # ensure mixin init runs
 		self.LIBRARIES_DIR= os.path.join(path, 'linkLibrary-addonFiles')
 		#Sending libraries path to the Link class
 		Link.SAVING_DIR= self.LIBRARIES_DIR
@@ -473,6 +474,9 @@ class LibraryDialog(wx.Dialog):
 		self.listBox.Bind(wx.EVT_CONTEXT_MENU, self.OnRightDown)
 		# wx.EVT_CONTEXT_MENU is used in NVDA 2021.1, for wx.EVT_RIGHT_DOWN seized to work.
 		self.listBox.Bind(wx.EVT_KILL_FOCUS, self.onKillFocus)
+		# Feature added to allow two letter navigation in the listBox, or list of libraries.
+		self.bind_navigation(self.listBox)
+
 		listBoxSizer.Add(staticText, 0, wx.ALL, 5)
 		listBoxSizer.Add(self.listBox, 1, wx.ALL|wx.EXPAND, 5)
 		mainSizer.Add(listBoxSizer, 1, wx.ALL, 5)

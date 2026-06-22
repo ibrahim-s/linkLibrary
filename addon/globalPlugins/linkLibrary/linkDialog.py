@@ -9,6 +9,7 @@ import webbrowser, os
 import subprocess 
 import json
 import re
+import time
 import queueHandler
 import config
 import api
@@ -127,7 +128,7 @@ class MyPopupMenu(wx.Menu):
 	''' The menu that pops up upon right clicking on the list box.'''
 	def __init__(self, parent, eventObjectId):
 		super(MyPopupMenu, self).__init__()
-        
+		
 		self.parent = parent
 		self.eventObjectId= eventObjectId
 		self.listBox= self.parent.FindWindowById(self.eventObjectId)
@@ -502,7 +503,63 @@ class MyPopupMenu(wx.Menu):
 		Link.remove_allLinks()
 		self.parent.populateListBox()
 
-class LinkDialog(wx.Dialog):
+class ListBoxNavigationMixin:
+	"""
+	A reusable mixin that adds incremental keyboard navigation to wx.ListBox controls,
+	similar to Windows File Explorer.
+	Features:
+	- Pressing a printable key jumps to the first item starting with that character.
+	- Typing multiple characters quickly (within ~1 second) builds a search buffer
+	  and navigates to items starting with that sequence.
+	  """
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)  # safe for mixins
+
+		# _search_buffer stores the sequence of typed characters.
+		self._search_buffer = ""
+		#Timestamp of the last key press
+		self._last_key_time = 0
+
+	# Attach the navigation handler to the given listbox.
+	def bind_navigation(self, listbox):
+		listbox.Bind(wx.EVT_CHAR, self.on_char)
+
+	def on_char(self, event):
+		key = event.GetKeyCode()
+		if 32 <= key <= 126:  # printable ASCII
+			char = chr(key).lower()
+			now = time.time()  # seconds
+			# Reset buffer if gap > 1 second
+			if now - self._last_key_time > 1.0:
+				self._search_buffer = ""
+			self._search_buffer += char
+			self._last_key_time = now
+
+			listbox = event.GetEventObject()
+			count = listbox.GetCount()
+			# Collapse buffer when repeating same letter (cycle single letters)
+			if len(self._search_buffer)>1 and (self._search_buffer[0]== self._search_buffer[-1]):
+				self._search_buffer= self._search_buffer[-1]
+
+			start_index = listbox.GetSelection()
+			# Enable cycling for two consecutive letters
+			if len(self._search_buffer)> 1 and listbox.GetString(start_index).casefold().startswith(self._search_buffer[0].casefold()):
+				#log.info(f'subtracting 1 from start_index...')
+				start_index= start_index-1
+			#log.info(f'start_index: {start_index}')
+			#log.info(f'before loop, {self._search_buffer=}')
+
+			for i in range(count):
+				idx = (start_index + 1 + i) % count
+				if listbox.GetString(idx).casefold().startswith(self._search_buffer.casefold()):
+					listbox.SetSelection(idx)
+					listbox.EnsureVisible(idx)
+					#log.info(f'match: {self._search_buffer} at {idx}')
+					break
+		else:
+			event.Skip()
+
+class LinkDialog(wx.Dialog, ListBoxNavigationMixin):
 	''' Dialog of library that contains list of links, and it may contain also sub libraries.
 	sub libraries will reside in the top of listBox, and they will have (Sub library) suffix.'''
 	#to insure that there is only one instance of LinkDialog class is running
@@ -511,6 +568,8 @@ class LinkDialog(wx.Dialog):
 	def __init__(self, parent, filename, libraries_path):
 		super(LinkDialog, self).__init__(parent, -1, title= filename, 
 		size=(500, 400))
+		ListBoxNavigationMixin.__init__(self)  # ensure mixin init runs
+
 		self.parent= parent
 		self.sublibrariesPath = os.path.join(libraries_path, filename)
 		# Sub libraries names with sub library suffix. 
@@ -529,6 +588,8 @@ class LinkDialog(wx.Dialog):
 		# Translators: Label for the list of links.
 		listLabel= wx.StaticText(panel, -1, _("List Of Links"))
 		self.listBox= wx.ListBox(panel, -1, style= wx.LB_SINGLE)
+		# Feature added to allow two letter navigation in the listBox, or list of links.
+		self.bind_navigation(self.listBox)
 
 		# Translators: Label of about the link text control.
 		aboutLabel = wx.StaticText(panel, -1, _("About The Link"))
