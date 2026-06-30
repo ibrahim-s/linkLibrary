@@ -1,7 +1,7 @@
 # مكتبةْ الروابط #
 
 تأليف: ابراهيم حمادة  
-تحميل [Version 2.3][1]  
+تحميل [Version 2.3.1][1]  
 التوافقية مع NVDA: 2021.1 فما بعد  
 
 هذه الإضافةُ تتيحُ للمستخدمِ عمل مكتبة لِتنظيم و ترتيب الروابط الخاصة به.  
@@ -220,4 +220,4 @@ and if he wants to merge the libraries, the imported or existed file will have t
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3/linkLibrary-2.3.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3.1/linkLibrary-2.3.1.nvda-addon

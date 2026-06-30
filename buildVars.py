@@ -28,10 +28,10 @@ This addon does not come with a default or assigned gesture or shortcut to it
 You can as always add a gesture or change the existed one going to :
 NVDA menu>preferences>inputGestures>Link Library."""),
 	# version
-	addon_version="2.3",
+	addon_version="2.3.1",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""- Add two letter navigation feature in listboxes,so that now the user can navigate using two consecutive letters in library and link dialogs, and cycle through items as in file explorer.
+	addon_changelog=_("""- Update Ukrainian localization , by [George-br](https://github.com/George-br).
 """),
 	# Author(s)
 	addon_author="ibrahim hamadeh<ibra.hamadeh@hotmail.com>",
