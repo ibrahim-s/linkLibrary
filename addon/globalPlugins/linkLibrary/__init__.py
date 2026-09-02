@@ -15,11 +15,11 @@ import globalVars
 import browseMode
 import shutil
 import json
-from scriptHandler import script
+from scriptHandler import script, getLastScriptRepeatCount
 from configobj import ConfigObj
 from logHandler import log
 from .libraryDialog import LibraryDialog
-from .linkDialog import LinkDialog, LinkSublibrary
+from .linkDialog import LinkDialog, LinkSublibrary, AddLinkOnFlyDialog
 
 import addonHandler
 addonHandler.initTranslation()
@@ -77,6 +77,9 @@ def getChosenDataPath():
 LIBRARYDIALOG= None
 # Instance of HelperFrame , that contains the popup menu, to add a link on the fly
 helperFrameInstance= None
+# repeatCount of add a link on the fly feature
+# single press add link directly after choosing library. and d ouble press opens dialog to edit link information before adding it.
+addLinkOnTheFlyRepeatCount = 0
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	scriptCategory = _("Link Library")
@@ -157,7 +160,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@script(
 	# Translators: message displayed in input help mode for adding a link on the fly.
-	description=_("Add the link and title of web page on the fly to library you choose."),
+	description=_("Add the link and title of web page on the fly to library you choose. "
+	"press once quickly to add it immediately, Press twice opens a dialog to review and edit the link before adding it; ."),
 	)
 	def script_addLinkOnTheFly(self, gesture):
 		obj = api.getNavigatorObject().treeInterceptor
@@ -169,6 +173,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		HelperFrame.navigatorObjectTreeInterceptor= obj
 		# Send foregroundObject to HelperFrame to get title of web page
 		HelperFrame.foregroundObject= api.getForegroundObject()
+		global addLinkOnTheFlyRepeatCount
+		addLinkOnTheFlyRepeatCount =getLastScriptRepeatCount()
+
 		def showPopupMenuInFrame():
 			global helperFrameInstance
 			if not helperFrameInstance:
@@ -176,9 +183,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				f.Raise()
 				f.Show()
 				helperFrameInstance = f
+				#log.info(f'under script, {addLinkOnTheFlyRepeatCount=}')
 			else:
 				helperFrameInstance.Raise()
-		wx.CallAfter(showPopupMenuInFrame)
+		#Show HelperFrame after 300 ms, So addLinkOnTheFlyRepeatCount will got stable.
+		wx.CallLater(300, showPopupMenuInFrame)
 
 	#Link Library Dialog Settings class
 class LinkDialogSettings(gui.SettingsDialog):
@@ -553,12 +562,13 @@ class AddPathDialog(wx.Dialog):
 class HelperFrame(wx.Frame):
 	"""A frame, contains a button, that triggers the popup menu of libraries to add the web page link to one of them.
 	"""
+
 	def __init__(self, parent):
 		super(HelperFrame, self).__init__(parent, wx.ID_ANY,
 		# Translators: title of frame
 		title="Add link and title of web page to library",
 		size=(300,200))
-		# dictionary that tracks submenu ids as keys, and the name of the folder in which they reside as valid.
+		# dictionary that tracks submenu ids as keys, and the name of the folder in which they reside as value.
 		self.subMenuId2parent: dict[int, str] = {}
 		panel = wx.Panel(self)
 		sizer= wx.BoxSizer(wx.VERTICAL)
@@ -607,8 +617,8 @@ class HelperFrame(wx.Frame):
 			self.Bind(wx.EVT_MENU, lambda evt , args=sublibrary: self.onMenuItem(evt, args), item)
 		mainMenu.AppendSubMenu(menu_sub, submenuLabel)
 
-	def onMenuItem(self,event, label: str):
-		#label is the name of library or menu item press.
+	def onMenuItem(self,event, menuLabel: str):
+		#menuLabel is the name of library or menu item press.
 		menu_id = event.GetId()
 		isSubmenu= menu_id in self.subMenuId2parent
 		# if it is a sublibraries
@@ -620,7 +630,7 @@ class HelperFrame(wx.Frame):
 			# name of folder in which this sublibraries is found.
 			subMenuLabel= self.subMenuId2parent.get(menu_id)
 			#log.info(f'subMenu label: {subMenuLabel}')
-			libraryPath= os.path.join(self.libraries_dir, subMenuLabel, label+'.json')
+			libraryPath= os.path.join(self.libraries_dir, subMenuLabel, menuLabel+'.json')
 		else:
 			# it is a major library and not sub library.
 			# Close any library dialog if opened.
@@ -628,10 +638,24 @@ class HelperFrame(wx.Frame):
 			if LinkDialog.currentInstance:
 				LinkDialog.currentInstance.onCancel(None)
 
-			libraryPath= os.path.join(self.libraries_dir, label+'.json')
+			libraryPath= os.path.join(self.libraries_dir, menuLabel+'.json')
 		#log.info(f'libraryPath: {libraryPath}')
 		link, title= self.getLinkAndTitleOfWebPage()
-		# Add the link, and title as label to the library
+		link= link.strip().rstrip('/')
+		if addLinkOnTheFlyRepeatCount== 0:
+			#log.info(f'one press, {addLinkOnTheFlyRepeatCount=}')
+		# after choosing the library, add the link directly.
+			self.checkAndAddLinkToLibrary(link, title, menuLabel, libraryPath)
+			self.Destroy()
+			return
+		#log.info(f'double press... {addLinkOnTheFlyRepeatCount=}')
+		# destroy the frame
+		self.Destroy()
+		 # double press, after choosing the library, display AddLinkOnFlyDialog
+		AddLinkOnFlyDialog(gui.mainFrame, libraryPath, menuLabel, link, title)
+
+	def checkAndAddLinkToLibrary(self,link, label, library, libraryPath, about=""):
+		"Check if link exist in library, and if not add it."
 		try:
 			with open(libraryPath, encoding= 'utf-8') as f:
 				libraryDict= json.load(f)
@@ -639,13 +663,12 @@ class HelperFrame(wx.Frame):
 				if gui.messageBox(
 				# Translators: Message displayed when trying to add a link already present in the library.
 				_("This link is already present in {library} library, under {label} label;\n"
-				" Do you still want to replace it with the one you are about to add?.").format(library= label, label= libraryDict[link]['label']),
+				" Do you still want to replace it with the one you are about to add?.").format(library= library, label= libraryDict[link]['label']),
 				# Translators: Title of message box.
 				_('Warning'),
 				wx.YES|wx.NO|wx.ICON_QUESTION)== wx.NO:
 					return
-
-			libraryDict[link]= {"label": title, "about": ""}
+			libraryDict[link]= {"label": label, "about": about}
 			with open(libraryPath, 'w', encoding= 'utf-8') as f:
 				json.dump(libraryDict, f, ensure_ascii= False, indent= 4)
 		except Exception as e:
@@ -658,12 +681,11 @@ class HelperFrame(wx.Frame):
 			return
 		core.callLater(100, ui.message, 
 		# Translators: Message displayed after adding the link successfuly.
-		_("Information: The link was added successfuly to {library} library").format(library= label))
-		self.Destroy()
+		_("Information: The link was added successfuly to {library} library").format(library= library))
 
 	def getLinkAndTitleOfWebPage(self):
 		obj= self.navigatorObjectTreeInterceptor
-		link = obj.documentConstantIdentifier
+		link = getattr(obj, 'documentURL', getattr(obj, 'documentConstantIdentifier'))
 		#log.info(f'link: {link}')
 		#get title
 		title= self.foregroundObject.name

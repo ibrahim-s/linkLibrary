@@ -13,9 +13,11 @@ import time
 import queueHandler
 import config
 import api
+import core, ui
 from .links import Link
 #importing the getBrowsers function that retreaves the found browsers in the registry
 from .getbrowsers import getBrowsers
+
 from logHandler import log
 
 import addonHandler
@@ -911,4 +913,95 @@ class LinkSublibrary(LinkDialog):
 		Link.filename= self.parent.filename + '.json'
 		#log.info(f'self.parent.filename: {self.parent.filename}')
 		Link.changeClassAttributes()
+		self.Destroy()
+
+class AddLinkOnFlyDialog(wx.Dialog):
+	"""Dialog used by the 'Add a link on the fly' feature (double press of its gesture).
+	Once a library is chosen, this dialog is shown pre-filled with the current page's
+	address and title, but both remain editable, and the About field can optionally be
+	filled in. The link is written to the chosen library's file only when the user
+	presses Ok; Cancel discards it.
+	"""
+	def __init__(self, parent, libraryPath, libraryLabel, url, label):
+		# Translators: title of the dialog to add a link captured on the fly.
+		super(AddLinkOnFlyDialog, self).__init__(parent, title= _("Add Link To {library}").format(library= libraryLabel))
+		self.libraryPath= libraryPath
+		self.libraryLabel= libraryLabel
+
+		mainSizer= wx.BoxSizer(wx.VERTICAL)
+		sHelper= gui.guiHelper.BoxSizerHelper(self, orientation= wx.VERTICAL)
+
+		# Translators: label of url text control in Add Link On Fly dialog.
+		self.urlEdit= sHelper.addLabeledControl(_("Url:"), wx.TextCtrl, value= url)
+		# Translators: label of link label text control in Add Link On Fly dialog.
+		self.labelEdit= sHelper.addLabeledControl(_("Link Label:"), wx.TextCtrl, value= label)
+		# Translators: label of about text control in Add Link On Fly dialog.
+		self.aboutEdit= sHelper.addLabeledControl(_("About:"), wx.TextCtrl,
+		style= wx.TE_MULTILINE, size= (300, 100))
+
+		bHelper= sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))
+		# Translators: label of Ok button.
+		okButton= bHelper.addButton(self, label= _("Ok"), id= wx.ID_OK)
+		okButton.SetDefault()
+		okButton.Bind(wx.EVT_BUTTON, self.onOk)
+		bHelper.addButton(self, id= wx.ID_CANCEL)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id= wx.ID_CANCEL)
+
+		mainSizer.Add(sHelper.sizer, border= 10, flag= wx.ALL)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.Raise()
+		self.urlEdit.SetFocus()
+		self.Show()
+
+	def onOk(self, evt):
+		url= self.urlEdit.Value.strip().rstrip('/')
+		label= self.labelEdit.Value.strip()
+		about= self.aboutEdit.Value.strip()
+		if not url:
+			gui.messageBox(
+			# Translators: message displayed when the url field is left empty.
+			_("Please enter the url of the link."),
+			# Translators: title of dialog.
+			_("Error"), wx.OK|wx.ICON_ERROR)
+			self.urlEdit.SetFocus()
+			return
+		if not label:
+			gui.messageBox(
+			# Translators: message displayed when the label field is left empty.
+			_("Please enter a label for the link."),
+			# Translators: title of dialog.
+			_("Error"), wx.OK|wx.ICON_ERROR)
+			self.labelEdit.SetFocus()
+			return
+		try:
+			with open(self.libraryPath, encoding= 'utf-8') as f:
+				libraryDict= json.load(f)
+			if url in libraryDict:
+				if gui.messageBox(
+				# Translators: Message displayed when trying to add a link already present in the library.
+				_("This link is already present in {library} library, under {label} label;\n"
+				" Do you still want to replace it with the one you are about to add?.").format(library= self.libraryLabel, label= libraryDict[url]['label']),
+				# Translators: Title of message box.
+				_('Warning'),
+				wx.YES|wx.NO|wx.ICON_QUESTION)== wx.NO:
+					self.Destroy()
+					return
+			libraryDict[url]= {"label": label, "about": about}
+			with open(self.libraryPath, 'w', encoding= 'utf-8') as f:
+				json.dump(libraryDict, f, ensure_ascii= False, indent= 4)
+		except Exception as e:
+			gui.messageBox(
+			# Translators: Message displayed when getting an error trying to add a link on the fly.
+			_("Unable to add the link to the library"),
+			# Translators: Title of message box
+			_("Error"), wx.OK|wx.ICON_ERROR)
+			raise e
+		else:
+			core.callLater(100, ui.message,
+			# Translators: Message displayed after adding the link successfuly.
+			_("Information: The link was added successfuly to {library} library").format(library= self.libraryLabel))
+			self.Destroy()
+
+	def onCancel(self, evt):
 		self.Destroy()
