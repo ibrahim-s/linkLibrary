@@ -175,6 +175,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		HelperFrame.foregroundObject= api.getForegroundObject()
 		global addLinkOnTheFlyRepeatCount
 		addLinkOnTheFlyRepeatCount =getLastScriptRepeatCount()
+		if AddLinkOnFlyDialog.currentInstance is not None:
+			# Translators: Message displayed when an instance of 'Add link on fly dialog' is still opened.
+			ui.message(_("An instance of Add link on fly dialog is opened, close it first please."))
+			return
 
 		def showPopupMenuInFrame():
 			global helperFrameInstance
@@ -652,7 +656,8 @@ class HelperFrame(wx.Frame):
 		# destroy the frame
 		self.Destroy()
 		 # double press, after choosing the library, display AddLinkOnFlyDialog
-		AddLinkOnFlyDialog(gui.mainFrame, libraryPath, menuLabel, link, title)
+		d= AddLinkOnFlyDialog(gui.mainFrame, libraryPath, menuLabel, link, title)
+		AddLinkOnFlyDialog.currentInstance= d
 
 	def checkAndAddLinkToLibrary(self,link, label, library, libraryPath, about=""):
 		"Check if link exist in library, and if not add it."

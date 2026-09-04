@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 2.3.2][1]  
+Download [Version 2.3.3][1]  
 NVDA compatibility: 2021.1 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -56,15 +56,31 @@ You can add if you like sub libraries to any library.
 *	Great, now you have from there the option to add, and remame or remove any sub libraries if they are present.
 Easy , isn't it, enjoy!
 
-## Add a link on the fly ##
+## Add a Link on the Fly ##
 
-Wonderful feature: Add link of web page on the fly
+This feature lets you quickly add the link of a web page to your chosen library.
 
-To use this feature, first you have to assign a gesture or shortcut to it , by going to: NVDA menu(NVDA+N)/preferences/Input gestures/Link Library/Add the link and title of web page on the fly to library you choose.
+To set it up, assign a gesture or shortcut:
+NVDA menu (NVDA+N) → Preferences → Input gestures → Link Library → *Add the link and title of web page on the fly to library you choose*.
 
-Now while browsing the net, if you like to add a page to any library in Link library addon you can do that. From any place on the page you like, press the gesture or shortcut for this feature, a window will open saying "Add link and title of web page to library", In it a button saying "Choose library:", press the button, and from the popup menu displayed choose the library you like and press enter.
+Once configured, here’s how it works while browsing:
 
-That's it , the link or url of the web page is added to library, with it's title as label, and you will hear a confirmation message telling you that. beautiful thing really.
+From any place on the page you like, press the gesture or shortcut for this feature, a window will open saying "Add link and title of web page to library", In it a button saying "Choose library:", press the button, and from the popup menu displayed choose the library you like and press enter.
+
+* **Single press**: After choosing the library, the link (URL and page title) is added directly.
+* **Double press**: After choosing the library, a dialog opens with pre‑filled values for URL and label (page title). You can edit these values and optionally fill in the *About* field before pressing OK to add the link.
+
+Result:  
+- With a single press, the link is added immediately.  
+- With a double press, you can customize it first.  
+
+A confirmation message will announce that the link has been added successfully.
+
+### Changes for 2.3.3 ###
+
+*	When standing on a web page and using the "Add Link on the Fly" gesture:
+	*	Pressing the gesture once: after choosing the library, the link is added directly (URL and page title).
+	*	Pressing the gesture twice: after choosing the library, a dialog opens with pre-filled values for URL and label (page title). In this dialog, you can edit the link information and optionally fill in the "About" field before pressing OK to add the link to the library.
 
 ### Changes for 2.3.2 ###
 
@@ -236,4 +252,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3.2/linkLibrary-2.3.2.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3.3/linkLibrary-2.3.3.nvda-addon

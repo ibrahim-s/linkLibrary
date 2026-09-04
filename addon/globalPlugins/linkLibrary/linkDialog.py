@@ -919,9 +919,9 @@ class AddLinkOnFlyDialog(wx.Dialog):
 	"""Dialog used by the 'Add a link on the fly' feature (double press of its gesture).
 	Once a library is chosen, this dialog is shown pre-filled with the current page's
 	address and title, but both remain editable, and the About field can optionally be
-	filled in. The link is written to the chosen library's file only when the user
-	presses Ok; Cancel discards it.
+	filled in. 
 	"""
+	currentInstance= None
 	def __init__(self, parent, libraryPath, libraryLabel, url, label):
 		# Translators: title of the dialog to add a link captured on the fly.
 		super(AddLinkOnFlyDialog, self).__init__(parent, title= _("Add Link To {library}").format(library= libraryLabel))
@@ -985,6 +985,7 @@ class AddLinkOnFlyDialog(wx.Dialog):
 				# Translators: Title of message box.
 				_('Warning'),
 				wx.YES|wx.NO|wx.ICON_QUESTION)== wx.NO:
+					self.cleanup()
 					self.Destroy()
 					return
 			libraryDict[url]= {"label": label, "about": about}
@@ -1001,7 +1002,12 @@ class AddLinkOnFlyDialog(wx.Dialog):
 			core.callLater(100, ui.message,
 			# Translators: Message displayed after adding the link successfuly.
 			_("Information: The link was added successfuly to {library} library").format(library= self.libraryLabel))
+			self.cleanup()
 			self.Destroy()
 
 	def onCancel(self, evt):
+		self.cleanup()
 		self.Destroy()
+
+	def cleanup(self):
+		AddLinkOnFlyDialog.currentInstance = None
