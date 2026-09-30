@@ -1,7 +1,7 @@
 # مكتبةْ الروابط #
 
 تأليف: ابراهيم حمادة  
-تحميل [Version 2.3.3][1]  
+تحميل [Version 2.3.4][1]  
 التوافقية مع NVDA: 2021.1 فما بعد  
 
 هذه الإضافةُ تتيحُ للمستخدمِ عمل مكتبة لِتنظيم و ترتيب الروابط الخاصة به.  
@@ -70,6 +70,11 @@
 - بالضغط مرتين، يمكنك تعديل المعلومات قبل إضافتها.  
 
 سيظهر لك تنبيه صوتي يؤكد أن الرابط(رابط صفحةْ الوب) تمت إضافته إلى المكتبة بنجاح.
+
+### التغييرات في 2.3.4 ###
+
+*	عند محاولة إضافة رابط بشكل سريع عقب فتح صفحة الويب مباشرة، كان برنامج NVDA يعجز عن الوصول إلى العنوان، مما يؤدي إلى حدوث خطأ.
+*	أصبحنا الآن نعالج هذا الخطأ ونعرض رسالة تنبيهية تطلب من المستخدم المحاولة مرة أخرى؛ حيث سيتمكن NVDA من الوصول إلى العنوان في المحاولة الثانية.
 
 ### التغييرات في 2.3.3 ###
 
@@ -237,4 +242,4 @@ and if he wants to merge the libraries, the imported or existed file will have t
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3.3/linkLibrary-2.3.3.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3.4/linkLibrary-2.3.4.nvda-addon

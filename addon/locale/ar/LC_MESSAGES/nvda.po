@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 'linkLibrary' '2.1'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2026-09-04 10:41+0300\n"
-"PO-Revision-Date: 2026-09-04 11:29+0300\n"
+"POT-Creation-Date: 2026-10-01 01:54+0300\n"
+"PO-Revision-Date: 2026-10-01 02:06+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -48,20 +48,20 @@ msgstr "هذا الإسم موجود لِمكتبة أخرى, يُرجى إدخ�
 #. Translators: Title of message box.
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:31
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:642
-#: addon\globalPlugins\linkLibrary\linkDialog.py:40
-#: addon\globalPlugins\linkLibrary\linkDialog.py:58
-#: addon\globalPlugins\linkLibrary\linkDialog.py:261
-#: addon\globalPlugins\linkLibrary\linkDialog.py:300
-#: addon\globalPlugins\linkLibrary\linkDialog.py:319
-#: addon\globalPlugins\linkLibrary\linkDialog.py:411
-#: addon\globalPlugins\linkLibrary\linkDialog.py:444
-#: addon\globalPlugins\linkLibrary\linkDialog.py:480
-#: addon\globalPlugins\linkLibrary\linkDialog.py:502
-#: addon\globalPlugins\linkLibrary\linkDialog.py:854
-#: addon\globalPlugins\linkLibrary\linkDialog.py:986
-#: addon\globalPlugins\linkLibrary\__init__.py:293
-#: addon\globalPlugins\linkLibrary\__init__.py:537
-#: addon\globalPlugins\linkLibrary\__init__.py:673
+#: addon\globalPlugins\linkLibrary\linkDialog.py:43
+#: addon\globalPlugins\linkLibrary\linkDialog.py:61
+#: addon\globalPlugins\linkLibrary\linkDialog.py:264
+#: addon\globalPlugins\linkLibrary\linkDialog.py:303
+#: addon\globalPlugins\linkLibrary\linkDialog.py:322
+#: addon\globalPlugins\linkLibrary\linkDialog.py:416
+#: addon\globalPlugins\linkLibrary\linkDialog.py:449
+#: addon\globalPlugins\linkLibrary\linkDialog.py:485
+#: addon\globalPlugins\linkLibrary\linkDialog.py:507
+#: addon\globalPlugins\linkLibrary\linkDialog.py:859
+#: addon\globalPlugins\linkLibrary\linkDialog.py:991
+#: addon\globalPlugins\linkLibrary\__init__.py:295
+#: addon\globalPlugins\linkLibrary\__init__.py:539
+#: addon\globalPlugins\linkLibrary\__init__.py:695
 msgid "Warning"
 msgstr "تنبيه"
 
@@ -78,27 +78,29 @@ msgstr "لَم تنجح عمليةْ فتح المكتبة, أو ربما ملف
 #. Translators: Title of dialog
 #. label of dialog
 #. Translators: label of dialog
+#. Translators: Title of dialog
 #. Translators: Title of message box
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:47
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:184
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:221
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:260
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:315
-#: addon\globalPlugins\linkLibrary\linkDialog.py:422
-#: addon\globalPlugins\linkLibrary\linkDialog.py:708
-#: addon\globalPlugins\linkLibrary\linkDialog.py:966
-#: addon\globalPlugins\linkLibrary\linkDialog.py:974
-#: addon\globalPlugins\linkLibrary\linkDialog.py:999
+#: addon\globalPlugins\linkLibrary\linkDialog.py:427
+#: addon\globalPlugins\linkLibrary\linkDialog.py:713
+#: addon\globalPlugins\linkLibrary\linkDialog.py:971
+#: addon\globalPlugins\linkLibrary\linkDialog.py:979
+#: addon\globalPlugins\linkLibrary\linkDialog.py:1004
 #: addon\globalPlugins\linkLibrary\links.py:106
-#: addon\globalPlugins\linkLibrary\__init__.py:372
-#: addon\globalPlugins\linkLibrary\__init__.py:378
-#: addon\globalPlugins\linkLibrary\__init__.py:397
-#: addon\globalPlugins\linkLibrary\__init__.py:443
-#: addon\globalPlugins\linkLibrary\__init__.py:448
-#: addon\globalPlugins\linkLibrary\__init__.py:460
-#: addon\globalPlugins\linkLibrary\__init__.py:475
-#: addon\globalPlugins\linkLibrary\__init__.py:542
-#: addon\globalPlugins\linkLibrary\__init__.py:684
+#: addon\globalPlugins\linkLibrary\__init__.py:374
+#: addon\globalPlugins\linkLibrary\__init__.py:380
+#: addon\globalPlugins\linkLibrary\__init__.py:399
+#: addon\globalPlugins\linkLibrary\__init__.py:445
+#: addon\globalPlugins\linkLibrary\__init__.py:450
+#: addon\globalPlugins\linkLibrary\__init__.py:462
+#: addon\globalPlugins\linkLibrary\__init__.py:477
+#: addon\globalPlugins\linkLibrary\__init__.py:544
+#: addon\globalPlugins\linkLibrary\__init__.py:659
+#: addon\globalPlugins\linkLibrary\__init__.py:706
 msgid "Error"
 msgstr "خَطَأ"
 
@@ -212,14 +214,14 @@ msgstr "إزالة المكتبة (Del)"
 #. Translators: Label of OK button
 #. Translators: Label of OK button.
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:508
-#: addon\globalPlugins\linkLibrary\linkDialog.py:643
+#: addon\globalPlugins\linkLibrary\linkDialog.py:648
 msgid "OK"
 msgstr "موافِق"
 
 #. Translators: Label of Cancel button
 #. Label of cancel button.
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:514
-#: addon\globalPlugins\linkLibrary\linkDialog.py:646
+#: addon\globalPlugins\linkLibrary\linkDialog.py:651
 msgid "Cancel"
 msgstr "إلغاء"
 
@@ -246,7 +248,7 @@ msgstr "أضِفْ مكتبة"
 #. Translators: Message displayed when renaming a library
 #. Translators: Message displayed when renaming a sub library
 #: addon\globalPlugins\linkLibrary\libraryDialog.py:605
-#: addon\globalPlugins\linkLibrary\linkDialog.py:285
+#: addon\globalPlugins\linkLibrary\linkDialog.py:288
 msgid "Enter new name please"
 msgstr "أدخِلْ إسماً جديداً لو سَمَحْت"
 
@@ -282,119 +284,119 @@ msgid "information"
 msgstr "تعليمات"
 
 #. Translators: message displayed when the url is present for another link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:39
+#: addon\globalPlugins\linkLibrary\linkDialog.py:42
 msgid "This url is for {}; please enter another one"
 msgstr "هذا الرابط لِ {}; أدخِلْ رابطْ آخَر لو سمحْت"
 
 #. Translators: message displayed when the label is present for another link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:57
+#: addon\globalPlugins\linkLibrary\linkDialog.py:60
 msgid "This label({}) is chosen for {}; please enter another one"
 msgstr "هذا الإسم({}) هو مُختار لِ {}; أدخِلْ إسمْ آخَر لو سمحْت"
 
 #. Translators: label of menu items to add a sub library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:150
+#: addon\globalPlugins\linkLibrary\linkDialog.py:153
 msgid "Add Sub library"
 msgstr "أضِفْ مكتبة فرعية"
 
 #. Translators: label of menu items to rename a sub library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:158
+#: addon\globalPlugins\linkLibrary\linkDialog.py:161
 msgid "Rename Sub library"
 msgstr "إعادةْ تسمية المكتبة الفرعية"
 
 #. Translators: label of menu items to remove a sub library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:165
+#: addon\globalPlugins\linkLibrary\linkDialog.py:168
 msgid "Remove Sub library\tDel"
 msgstr "إزالة المكتبة الفرعية\tDel"
 
 #. Translators: label obj menu items to add a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:172
+#: addon\globalPlugins\linkLibrary\linkDialog.py:175
 msgid "Add A Link"
 msgstr "أضِفْ رابط"
 
 #. Translators: label of menu items to edit a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:180
+#: addon\globalPlugins\linkLibrary\linkDialog.py:183
 msgid "Edit Selected link"
 msgstr "تعديل الرابط المحدد"
 
 #. Translators: label obj subMenu items for moving a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:197
+#: addon\globalPlugins\linkLibrary\linkDialog.py:200
 msgid "Move Link To"
 msgstr "نقل الرابط إلى"
 
 #. Translators: label of menu items to remove a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:229
+#: addon\globalPlugins\linkLibrary\linkDialog.py:232
 msgid "Remove Selected link\tDel"
 msgstr "إزالةْ الرابط المحدد\tDel"
 
 #. Translators: label of menu items to remove all links.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:236
+#: addon\globalPlugins\linkLibrary\linkDialog.py:239
 msgid "Remove All Links"
 msgstr "إزالةْ جميع الروابط"
 
 #. log.info(f'LibraryName: {libraryName}')
 #. Translators: Message displayed when adding a sublibrary.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:245
+#: addon\globalPlugins\linkLibrary\linkDialog.py:248
 msgid "Enter sublibrary name please"
 msgstr "أدخِلْ إسم المكتبة الفرعية لو سَمَحْت"
 
 #. Translators: Title of dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:247
+#: addon\globalPlugins\linkLibrary\linkDialog.py:250
 msgid "Add subLibrary for {}"
 msgstr "إضافة مكتبة فرعية لمكتبة {}"
 
 #. Translators: message displayed when the name is present for another sub library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:259
-#: addon\globalPlugins\linkLibrary\linkDialog.py:298
+#: addon\globalPlugins\linkLibrary\linkDialog.py:262
+#: addon\globalPlugins\linkLibrary\linkDialog.py:301
 msgid "This name is already present for another sub library, enter another name please"
 msgstr "هذا الإسم موجود لِمكتبة فرعية أخرى, يُرجى إدخال إسم آخَر"
 
 #. Translators: Title of dialog to enter new name.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:287
+#: addon\globalPlugins\linkLibrary\linkDialog.py:290
 msgid "Rename sub library"
 msgstr "إعادةُ تسمية المكتبة الفرعية"
 
 #. Translators: Message displayed upon removing a sub library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:317
+#: addon\globalPlugins\linkLibrary\linkDialog.py:320
 msgid "Are you sure you want to remove the sub library {}, this can not be undone?"
 msgstr "هل أنتَ مُتأكِدْ مِن أنكَ تُريد إزالةْ المكتبة الفرعية {}, فهذا الأمر لا يُمكنْ التراجع عنه؟"
 
 #. Translators: getting the url of the link
-#: addon\globalPlugins\linkLibrary\linkDialog.py:339
+#: addon\globalPlugins\linkLibrary\linkDialog.py:342
 msgid "Enter Link source(www...)"
 msgstr "أدخِلْ الرابط(www...)"
 
 #. Translators: title of dialog.
 #. Translators: Label of the text control that shows the url .
 #. Translators: label of url text control in Add Link On Fly dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:341
-#: addon\globalPlugins\linkLibrary\linkDialog.py:636
-#: addon\globalPlugins\linkLibrary\linkDialog.py:935
+#: addon\globalPlugins\linkLibrary\linkDialog.py:344
+#: addon\globalPlugins\linkLibrary\linkDialog.py:641
+#: addon\globalPlugins\linkLibrary\linkDialog.py:940
 msgid "Url:"
 msgstr "الرابط:"
 
 #. Translators: getting the label of the link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:346
+#: addon\globalPlugins\linkLibrary\linkDialog.py:350
 msgid "Enter Link Label Please"
 msgstr "أدخِلْ إسم الرابط لو سمحْت"
 
 #. Translators: title of dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:348
+#: addon\globalPlugins\linkLibrary\linkDialog.py:352
 msgid "Link Label"
 msgstr "إسم الرابط"
 
 #. Translators: getting the about of the link
-#: addon\globalPlugins\linkLibrary\linkDialog.py:353
+#: addon\globalPlugins\linkLibrary\linkDialog.py:358
 msgid "Write Something About The Link"
 msgstr "أُكتبْ شيئا عن الرابط"
 
 #. Translators: title of dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:355
+#: addon\globalPlugins\linkLibrary\linkDialog.py:360
 msgid "About"
 msgstr "حول"
 
 #. Translators: Message displayed when trying to move a link already present in the other library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:408
-#: addon\globalPlugins\linkLibrary\linkDialog.py:441
+#: addon\globalPlugins\linkLibrary\linkDialog.py:413
+#: addon\globalPlugins\linkLibrary\linkDialog.py:446
 msgid ""
 "This link is already present in {library} library, under {label} label;\n"
 " Do you still want to replace it with the one you are about to move?."
@@ -403,12 +405,12 @@ msgstr ""
 "بالرابط الذي تُريد نقله؟."
 
 #. Translators: Message displayed when getting an error trying to move a link from one library to another.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:420
+#: addon\globalPlugins\linkLibrary\linkDialog.py:425
 msgid "Unable to move the link to another library"
 msgstr "ليس بالإمكان نقل الرابط إلى مكتبة أخرى"
 
 #. Translators: Message displayed when trying to remove a link.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:478
+#: addon\globalPlugins\linkLibrary\linkDialog.py:483
 msgid ""
 "Are you sure you want to remove the link labeled {} from the library?, this can not be "
 "undone."
@@ -416,7 +418,7 @@ msgstr ""
 "هل أنتَ متأكِد مِن أنكَ تريدُ إزالةْ الرابط المُسمَّى {} مِن المكتبة؟, فهذا لا يُمكن التراجع عنه."
 
 #. Translators: Message displayed when trying to remove all links.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:500
+#: addon\globalPlugins\linkLibrary\linkDialog.py:505
 msgid ""
 "Are you sure you want to remove all links from this library?, this can not be undone."
 msgstr ""
@@ -424,96 +426,96 @@ msgstr ""
 "عنه."
 
 #. Translators: Label for search or filter control.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:613
+#: addon\globalPlugins\linkLibrary\linkDialog.py:618
 msgid "Filter by:"
 msgstr "التصفية حسب:"
 
 #. Translators: Label for the list of links.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:617
+#: addon\globalPlugins\linkLibrary\linkDialog.py:622
 msgid "List Of Links"
 msgstr "قائمةُ الروابط"
 
 #. Translators: Label of about the link text control.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:623
+#: addon\globalPlugins\linkLibrary\linkDialog.py:628
 msgid "About The Link"
 msgstr "حول الرابط"
 
 #. These two translatable string are made as instance attributes, because we will use them in several methods in the class.
 #. Translators: Label of showOrHideUrlButton, in state to show source url.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:629
+#: addon\globalPlugins\linkLibrary\linkDialog.py:634
 msgid "Show Source Url"
 msgstr "إظهارُ قيمةِ الرابط"
 
 #. Translators: Label of showOrHideUrlButton, in state to hide source url.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:631
+#: addon\globalPlugins\linkLibrary\linkDialog.py:636
 msgid "Hide Source Url"
 msgstr "إخفاء قيمةِ الرابط"
 
 #. Translators: Label of open link with button.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:641
+#: addon\globalPlugins\linkLibrary\linkDialog.py:646
 msgid "Open Link With"
 msgstr "إفْتَحْ الرابط بِواسطةْ ..."
 
 #. Translators: Suffix of sub library label.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:676
+#: addon\globalPlugins\linkLibrary\linkDialog.py:681
 msgid "Sub library"
 msgstr "مكتبة فرعية"
 
 #. Translators: Message displayed when getting an error trying to retreave links data
 #. Translators: Message displayed when getting an error trying to retreave link data
-#: addon\globalPlugins\linkLibrary\linkDialog.py:706
+#: addon\globalPlugins\linkLibrary\linkDialog.py:711
 #: addon\globalPlugins\linkLibrary\links.py:104
 msgid "Unable to load links data"
 msgstr "لم يكن بالإمكان تحميل بيانات الروابط"
 
 #. Translators: suffix of title.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:722
+#: addon\globalPlugins\linkLibrary\linkDialog.py:727
 msgid "link"
 msgstr "رابط"
 
-#: addon\globalPlugins\linkLibrary\linkDialog.py:722
+#: addon\globalPlugins\linkLibrary\linkDialog.py:727
 msgid "links"
 msgstr "روابط"
 
 #. Translators: Message displayed if another sub library is opened.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:852
+#: addon\globalPlugins\linkLibrary\linkDialog.py:857
 msgid "Another sub library is opened, close it first please"
 msgstr "هناكْ مكتبة فرعية مفتوحة مِن قبلْ; أغلِقْها أولا لو سمَحْت"
 
 #. Translators: title of the dialog to add a link captured on the fly.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:927
+#: addon\globalPlugins\linkLibrary\linkDialog.py:932
 msgid "Add Link To {library}"
 msgstr "أضِفْ رابط إلى المكتبة {library}"
 
 #. Translators: label of link label text control in Add Link On Fly dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:937
+#: addon\globalPlugins\linkLibrary\linkDialog.py:942
 msgid "Link Label:"
 msgstr "إسم الرابط:"
 
 #. Translators: label of about text control in Add Link On Fly dialog.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:939
+#: addon\globalPlugins\linkLibrary\linkDialog.py:944
 msgid "About:"
 msgstr "حول:"
 
 #. Translators: label of Ok button.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:944
-#: addon\globalPlugins\linkLibrary\__init__.py:509
+#: addon\globalPlugins\linkLibrary\linkDialog.py:949
+#: addon\globalPlugins\linkLibrary\__init__.py:511
 msgid "Ok"
 msgstr "موافق"
 
 #. Translators: message displayed when the url field is left empty.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:964
+#: addon\globalPlugins\linkLibrary\linkDialog.py:969
 msgid "Please enter the url of the link."
 msgstr "فضلا أدخل قيمةْ الرابط."
 
 #. Translators: message displayed when the label field is left empty.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:972
+#: addon\globalPlugins\linkLibrary\linkDialog.py:977
 msgid "Please enter a label for the link."
 msgstr "من فضلك أدخل اسمًا للرابط."
 
 #. Translators: Message displayed when trying to add a link already present in the library.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:983
-#: addon\globalPlugins\linkLibrary\__init__.py:670
+#: addon\globalPlugins\linkLibrary\linkDialog.py:988
+#: addon\globalPlugins\linkLibrary\__init__.py:692
 msgid ""
 "This link is already present in {library} library, under {label} label;\n"
 " Do you still want to replace it with the one you are about to add?."
@@ -522,56 +524,56 @@ msgstr ""
 "بالرابط الذي تُريد نقله؟."
 
 #. Translators: Message displayed when getting an error trying to add a link on the fly.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:997
-#: addon\globalPlugins\linkLibrary\__init__.py:682
+#: addon\globalPlugins\linkLibrary\linkDialog.py:1002
+#: addon\globalPlugins\linkLibrary\__init__.py:704
 msgid "Unable to add the link to the library"
 msgstr "لم يكن بالإستطاع إضافةْ رابط إلى المكتبة"
 
 #. Translators: Message displayed after adding the link successfuly.
-#: addon\globalPlugins\linkLibrary\linkDialog.py:1004
-#: addon\globalPlugins\linkLibrary\__init__.py:689
+#: addon\globalPlugins\linkLibrary\linkDialog.py:1009
+#: addon\globalPlugins\linkLibrary\__init__.py:710
 msgid "Information: The link was added successfuly to {library} library"
 msgstr "تنبيه: لقد تم إضافةْ الرابط بنجاح إلى المكتبة {library}"
 
 #. Add-on summary/title, usually the user visible name of the add-on
 #. Translators: Summary/title for this add-on
 #. to be shown on installation and add-on information found in add-on store
-#: addon\globalPlugins\linkLibrary\__init__.py:85 buildVars.py:21
+#: addon\globalPlugins\linkLibrary\__init__.py:87 buildVars.py:21
 msgid "Link Library"
 msgstr "مكتبةْ الروابط"
 
 #. Translators: label of submenu.
-#: addon\globalPlugins\linkLibrary\__init__.py:96
+#: addon\globalPlugins\linkLibrary\__init__.py:98
 msgid "&Link Library"
 msgstr "&مكتبةْ الروابط"
 
 #. Translators: Label of Link Library Setting menu item
-#: addon\globalPlugins\linkLibrary\__init__.py:100
+#: addon\globalPlugins\linkLibrary\__init__.py:102
 msgid "Link Library Setting..."
 msgstr "إعدادات مكتبةْ الروابط..."
 
 #. Translators: Label of Open Library Dialog menu item
-#: addon\globalPlugins\linkLibrary\__init__.py:105
+#: addon\globalPlugins\linkLibrary\__init__.py:107
 msgid "Open Library Dialog"
 msgstr "فتح مُحاورةْ المكتبات"
 
 #. Translators: Label of Copy Library Folder menu item
-#: addon\globalPlugins\linkLibrary\__init__.py:110
+#: addon\globalPlugins\linkLibrary\__init__.py:112
 msgid "Copy Library Folder"
 msgstr "نَسخ مُجَلَّد المكتبات"
 
 #. Translators: Label of Import Library Folder menu item
-#: addon\globalPlugins\linkLibrary\__init__.py:115
+#: addon\globalPlugins\linkLibrary\__init__.py:117
 msgid "Import Library Folder"
 msgstr "إستيراد مُجَلَّد المكتبات"
 
 #. Translators: message displayed in input help mode for openning  link library dialog.
-#: addon\globalPlugins\linkLibrary\__init__.py:147
+#: addon\globalPlugins\linkLibrary\__init__.py:149
 msgid "Open  Link Library dialog."
 msgstr "فتح مُحاورةْ مكتبةْ الروابط."
 
 #. Translators: message displayed in input help mode for adding a link on the fly.
-#: addon\globalPlugins\linkLibrary\__init__.py:163
+#: addon\globalPlugins\linkLibrary\__init__.py:165
 msgid ""
 "Add the link and title of web page on the fly to library you choose. press once quickly "
 "to add it immediately, Press twice opens a dialog to review and edit the link before "
@@ -581,148 +583,148 @@ msgstr ""
 "فورًا، أما الضغط مرتين سيفتح مربع حوار لمراجعة الرابط وتعديله قبل إضافته."
 
 #. Translators: Message displayed when an instance of 'Add link on fly dialog' is still opened.
-#: addon\globalPlugins\linkLibrary\__init__.py:180
+#: addon\globalPlugins\linkLibrary\__init__.py:182
 msgid "An instance of Add link on fly dialog is opened, close it first please."
 msgstr "هناكْ محاورة مفتوحةمن إضافةْ رابط بشكل سريع , أغلِقْها أولا لو سمَحْت."
 
 #. Translators: title of the dialog
-#: addon\globalPlugins\linkLibrary\__init__.py:199
+#: addon\globalPlugins\linkLibrary\__init__.py:201
 msgid "Link Library Settings"
 msgstr "إعدادات مكتبةْ الروابط"
 
 #. Translators: label of cumbo box of available paths to contain data files.
-#: addon\globalPlugins\linkLibrary\__init__.py:205
+#: addon\globalPlugins\linkLibrary\__init__.py:207
 msgid "Choose Path to store Data Files"
 msgstr "اختيار مسار لِحفظ ملفات البيانات"
 
 #. Translators: label of button to add a new path.
-#: addon\globalPlugins\linkLibrary\__init__.py:213
+#: addon\globalPlugins\linkLibrary\__init__.py:215
 msgid "Add New Path"
 msgstr "أضِف مسار جديد"
 
 #. Translators: label of Remove path button.
-#: addon\globalPlugins\linkLibrary\__init__.py:218
+#: addon\globalPlugins\linkLibrary\__init__.py:220
 msgid "Remove Selected Path"
 msgstr "إزالةْ المسار المُحدد"
 
 #. Translators: Option in combo box to do nothing
-#: addon\globalPlugins\linkLibrary\__init__.py:225
+#: addon\globalPlugins\linkLibrary\__init__.py:227
 msgid "Do nothing"
 msgstr "لا تفعل شيء"
 
 #. Translators: Option in combo box to close library window.
-#: addon\globalPlugins\linkLibrary\__init__.py:227
+#: addon\globalPlugins\linkLibrary\__init__.py:229
 msgid "Close library window only"
 msgstr "إغلاق نافذةْ المكتبة فقط"
 
 #. Translators: Option in combo box to close main window of addon.
-#: addon\globalPlugins\linkLibrary\__init__.py:229
+#: addon\globalPlugins\linkLibrary\__init__.py:231
 msgid "Close main window of addon"
 msgstr "إغلاق النافذة الرئيسية للإضافة"
 
 #. Translators: Label of combo box
-#: addon\globalPlugins\linkLibrary\__init__.py:233
+#: addon\globalPlugins\linkLibrary\__init__.py:235
 msgid "After activating a link:"
 msgstr "الإجراء الذي تُريده بعدَ تفعيل الرابط:"
 
 #. Translators: The confirmation prompt displayed when the user requests to remove the selected path.
-#: addon\globalPlugins\linkLibrary\__init__.py:291
+#: addon\globalPlugins\linkLibrary\__init__.py:293
 msgid "This path({}) will be permanently removed. This action cannot be undone."
 msgstr "هذا المَسار({}) سيتم إزالته بشكل داءم. هذا الأمر لا يُمكن التراجع عنه."
 
 #. Translators: title of Copy Dialog
-#: addon\globalPlugins\linkLibrary\__init__.py:335
+#: addon\globalPlugins\linkLibrary\__init__.py:337
 msgid "Copy Libraries Folder"
 msgstr "نَسخ مُجَلَّد المكتبات"
 
 #. Translators: An informational message displayed in the Copy dialog.
-#: addon\globalPlugins\linkLibrary\__init__.py:340
+#: addon\globalPlugins\linkLibrary\__init__.py:342
 msgid ""
 "To copy libraries folder , please select the path and other options and then press "
 "Continue"
 msgstr "لِنَسخ مُجَلَّد المكتبات, يُرجى تحديد المسار و الخيارات الأخرى ثُمَّ الضغط على زر مُتابعة"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
-#: addon\globalPlugins\linkLibrary\__init__.py:343
+#: addon\globalPlugins\linkLibrary\__init__.py:345
 msgid "Destination &directory:"
 msgstr "المسار المقصود:"
 
 #. Translators: The label of a button to browse for a directory.
 #. Translators: The label of a button to browse for the required directory.
-#: addon\globalPlugins\linkLibrary\__init__.py:347
-#: addon\globalPlugins\linkLibrary\__init__.py:421
-#: addon\globalPlugins\linkLibrary\__init__.py:503
+#: addon\globalPlugins\linkLibrary\__init__.py:349
+#: addon\globalPlugins\linkLibrary\__init__.py:423
+#: addon\globalPlugins\linkLibrary\__init__.py:505
 msgid "Browse..."
 msgstr "تَصَفُّح..."
 
 #. Translators: The title of the dialog presented when browsing for the destination directory
 #. Translators: The title of the dialog presented when browsing for the directory to be imported.
-#: addon\globalPlugins\linkLibrary\__init__.py:349
-#: addon\globalPlugins\linkLibrary\__init__.py:505
+#: addon\globalPlugins\linkLibrary\__init__.py:351
+#: addon\globalPlugins\linkLibrary\__init__.py:507
 msgid "Select Directory"
 msgstr "اخترْ المسار"
 
 #. Translators: Label of continue button
-#: addon\globalPlugins\linkLibrary\__init__.py:355
-#: addon\globalPlugins\linkLibrary\__init__.py:427
+#: addon\globalPlugins\linkLibrary\__init__.py:357
+#: addon\globalPlugins\linkLibrary\__init__.py:429
 msgid "&Continue"
 msgstr "&مُتابعة"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. Translators: Message displayedwhen no directory is specified.
 #. Translators: The message displayed when the user has not specified a directory
-#: addon\globalPlugins\linkLibrary\__init__.py:370
-#: addon\globalPlugins\linkLibrary\__init__.py:441
-#: addon\globalPlugins\linkLibrary\__init__.py:536
+#: addon\globalPlugins\linkLibrary\__init__.py:372
+#: addon\globalPlugins\linkLibrary\__init__.py:443
+#: addon\globalPlugins\linkLibrary\__init__.py:538
 msgid "Please specify a directory."
 msgstr "الرجاء اختيار المسار."
 
 #. Translators: The message displayed when the user specifies an invalid destination directory
-#: addon\globalPlugins\linkLibrary\__init__.py:376
+#: addon\globalPlugins\linkLibrary\__init__.py:378
 #, python-format
 msgid "%s is invalid, please select a valid directory path."
 msgstr "%s غير مُناسِب, يُرجى اختيار مَسار مُناسِب."
 
 #. Translators: message presented when copy fails
-#: addon\globalPlugins\linkLibrary\__init__.py:395
+#: addon\globalPlugins\linkLibrary\__init__.py:397
 msgid "Sorry, copying libraries folder did not succeed"
 msgstr "المعذرة, لَم تنجحْ عمليةْ نَسخ مُجَلَّد المكتبات"
 
-#: addon\globalPlugins\linkLibrary\__init__.py:400
+#: addon\globalPlugins\linkLibrary\__init__.py:402
 msgid "Information:Folder Copied"
 msgstr "تنبيه: تَمَّ نَسخ المُجَلَّد"
 
 #. Translators: title of import dialog
-#: addon\globalPlugins\linkLibrary\__init__.py:410
+#: addon\globalPlugins\linkLibrary\__init__.py:412
 msgid "Import Libraries Folder"
 msgstr "إستيراد مُجَلَّد المكتبات"
 
 #. Translators: An informational message displayed in the Import dialog.
-#: addon\globalPlugins\linkLibrary\__init__.py:415
+#: addon\globalPlugins\linkLibrary\__init__.py:417
 msgid ""
 "To import libraries folder , please select the path of folder you want to import, and "
 "then press Continue"
 msgstr "لِإستيراد مُجَلَّد المكتبات, يُرجى تحديد مَسار المُجَلَّد الذي تُريد استيراده, ثُمَّ اضغط مُتابعة"
 
 #. Translators: The label of a grouping containing controls to select the destination directory in the Import dialog.
-#: addon\globalPlugins\linkLibrary\__init__.py:418
+#: addon\globalPlugins\linkLibrary\__init__.py:420
 msgid "Directory of folder you want to import:"
 msgstr "مسار المُجَلَّد الذي تُريد استيراده:"
 
 #. Translators: The title of the dialog presented when browsing for the directory to be imported.
-#: addon\globalPlugins\linkLibrary\__init__.py:423
+#: addon\globalPlugins\linkLibrary\__init__.py:425
 msgid "Select Directory to import"
 msgstr "اختيار المسار للإستيراد"
 
 #. Translators: message displayed when path selected is not valid
-#: addon\globalPlugins\linkLibrary\__init__.py:447
-#: addon\globalPlugins\linkLibrary\__init__.py:541
+#: addon\globalPlugins\linkLibrary\__init__.py:449
+#: addon\globalPlugins\linkLibrary\__init__.py:543
 #, python-format
 msgid "Sorry, but %s is invalid path."
 msgstr "المعذرة, و لكن %s هو مسار غير مُناسِب."
 
 #. Translators: message displayed when folder to be imported not named linkLibrary-addonFiles, or all files in it has not .json extension
-#: addon\globalPlugins\linkLibrary\__init__.py:459
+#: addon\globalPlugins\linkLibrary\__init__.py:461
 msgid ""
 "Check that the folder name is linkLibrary-addonFiles, and all files in it has a .json "
 "extension."
@@ -730,7 +732,7 @@ msgstr ""
 "تَحقق مِن أنّ إسم المُجَلَّد هو linkLibrary-addonFiles, و إمتداد جميع الملفات فيه هو .json."
 
 #. Translators: message to warn the user that the old library folder will be removed.
-#: addon\globalPlugins\linkLibrary\__init__.py:463
+#: addon\globalPlugins\linkLibrary\__init__.py:465
 msgid ""
 "You should be aware by this import, the old linkLibrary-addonFiles will be removed and "
 "replaced by the newly imported one,\n"
@@ -740,34 +742,40 @@ msgstr ""
 "استبداله بالمُجَلَّد الجديد, و هذا لا يُمكل التراجع عنه, هل أنت مُتأكِّد أنكَ تُريد الإستمرار؟"
 
 #. Translators: message presented when import folder fails
-#: addon\globalPlugins\linkLibrary\__init__.py:474
+#: addon\globalPlugins\linkLibrary\__init__.py:476
 msgid "Import libraries folder failed."
 msgstr "لَم ينجح استيراد مُجَلَّد المكتبات."
 
 #. Translators: message presented when importing libraries folder succeeded.
-#: addon\globalPlugins\linkLibrary\__init__.py:479
+#: addon\globalPlugins\linkLibrary\__init__.py:481
 msgid "Information: Libraries folder imported successfuly."
 msgstr "تنبيه: قد تَمَّ استيراد مُجَلَّد المكتبات بنجاح."
 
 #. Translators: Title of dialog.
-#: addon\globalPlugins\linkLibrary\__init__.py:488
+#: addon\globalPlugins\linkLibrary\__init__.py:490
 msgid "Add new path"
 msgstr "أضِفْ مَسار جديد"
 
 #. Translators: The label of a grouping containing controls to select the destination directory in the Add new path dialog.
-#: addon\globalPlugins\linkLibrary\__init__.py:496
+#: addon\globalPlugins\linkLibrary\__init__.py:498
 msgid "Path of the directory:(c:\\users\\...)"
 msgstr "مسار الدليل:(c:\\users\\...)"
 
 #. Translators: Label of text control to enter path name.
-#: addon\globalPlugins\linkLibrary\__init__.py:500
+#: addon\globalPlugins\linkLibrary\__init__.py:502
 msgid "Enter a general name for the path(example dropbox or Documents or any other)"
 msgstr "أدخِلْ إسم عام لِهذا المَسار(مثلا dropbox أو Documents أو أي إسم آخَر)"
 
 #. Translators: Label of choose library button
-#: addon\globalPlugins\linkLibrary\__init__.py:581
+#: addon\globalPlugins\linkLibrary\__init__.py:583
 msgid "Choose library:"
 msgstr "إخترْ مكتبة:"
+
+#. Translators: The message displayed when the title is not yet accessible.
+#: addon\globalPlugins\linkLibrary\__init__.py:657
+msgid "Title of web page is not yet accessible, simply press the OK button and try again."
+msgstr ""
+"عنوان صفحة الويب غير متاح حاليًا، ما عليك سوى الضغط على زر \"موافق\" والمحاولة مرة أخرى."
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-on store
@@ -794,19 +802,30 @@ msgstr ""
 #. Translators: what's new content for the add-on version to be shown in the add-on store
 #: buildVars.py:34
 msgid ""
-"- When standing on a web page and using the \"Add Link on the Fly\" gesture:\n"
-"  - Pressing the gesture once: after choosing the library, the link is added directly "
-"(URL and page title).\n"
-"  - Pressing the gesture twice: after choosing the library, a dialog opens with pre-"
-"filled values for URL and label (page title). In this dialog, you can edit the link "
-"information and optionally fill in the \"About\" field before pressing OK to add the link "
-"to the library.\n"
+"* When trying to add a link on the fly immediately after the web page opens, NVDA "
+"couldn't access the title, resulting in error\n"
+"* Now we catch the error, display a message box, and prompt the user to try again, for "
+"the second time NVDA will be able to access the title.\n"
 msgstr ""
-"- عند الوقوف على صفحة ويب واستخدام إيماءة \"إضافة الرابط مباشرة\":\n"
-"  - الضغط مرة واحدة: بعد اختيار المكتبة، يُضاف الرابط مباشرة (الرابط وعنوان الصفحة).\n"
-"  - الضغط مرتين: بعد اختيار المكتبة، تُفتح نافذة تحتوي على قيم مُعبأة مسبقًا للرابط والعنوان "
-"(عنوان الصفحة). في هذه النافذة يمكنك تعديل معلومات الرابط، وإضافة حقل \"حول\" اختياريًا "
-"قبل الضغط على موافق لإضافة الرابط إلى المكتبة.\n"
+"* عند محاولة إضافة رابط بشكل فوري عقب فتح صفحة الويب مباشرة، كان برنامج NVDA يعجز عن "
+"الوصول إلى العنوان، مما يؤدي إلى حدوث خطأ.\n"
+"* أصبحنا الآن نعالج هذا الخطأ ونعرض رسالة تنبيهية تطلب من المستخدم المحاولة مرة أخرى؛ حيث "
+"سيتمكن NVDA من الوصول إلى العنوان في المحاولة الثانية.\n"
+
+#~ msgid ""
+#~ "- When standing on a web page and using the \"Add Link on the Fly\" gesture:\n"
+#~ "  - Pressing the gesture once: after choosing the library, the link is added directly "
+#~ "(URL and page title).\n"
+#~ "  - Pressing the gesture twice: after choosing the library, a dialog opens with pre-"
+#~ "filled values for URL and label (page title). In this dialog, you can edit the link "
+#~ "information and optionally fill in the \"About\" field before pressing OK to add the "
+#~ "link to the library.\n"
+#~ msgstr ""
+#~ "- عند الوقوف على صفحة ويب واستخدام إيماءة \"إضافة الرابط مباشرة\":\n"
+#~ "  - الضغط مرة واحدة: بعد اختيار المكتبة، يُضاف الرابط مباشرة (الرابط وعنوان الصفحة).\n"
+#~ "  - الضغط مرتين: بعد اختيار المكتبة، تُفتح نافذة تحتوي على قيم مُعبأة مسبقًا للرابط "
+#~ "والعنوان (عنوان الصفحة). في هذه النافذة يمكنك تعديل معلومات الرابط، وإضافة حقل \"حول\" "
+#~ "اختياريًا قبل الضغط على موافق لإضافة الرابط إلى المكتبة.\n"
 
 #~ msgid "Add the link and title of web page on the fly to library you choose."
 #~ msgstr "إضافةْ الرابط و عنوان الصفحة للمكتبة التي تختارها بطريقة سريعة."

@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 2.3.3][1]  
+Download [Version 2.3.4][1]  
 NVDA compatibility: 2021.1 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -75,6 +75,11 @@ Result:
 - With a double press, you can customize it first.  
 
 A confirmation message will announce that the link has been added successfully.
+
+### Changes for 2.3.4 ###
+
+*	When trying to add a link on the fly immediately after the web page opens, NVDA couldn't access the title, resulting in error
+*	Now we catch the error, display a message box, and prompt the user to try again, for the second time NVDA will be able to access the title.
 
 ### Changes for 2.3.3 ###
 
@@ -252,4 +257,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3.3/linkLibrary-2.3.3.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3.4/linkLibrary-2.3.4.nvda-addon
