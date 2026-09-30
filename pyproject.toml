@@ -59,6 +59,8 @@ exclude = [
 # Tell pyright where to load python code from
 extraPaths = [
 	"./addon",
+	#by ibra
+	"../nvda/source",
 ]
 
 # General config

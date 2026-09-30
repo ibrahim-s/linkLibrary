@@ -4,16 +4,19 @@
 # See the file COPYING for more details.
 # Graphical user interface for link dialog
 
-import wx, gui
-import webbrowser, os
+import os
+import webbrowser
 import subprocess 
 import json
 import re
 import time
+import wx
+import gui
 import queueHandler
 import config
 import api
-import core, ui
+import core
+import ui
 from .links import Link
 #importing the getBrowsers function that retreaves the found browsers in the registry
 from .getbrowsers import getBrowsers
@@ -340,14 +343,16 @@ class MyPopupMenu(wx.Menu):
 		# Translators: title of dialog.
 		_("Url:"), link)
 		#log.info('url: %s'%url)
-		if not url: return
+		if not url:
+			return
 
 		# Translators: getting the label of the link.
 		label=getLinkLabel(_("Enter Link Label Please"),
 		# Translators: title of dialog.
 		_("Link Label"), link)
 		#log.info('label: %s'%label)
-		if not label: return
+		if not label:
+			return
 
 		# Translators: getting the about of the link
 		about= getLinkAbout(_("Write Something About The Link"),

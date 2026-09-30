@@ -4,17 +4,19 @@
 #See the file COPYING for more details.
 # An addon that helps collect and arrange and access easily informations related to links under specific categories
 
-import globalPluginHandler 
-import core, ui
-import wx, gui
-import os, sys
+import os
 import re
+import shutil
+import json
+import wx
+import globalPluginHandler 
+import core
+import ui
+import gui
 import api
 import config
 import globalVars
 import browseMode
-import shutil
-import json
 from scriptHandler import script, getLastScriptRepeatCount
 from configobj import ConfigObj
 from logHandler import log
@@ -118,7 +120,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def terminate(self):
 		try:
 			self.preferencesMenu.Remove(self.subMenu)
-		except:
+		except Exception:
 			pass
 
 	def onLinkLibrarySetting(self, evt):
@@ -582,7 +584,7 @@ class HelperFrame(wx.Frame):
 		self.chooseLibraryButton.Bind(wx.EVT_BUTTON, self.onChooseLibrary)
 		sizer.Add(self.chooseLibraryButton, 0, wx.ALL | wx.CENTER, 20)
 		panel.SetSizer(sizer)
-		self.Bind(wx.EVT_CLOSE, self.onExit)
+		self.Bind(wx.EVT_CLOSE, self.onClose)
 		# To dismiss the frame with the escape key.
 		panel.Bind(wx.EVT_CHAR_HOOK, self.on_key)
 
@@ -594,7 +596,7 @@ class HelperFrame(wx.Frame):
 		self.sublibraryNames= [name for name, ext in allFiles if ext== '' and name in self.libraryNames]
 		#log.info(f'sublibraryNames: {self.sublibraryNames}')
 
-	def makePopupMenu(self):
+	def makePopupMenu(self) -> wx.Menu:
 		self.menu= wx.Menu()
 		for library in self.libraryNames:
 			item = self.menu.Append(wx.ID_ANY, library)
@@ -644,8 +646,21 @@ class HelperFrame(wx.Frame):
 
 			libraryPath= os.path.join(self.libraries_dir, menuLabel+'.json')
 		#log.info(f'libraryPath: {libraryPath}')
-		link, title= self.getLinkAndTitleOfWebPage()
+
+		try:
+			link, title= self.getLinkAndTitleOfWebPage()
+		except Exception:
+			# Lot of times, when adding link on the fly quickly, just after the page is opened, the title is not yet accessible by NVDA , resulting in error.
+			log.info('Error while addding link on the fly', exc_info= True)
+			gui.messageBox(
+			# Translators: The message displayed when the title is not yet accessible.
+			_("Title of web page is not yet accessible, simply press the OK button and try again."),
+			# Translators: Title of dialog
+			_("Error"), wx.OK|wx.ICON_ERROR)
+			self.Destroy()
+			return
 		link= link.strip().rstrip('/')
+
 		if addLinkOnTheFlyRepeatCount== 0:
 			#log.info(f'one press, {addLinkOnTheFlyRepeatCount=}')
 		# after choosing the library, add the link directly.
@@ -659,7 +674,14 @@ class HelperFrame(wx.Frame):
 		d= AddLinkOnFlyDialog(gui.mainFrame, libraryPath, menuLabel, link, title)
 		AddLinkOnFlyDialog.currentInstance= d
 
-	def checkAndAddLinkToLibrary(self,link, label, library, libraryPath, about=""):
+	def checkAndAddLinkToLibrary(
+		self,
+		link: str,
+		label: str,
+		libraryName: str,
+		libraryPath: str,
+		about: str = "",
+	):
 		"Check if link exist in library, and if not add it."
 		try:
 			with open(libraryPath, encoding= 'utf-8') as f:
@@ -668,7 +690,7 @@ class HelperFrame(wx.Frame):
 				if gui.messageBox(
 				# Translators: Message displayed when trying to add a link already present in the library.
 				_("This link is already present in {library} library, under {label} label;\n"
-				" Do you still want to replace it with the one you are about to add?.").format(library= library, label= libraryDict[link]['label']),
+				" Do you still want to replace it with the one you are about to add?.").format(library= libraryName, label= libraryDict[link]['label']),
 				# Translators: Title of message box.
 				_('Warning'),
 				wx.YES|wx.NO|wx.ICON_QUESTION)== wx.NO:
@@ -683,12 +705,11 @@ class HelperFrame(wx.Frame):
 			# Translators: Title of message box
 			_("Error"), wx.OK|wx.ICON_ERROR)
 			raise e
-			return
 		core.callLater(100, ui.message, 
 		# Translators: Message displayed after adding the link successfuly.
-		_("Information: The link was added successfuly to {library} library").format(library= library))
+		_("Information: The link was added successfuly to {library} library").format(library= libraryName))
 
-	def getLinkAndTitleOfWebPage(self):
+	def getLinkAndTitleOfWebPage(self) -> tuple[str, str]:
 		obj= self.navigatorObjectTreeInterceptor
 		link = getattr(obj, 'documentURL', getattr(obj, 'documentConstantIdentifier'))
 		#log.info(f'link: {link}')
@@ -709,13 +730,13 @@ class HelperFrame(wx.Frame):
 		pos = btn.ClientToScreen( (0,0) )
 		menu= self.makePopupMenu()
 		self.PopupMenu(menu, pos)
-		self.menu.Destroy()
+		menu.Destroy()
 
 	def on_key(self, event):
 		if event.GetKeyCode() == wx.WXK_ESCAPE:
-			self.Destroy()
+			self.Close()
 		else:
 			event.Skip()
 
-	def onExit(self,event):
+	def onClose(self,event):
 		self.Destroy()
