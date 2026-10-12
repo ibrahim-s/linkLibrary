@@ -71,11 +71,11 @@ def getLinkAbout(message, caption, link= None):
 	result= dlg.GetValue().strip()
 	return result
 
-def isSublibrary(name):
-	''' use regular expression to know if the name ends with sub library suffix.'''
-	pattern = r'\([^()]+\)$'
-	result= re.search(pattern, name)
-	return result
+def isSublibrary(name: str) -> bool:
+	''' name is a list item, if it is sub library, it should end with the sub library suffix.'''
+	#self.sublibraries in LinkDialog class is a list that contains all sub libraries with their suffix
+	self = LinkDialog.currentInstance
+	return name in self.sublibraries
 
 def getSublibraryName(name):
 	''' use regular expression to get pure name without sub library suffix.'''
