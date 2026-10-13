@@ -1,8 +1,8 @@
 # Bağlantı Kitaplığı #
 
 Yazar: İbrahim Hamadeh  
-[Sürüm 2.1.4'ü İndirin][1]  
-NVDA uyumluluğu: 2019.3 ve sonrası.  
+[Sürüm 2.3.4'ü İndirin][1]  
+NVDA uyumluluğu: 2021.1 ve sonrası.  
 
 Bu eklenti, kullanıcının bağlantılarını veya yer imlerini kitaplıktaki gibi düzenlemesine yardımcı olur.  
 Kitaplıkların ana iletişim kutusundan, mevcut herhangi birini ekleyebilir, yeniden adlandırabilir veya kaldırabilirsiniz.  
@@ -38,7 +38,7 @@ NVDA menüsü>tercihler>Girdi hareketleri>Bağlantı Kitaplığı.
 *	Son olarak bahsedilen, ancak en önemlisi, eklentinizin veri dosyalarının yerini seçebilmenizdir.
 *	İlk olarak eklentiyi yükledikten sonra, ana kullanıcı dizininizde eklenti için veri dosyalarını barındıran klasörü oluşturmayı kabul edip etmediğinizi soran bir mesaj kutusu görünecektir.
 *	dilerseniz iptale basın ve daha sonra tercihler menüsünde eklentinin ayarlar iletişim kutusundan veri dosyalarını barındırmak için gereken dizini seçin.
-*	NVDA menüsü>Tercihler>Bağlantı Kitaplığı>Bağlantı Kitaplığı Ayarı... seçeneğine gidin ve ayarlar iletişim kutusunu açın.
+*	NVDA menüsü>Tercihler>Bağlantı Kitaplığı>Bağlantı Kitaplığı Ayarları... seçeneğine gidin ve ayarlar iletişim kutusunu açın.
 *	Bu iletişim kutusundaki eklenti için veri dosyaları veya kitaplıklar için yeni varsayılan yolu seçtikten sonra,
 *	Kalıcı yapmak istiyorsanız, özellikle ayarlarınız genel ayarlar iletişim kutusunda çıkışta kaydedilecek şekilde ayarlanmamışsa, control+nvda+c tuşlarına basarak ayarları kaydetmeniz gerekir.
 *	Ev kullanıcı dizinindeki veri dosyalarını barındıracak klasörü oluşturmanın, bilgisayardaki eklentinin tüm örneklerinin aynı dosyaları veya veri tabanını paylaşmasına yardımcı olduğunu belirtmekte fayda var.
@@ -52,6 +52,94 @@ Alt kitaplıkları seviyorsanız herhangi bir kitaplığa ekleyebilirsiniz.
 *	Bağlam veya açılır menü ya da uygulama menüsüne basın.
 *	Harika, artık varsa alt kitaplıkları ekleme, yeniden adlandırma veya kaldırma seçeneğiniz var.
 Kolay, değil mi, tadını çıkarın!
+
+## Anında bir bağlantı ekleyin: ##
+
+Harika Özellik: Web sayfasının bağlantısını anında ekleyin.
+
+Bu özelliği kullanmak için önce ona bir hareket veya kısayol atamak gerekir. Girdi hareketleri iletişim kutusunda: NVDA menüsü(NVDA+N)/tercihler/Girdi hareketleri/Bağlantı Kitaplığı/Web sayfasının bağlantısını ve başlığını seçilen kitaplığa ekler. Alt dalı altından atanabilir.
+
+Artık internette dolaşırken, Bağlantı kitaplığı eklentisindeki herhangi bir kitaplığa sayfa eklemek isterseniz bunu yapabilirsiniz. Sayfanın istediğiniz herhangi bir yerinden, bu özellik için hareket veya kısayolu kullanın, “Web sayfasının bağlantısını ve başlığını seçilen kitaplığa ekler.” yazan bir pencere açılacaktır. Bu pencerede “Kitaplık seç:” yazan bir düğme vardır, bu düğmeye basın ve açılan menüden istediğiniz kitaplığı seçin ve Enter tuşuna basın.
+
+İşte bu, web sayfasının bağlantısı veya URL'si, etiket olarak başlığı ile kütüphaneye eklenir ve bunu söyleyen bir onay mesajı duyacaksınız. Gerçekten güzel bir şey.
+
+* **Tek tıklama**: Kütüphane seçildikten sonra, bağlantı (URL ve sayfa başlığı) doğrudan eklenir.
+* **Çift tıklama**: Kütüphaneyi seçtikten sonra, URL ve etiket (sayfa başlığı) için önceden doldurulmuş değerler içeren bir iletişim kutusu açılır. Bu değerleri düzenleyebilir ve isteğe bağlı olarak *Hakkında* alanını doldurduktan sonra bağlantıyı eklemek için Tamam'a basabilirsiniz.
+
+Sonuç:  
+- Tek bir tuşa basarak bağlantı anında eklenir.  
+- Çift basarak önce özelleştirebilirsiniz.  
+
+Bağlantının başarıyla eklendiğini bildiren bir onay mesajı görüntülenecektir.
+
+### 2.3.4 için Değişiklikler ###
+
+* Web sayfası açıldıktan hemen sonra anlık olarak bağlantı eklemeye çalışırken, NVDA başlığa erişemiyor ve bu da hataya neden oluyordu.
+* Şimdi hata yakalanıyor, bir mesaj kutusu görüntüleniyor ve kullanıcıdan tekrar denenmesi isteniyor; ikinci denemede NVDA başlığa erişebilecek.
+
+### 2.3.3 için Değişiklikler ###
+
+* Bir web sayfasında dururken ve "Anında Bağlantı Ekle" hareketini kullanırken:
+	* Harekete bir kez basma: kütüphaneyi seçtikten sonra bağlantı doğrudan eklenir (URL ve sayfa başlığı).
+	* Harekete iki kez basma: Kütüphaneyi seçtikten sonra, URL ve etiket (sayfa başlığı) için önceden doldurulmuş değerler içeren bir iletişim kutusu açılır. Bu iletişim kutusunda, bağlantı bilgilerini düzenleyebilir ve isteğe bağlı olarak "Hakkında" alanını doldurduktan sonra bağlantıyı kütüphaneye eklemek için Tamam'a basabilirsiniz.
+
+### 2.3.2 için Değişiklikler ###
+
+* Artık herhangi bir liste kutusunda, bir bağlantı, kitaplık veya alt kitaplık üzerindeyken, Delete veya sayısal tuş takımındaki Delete tuşuyla öğe kaldırılabilir.
+
+### 2.3 için Değişiklikler ###
+
+* Liste kutularına iki harfli gezinme özelliği eklendi; böylece kullanıcı artık kitaplık ve bağlantı iletişim kutularında ardışık iki harf kullanarak dolaşabilecek ve dosya gezginindeki gibi öğeler arasında geçiş yapabilecek.
+
+### 2.2.9 için Değişiklikler ###
+
+* Bağlantı iletişim kutusundaki 'Kaynak URL'sini göster' düğmesinde, İngilizce dışındaki dillerde görünen bir hata düzeltildi.
+* [Ana Giselle](https://github.com/ana-giselle-ar86) tarafından katkıda bulunulan İspanyolca dokümantasyon eklendi.
+
+### 2.2.7 için Değişiklikler ###
+
+* [Ana Giselle](https://github.com/ana-giselle-ar86) tarafından katkıda bulunulan İspanyolca çeviri eklendi.
+
+### 2.2.6 için Değişiklikler ###
+
+* Son test edilen sürüm, NVDA 2026.1 sürümüne uyacak şekilde güncellendi.
+* Eklenti ayarları iletişim kutusunda, eklenti verilerini depolamak için birden fazla yol içeren açılır kutuda artık yalnızca yol etiketi değil, tüm dizin yolu görüntüleniyor.
+
+### 2.2.5 için Değişiklikler ###
+
+* [@George-br](https://github.com/George-br) tarafından katkıda bulunulan Ukraynaca çeviri güncellendi.
+
+### 2.2.4 için Değişiklikler ###
+
+* 'Anında bağlantı ekleme' özelliğindeki bir hata düzeltildi; artık açık bir kitaplığa veya alt kitaplığa bağlantı eklenebilir, bu daha önce mümkün değildi.
+
+### 2.2.3 için Değişiklikler ###
+
+* Eklentiye dahil edilecek ve Kitaplıklar listesindeyken bağlam menüsündeki bir seçenek aracılığıyla erişilebilecek şekilde, Firefox yer imlerinin tamamını (JSON dosyası olarak) içe aktarma özelliği eklendi.
+
+### 2.2.2 için Değişiklikler ###
+
+* Artık bir kitaplığı alt kitaplıklarıyla birlikte HTML dosyası olarak dışa aktarmak ve dilerseniz Firefox yer imlerine entegre etmek mümkün.
+
+### 2.2.1 için Değişiklikler ###
+
+* Eklenti şablon dosyaları güncellendi ve eklenti Apveyor yerine GitHub Actions kullanarak derlendi.
+
+### 2.2 için Değişiklikler ###
+
+* "Anında bağlantı ekleme" özelliğinde web sayfasının başlığını çıkarma işlemindeki küçük bir hata düzeltildi.
+
+### 2.1.9 için değişiklikler: ###
+
+*	Anında web sayfası bağlantısı ekleyebilme mümkün kılındı. bu özelliğe bir hareket atayın ve herhangi bir sayfada bu harekete basın, açılır menüden kitaplığı seçin ve bağlantı, sayfanın başlığı etiket olarak eklenecektir.
+
+### 2.1.8 için değişiklikler: ###
+
+*	Firefox, Chrome ve Edge için bağlantıyı özel modda açma seçeneği eklendi. Bağlantı iletişim kutusundaki “Bağlantıyı şununla aç” düğmesine bastıktan sonra bu seçeneğe erişebilirsiniz.
+
+### 2.1.6 için değişiklikler ###
+
+*	Umut KORKMAZ tarafından yapılan güncel Türkçe çeviri.
 
 ### 2.1.5 için değişiklikler ###
 
@@ -166,4 +254,4 @@ Bu kişiler için çok minnettarım:
 
 Herhangi bir hata veya öneri bildirmek istediğinizde bana ulaşmak için: [Bir eposta gönderebilirsiniz.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/v2.1.5/linkLibrary-2.1.5.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3.4/linkLibrary-2.3.4.nvda-addon

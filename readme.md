@@ -1,7 +1,7 @@
 # Link Library #
 
 Author: Ibrahim Hamadeh  
-Download [Version 2.3.4][1]  
+Download [Version 2.3.5][1]  
 NVDA compatibility: 2021.1 and beyond  
 
 This addon helps the user to arrange his links or bookmarks in library like way.  
@@ -75,6 +75,10 @@ Result:
 - With a double press, you can customize it first.  
 
 A confirmation message will announce that the link has been added successfully.
+
+### Changes for 2.3.5 ###
+
+*	Fix a bug happens when trying to check if a list item is sub library , and that sometimes caused problems navigating link dialog, but now the problems is gone.
 
 ### Changes for 2.3.4 ###
 
@@ -257,4 +261,4 @@ Very grateful for:
 
 In the case of any bugs or suggestion you can [send me an email.](mailto:ibra.hamadeh@hotmail.com)
 
-[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3.4/linkLibrary-2.3.4.nvda-addon
+[1]: https://github.com/ibrahim-s/linkLibrary/releases/download/2.3.5/linkLibrary-2.3.5.nvda-addon

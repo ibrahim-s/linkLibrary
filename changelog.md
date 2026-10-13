@@ -1,4 +1,4 @@
-### Changes for 2.3.4 ###
+### Changes for 2.3.5 ###
 
-* When trying to add a link on the fly immediately after the web page opens, NVDA couldn't access the title, resulting in error
-* Now we catch the error, display a message box, and prompt the user to try again, for the second time NVDA will be able to access the title.
+* Fix a bug happens when trying to check if a list item is sub library , and that sometimes caused problems navigating link dialog, but now the problems is gone.
+* Update Turkish translation, contributed by Umut KORKMAZ.

@@ -28,11 +28,11 @@ This addon does not come with a default or assigned gesture or shortcut to it
 You can as always add a gesture or change the existed one going to :
 NVDA menu>preferences>inputGestures>Link Library."""),
 	# version
-	addon_version="2.3.4",
+	addon_version="2.3.5",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""* When trying to add a link on the fly immediately after the web page opens, NVDA couldn't access the title, resulting in error
-* Now we catch the error, display a message box, and prompt the user to try again, for the second time NVDA will be able to access the title.
+	addon_changelog=_("""* Fix a bug happens when trying to check if a list item is sub library , and that sometimes caused problems navigating link dialog, but now the problems is gone.
+* Update Turkish translation, contributed by Umut KORKMAZ.
 """),
 	# Author(s)
 	addon_author="ibrahim hamadeh<ibra.hamadeh@hotmail.com>",
